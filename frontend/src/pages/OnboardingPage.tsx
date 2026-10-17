@@ -13,6 +13,7 @@ import {
   ProfileStep,
   ProfileStepActions,
 } from '@/components/onboarding/ProfileStep'
+import { CUSTOM_INTEREST_ID } from '@/data/interestCategories'
 import {
   buildUserContextFromOnboarding,
   type OnboardingFormState,
@@ -33,6 +34,7 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
   const [age, setAge] = useState('')
   const [hasChildren, setHasChildren] = useState(false)
   const [childrenCount, setChildrenCount] = useState('')
+  const [customInterests, setCustomInterests] = useState('')
   const [preferOutdoor, setPreferOutdoor] = useState(true)
 
   function handleAgeChange(value: string) {
@@ -54,9 +56,14 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
   }
 
   function toggleInterest(id: string) {
-    setInterestTagIds((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
-    )
+    if (interestTagIds.includes(id)) {
+      if (id === CUSTOM_INTEREST_ID) {
+        setCustomInterests('')
+      }
+      setInterestTagIds((prev) => prev.filter((item) => item !== id))
+      return
+    }
+    setInterestTagIds((prev) => [...prev, id])
   }
 
   function handleFinish() {
@@ -66,6 +73,7 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
       age,
       hasChildren,
       childrenCount,
+      customInterests,
       preferOutdoor,
     }
     const context = buildUserContextFromOnboarding(form)
@@ -113,7 +121,12 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
         <PersonaStep value={persona} onChange={setPersona} />
       ) : null}
       {step === 2 ? (
-        <InterestsStep selectedIds={interestTagIds} onToggle={toggleInterest} />
+        <InterestsStep
+          selectedIds={interestTagIds}
+          customInterests={customInterests}
+          onToggle={toggleInterest}
+          onCustomInterestsChange={setCustomInterests}
+        />
       ) : null}
       {step === 3 ? (
         <ProfileStep

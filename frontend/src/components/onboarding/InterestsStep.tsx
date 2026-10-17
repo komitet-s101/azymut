@@ -6,17 +6,29 @@ import {
   onboardingSecondaryButtonClass,
 } from '@/components/onboarding/onboardingButtonStyles'
 import { Button } from '@/components/ui/button'
-import { onboardingInterestOptions } from '@/data/interestCategories'
+import { Input } from '@/components/ui/input'
+import {
+  CUSTOM_INTEREST_ID,
+  onboardingInterestOptions,
+} from '@/data/interestCategories'
 
 const INTRO = 'Wybierz zainteresowania — kilka opcji naraz.'
 
 type InterestsStepProps = {
   selectedIds: string[]
+  customInterests: string
   onToggle: (id: string) => void
+  onCustomInterestsChange: (value: string) => void
 }
 
-export function InterestsStep({ selectedIds, onToggle }: InterestsStepProps) {
+export function InterestsStep({
+  selectedIds,
+  customInterests,
+  onToggle,
+  onCustomInterestsChange,
+}: InterestsStepProps) {
   const options = onboardingInterestOptions()
+  const showCustomInput = selectedIds.includes(CUSTOM_INTEREST_ID)
 
   return (
     <>
@@ -31,6 +43,18 @@ export function InterestsStep({ selectedIds, onToggle }: InterestsStepProps) {
           />
         ))}
       </div>
+      {showCustomInput ? (
+        <label className="mt-3 flex flex-col gap-2 text-sm font-medium text-foreground">
+          Twoje zainteresowania
+          <Input
+            type="text"
+            placeholder="np. ceramika, koncerty na dworze…"
+            value={customInterests}
+            onChange={(e) => onCustomInterestsChange(e.target.value)}
+            className="h-12 rounded-full border-border/80 bg-white px-4 shadow-sm"
+          />
+        </label>
+      ) : null}
     </>
   )
 }

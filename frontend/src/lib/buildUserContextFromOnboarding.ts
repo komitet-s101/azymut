@@ -12,6 +12,7 @@ export type OnboardingFormState = {
   age: string
   hasChildren: boolean
   childrenCount: string
+  customInterests: string
   preferOutdoor: boolean
 }
 
@@ -97,7 +98,7 @@ export function buildUserContextFromOnboarding(
     schema_version: 1,
     persona: form.persona,
     interest_package_id: pickPrimaryPackageId(form.persona, form.interestTagIds),
-    custom_request: '',
+    custom_request: form.customInterests.trim(),
     constraints: {
       budget_max_pln: 0,
       available_minutes: 180,
