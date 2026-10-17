@@ -35,6 +35,18 @@ uv run backend
 # http://127.0.0.1:8000/docs
 ```
 
+## Natural language search
+
+`POST /api/v1/search` with `{ "query": "mam wolne 3 godziny w sobotę..." }`.
+
+Groq (`openai/gpt-oss-120b`, low reasoning) only parses the sentence into a filter. Ranking is deterministic in Python. Without `GROQ_API_KEY` the same endpoint uses the built-in Polish rules. `SEARCH_LLM_REASONS=true` adds a short Polish reason for the top hits.
+
+```bash
+cp .env.example .env   # set GROQ_API_KEY
+uv run tortoise migrate && uv run backend-seed
+uv run backend
+```
+
 ## Tests
 
 ```bash

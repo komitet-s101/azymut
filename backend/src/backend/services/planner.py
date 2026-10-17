@@ -192,7 +192,7 @@ async def generate_plan(request: PlanRequest):
     else:
         try:
             plan = await _call_llm_plan(request, candidates, weather_context)
-            planner_name = "bielik"
+            planner_name = "groq"
         except LLMUnavailableError:
             raise HTTPException(
                 status_code=503,

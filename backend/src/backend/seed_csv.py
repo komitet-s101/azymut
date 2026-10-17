@@ -52,13 +52,6 @@ def parse_optional_decimal(value: str | None) -> Decimal | None:
         return None
 
 
-def parse_price_level(value: str | None) -> PriceLevel:
-    text = _strip(value)
-    if not text:
-        return PriceLevel.FREE
-    return PriceLevel(int(text))
-
-
 def parse_optional_price_level(value: str | None) -> PriceLevel | None:
     text = _strip(value)
     if not text:
@@ -132,7 +125,7 @@ async def load_catalog_from_dir(
             typical_visit_estimated=parse_bool(row.get("typical_visit_estimated"))
             if _strip(row.get("typical_visit_estimated"))
             else False,
-            price_level=parse_price_level(row.get("price_level")),
+            price_level=parse_optional_price_level(row.get("price_level")),
             price_max_pln=parse_optional_decimal(row.get("price_max_pln")),
             price_notes=_strip(row.get("price_notes")) or None,
             participation_mode=_strip(row.get("participation_mode")) or None,

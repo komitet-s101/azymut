@@ -31,7 +31,7 @@ class Place(models.Model):
     min_age_recommended = fields.SmallIntField(null=True)
     typical_visit_minutes = fields.IntField()
     typical_visit_estimated = fields.BooleanField(default=False, null=True)
-    price_level = fields.IntEnumField(PriceLevel)
+    price_level = fields.IntEnumField(PriceLevel, null=True)
     price_max_pln = fields.DecimalField(max_digits=10, decimal_places=2, null=True)
     price_notes = fields.TextField(null=True)
     participation_mode = fields.CharField(max_length=32, null=True)

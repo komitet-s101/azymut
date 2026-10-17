@@ -15,14 +15,20 @@ class Settings(BaseSettings):
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
     admin_enabled: bool = False
 
-    llm_base_url: str = "http://localhost:11434/v1"
-    llm_model: str = "speakleash/bielik-11b-v2.3-instruct:Q4_K_M"
+    # Groq OpenAI-compatible API. Swap models with LLM_MODEL
+    # (for example openai/gpt-oss-20b) without code changes.
+    groq_api_key: str = ""
+    llm_base_url: str = "https://api.groq.com/openai/v1"
+    llm_model: str = "openai/gpt-oss-120b"
     llm_api_key: str = ""
-    llm_timeout_seconds: float = 120.0
+    llm_reasoning_effort: str = "low"
+    llm_timeout_seconds: float = 45.0
     llm_max_tokens: int = 2048
     llm_temperature: float = 0.2
     llm_retry_temperature: float = 0.1
     planner_stub: bool = True
+    # When true, a second Groq call writes a short Polish reason per top hit.
+    search_llm_reasons: bool = False
 
     weather_provider: str = "stub"
     weather_api_key: str = ""
@@ -36,6 +42,10 @@ class Settings(BaseSettings):
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
+    @property
+    def resolved_llm_api_key(self) -> str:
+        return self.groq_api_key.strip() or self.llm_api_key.strip()
 
 
 @lru_cache
