@@ -6,6 +6,7 @@ import { PlanInfoCard } from '@/components/search-results/PlanInfoCard'
 import { PlanMapPlaceholder } from '@/components/search-results/PlanMapPlaceholder'
 import { PlanTrailMap } from '@/components/search-results/PlanTrailMap'
 import { PlanResultsHeader } from '@/components/search-results/PlanResultsHeader'
+import { SearchQueryCallout } from '@/components/search-results/SearchQueryCallout'
 import { SearchResultCard } from '@/components/search-results/SearchResultCard'
 import { TrailDetailPanel } from '@/components/search-results/TrailDetailPanel'
 import {
@@ -108,8 +109,8 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
         header={<PlanResultsHeader planSummary={summary} />}
         contentClassName="pt-[max(1rem,calc(env(safe-area-inset-top)+0.25rem))]"
       />
-      <div className="home-surface-texture flex flex-1 flex-col gap-6 px-5 pt-7 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-        <p className="text-sm text-muted-foreground">Zapytanie: {query}</p>
+      <div className="home-surface-texture flex flex-1 flex-col gap-8 px-5 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+        <SearchQueryCallout query={query} />
 
         {state.status === 'ready' && trailStops.length > 0 ? (
           <>
@@ -124,8 +125,6 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
               stops={trailStops}
               trailMode={trailPlan.mode}
               selectedKey={selectedStopKey}
-              planSummary={state.data.summary}
-              query={query}
               walkingRoute={walkingRoute}
             />
           </>

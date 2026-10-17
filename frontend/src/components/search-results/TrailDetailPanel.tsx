@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Clock, Route } from 'lucide-react'
+import { Clock, Footprints, MapPinned, Route } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,8 +13,6 @@ type TrailDetailPanelProps = {
   stops: TrailStop[]
   trailMode: TrailMode | null
   selectedKey: string | null
-  planSummary: string
-  query: string
   walkingRoute: WalkingRoute | null
 }
 
@@ -24,12 +22,41 @@ type DetailState =
   | { status: 'ready'; description: string | null; officialUrl: string | null; bookingUrl: string | null }
   | { status: 'error' }
 
+function polishPlaceCount(n: number): string {
+  if (n === 1) {
+    return '1 miejsce'
+  }
+  const mod10 = n % 10
+  const mod100 = n % 100
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+    return `${n} miejsca`
+  }
+  return `${n} miejsc`
+}
+
+function trailIntro(trailMode: TrailMode | null, stopCount: number): string {
+  if (trailMode === 'event') {
+    if (stopCount === 1) {
+      return 'To wydarzenie z kalendarza — skupiamy się na nim, bez dokładania innych punktów obok.'
+    }
+    if (stopCount === 2) {
+      return 'Dwa wydarzenia jedno po drugim — w kolejności, która ma sens.'
+    }
+    return `${stopCount} wydarzeń w jednym planie — spokojnie, bez pośpiechu.`
+  }
+  if (stopCount === 1) {
+    return 'Jedno miejsce na spokojnie — bez biegania po całej mapie.'
+  }
+  if (stopCount === 2) {
+    return 'Dwa punkty blisko siebie — krótko i przyjemnie.'
+  }
+  return `${polishPlaceCount(stopCount)} w jednym planie — po drodze, bez dalekich objazdów.`
+}
+
 export function TrailDetailPanel({
   stops,
   trailMode,
   selectedKey,
-  planSummary,
-  query,
   walkingRoute,
 }: TrailDetailPanelProps) {
   const selected = stops.find((stop) => stop.key === selectedKey) ?? null
@@ -64,29 +91,40 @@ export function TrailDetailPanel({
     const item = selected.result
     const placeLine = [item.city, item.address_line].filter(Boolean).join(' · ')
     return (
-      <Card className="border-border/80">
-        <CardHeader className="gap-2">
+      <Card className="gap-2 border-border/80">
+        <CardHeader className="gap-2 border-b border-border/60 pb-3">
           <div className="flex items-start justify-between gap-2">
-            <CardTitle className="text-lg">{item.name}</CardTitle>
+            <CardTitle className="text-lg leading-snug">{item.name}</CardTitle>
             <Badge variant="secondary">Przystanek {selected.order}</Badge>
           </div>
-          <p className="text-sm text-muted-foreground">{placeLine || 'Lokalizacja na mapie'}</p>
+          {placeLine ? (
+            <p className="text-sm text-muted-foreground">{placeLine}</p>
+          ) : (
+            <p className="text-sm text-muted-foreground">Lokalizacja na mapie</p>
+          )}
         </CardHeader>
-        <CardContent className="flex flex-col gap-3 text-sm">
-          <p>
-            <span className="font-medium text-foreground">Kategoria:</span>{' '}
-            {categoryLabel(item.category)}
-          </p>
-          <p>
-            <span className="font-medium text-foreground">Bilety:</span>{' '}
-            {priceLabel(item.price_level, item.flags)}
-          </p>
-          {item.typical_visit_minutes ? (
-            <p>
-              <span className="font-medium text-foreground">Czas zwiedzania:</span> ok.{' '}
-              {item.typical_visit_minutes} min
-            </p>
-          ) : null}
+        <CardContent className="flex flex-col gap-3 pt-3 text-sm">
+          <dl className="grid gap-3 sm:grid-cols-2">
+            <div className="rounded-lg bg-muted/40 px-3 py-2.5">
+              <dt className="text-xs font-medium text-muted-foreground">Kategoria</dt>
+              <dd className="mt-0.5 font-medium text-foreground">{categoryLabel(item.category)}</dd>
+            </div>
+            <div className="rounded-lg bg-muted/40 px-3 py-2.5">
+              <dt className="text-xs font-medium text-muted-foreground">Bilety</dt>
+              <dd className="mt-0.5 font-medium text-foreground">
+                {priceLabel(item.price_level, item.flags)}
+              </dd>
+            </div>
+            {item.typical_visit_minutes ? (
+              <div className="rounded-lg bg-muted/40 px-3 py-2.5 sm:col-span-2">
+                <dt className="text-xs font-medium text-muted-foreground">Czas zwiedzania</dt>
+                <dd className="mt-0.5 font-medium text-foreground">
+                  ok. {item.typical_visit_minutes} min
+                </dd>
+              </div>
+            ) : null}
+          </dl>
+
           {detail.status === 'loading' ? <p role="status">Ładujemy opis…</p> : null}
           {detail.status === 'ready' && detail.description ? (
             <p className="leading-relaxed text-foreground">{detail.description}</p>
@@ -98,7 +136,7 @@ export function TrailDetailPanel({
             <p className="text-muted-foreground">Brak opisu — sprawdź kartę miejsca poniżej.</p>
           ) : null}
           {detail.status === 'ready' && (detail.officialUrl || detail.bookingUrl) ? (
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 border-t border-border/60 pt-4">
               {detail.officialUrl ? (
                 <a
                   href={detail.officialUrl}
@@ -129,49 +167,69 @@ export function TrailDetailPanel({
   const pathKm = walkingRoute?.distanceKm ?? trailPathKm(stops)
   const walkMin = walkingRoute?.durationMinutes
   const visitMin = trailVisitMinutes(stops)
-  const pathLabel = walkingRoute?.followsRoads ? 'pieszo po drogach' : 'w linii prostej'
 
   const title =
     trailMode === 'event'
       ? stops.length === 1
         ? 'Twoje wydarzenie'
         : 'Plan wydarzeń'
-      : 'Twój szlak zwiedzania'
-
-  const intro =
-    trailMode === 'event'
-      ? stops.length === 1
-        ? `Dla zapytania „${query}” pokazujemy jedno wydarzenie z kalendarza — bez mieszania ze stałymi obiektami (np. salami koncertowymi).`
-        : `Dla zapytania „${query}” połączyliśmy ${stops.length} wydarzenia w jeden plan (kolejność wg godziny lub dojazdu).`
-      : `Na podstawie „${query}” ułożyliśmy spacer przez ${stops.length} blisko siebie położonych miejsc. Nie łączymy odległych punktów w jedną trasę.`
+      : 'Twój spersonalizowany szlak zwiedzania'
 
   return (
-    <Card className="border-border/80">
-      <CardHeader className="gap-2">
-        <CardTitle className="flex items-center gap-2 text-lg">
-          <Route className="size-5 text-primary" aria-hidden />
+    <Card className="gap-2 border-border/80">
+      <CardHeader className="border-b border-border/60 pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Route className="size-4 shrink-0 text-primary" aria-hidden />
           {title}
         </CardTitle>
-        <p className="text-sm text-muted-foreground">{planSummary}</p>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3 text-sm leading-relaxed">
-        <p>{intro}</p>
-        <p className="inline-flex items-center gap-2 text-muted-foreground">
-          <Clock className="size-4 shrink-0 text-primary" aria-hidden />
-          {trailMode === 'event' ? 'Czas wydarzeń' : 'Zwiedzanie'}: ok. {visitMin} min
-          {stops.length > 1
-            ? ` · ${pathKm.toFixed(1)} km ${pathLabel}${walkMin ? ` · ok. ${Math.round(walkMin)} min marszu` : ''}`
-            : ''}
+      <CardContent className="flex flex-col gap-3.5 pt-3">
+        <p className="text-sm leading-snug text-muted-foreground">
+          {trailIntro(trailMode, stops.length)}
         </p>
-        <p>
-          Kliknij numer na mapie, żeby zobaczyć szczegóły
-          {trailMode === 'event' ? ' wydarzenia' : ' przystanku'}.
-        </p>
-        <ol className="list-decimal space-y-1 pl-5 text-foreground">
-          {stops.map((stop) => (
-            <li key={stop.key}>{stop.result.name}</li>
-          ))}
-        </ol>
+
+        <ul className="flex flex-col gap-1.5 text-sm text-foreground">
+          <li className="flex items-center gap-2.5">
+            <Clock className="size-4 shrink-0 text-primary" aria-hidden />
+            <span>ok. {visitMin} min</span>
+          </li>
+          {stops.length > 1 ? (
+            <li className="flex items-center gap-2.5">
+              <MapPinned className="size-4 shrink-0 text-primary" aria-hidden />
+              <span>{pathKm.toFixed(1)} km</span>
+            </li>
+          ) : null}
+          {stops.length > 1 && walkMin ? (
+            <li className="flex items-center gap-2.5">
+              <Footprints className="size-4 shrink-0 text-primary" aria-hidden />
+              <span>ok. {Math.round(walkMin)} min marszu</span>
+            </li>
+          ) : null}
+        </ul>
+
+        <section className="flex flex-col gap-2" aria-labelledby="trail-stops-heading">
+          <h3 id="trail-stops-heading" className="text-sm font-semibold text-foreground">
+            Kolejność
+          </h3>
+          <ol className="flex flex-col gap-1.5">
+            {stops.map((stop) => (
+              <li
+                key={stop.key}
+                className="flex items-start gap-2.5 rounded-lg border border-border/70 bg-card px-2.5 py-2"
+              >
+                <span
+                  className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[0.6875rem] font-bold text-primary-foreground"
+                  aria-hidden
+                >
+                  {stop.order}
+                </span>
+                <span className="pt-0.5 text-sm font-medium leading-snug text-foreground">
+                  {stop.result.name}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
       </CardContent>
     </Card>
   )

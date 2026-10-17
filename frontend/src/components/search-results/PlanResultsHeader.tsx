@@ -1,6 +1,6 @@
 import { Sparkles } from 'lucide-react'
 
-const HEADER_TITLE = 'Twój namiar'
+const HEADER_TITLE = 'Twój plan na dziś'
 
 type PlanResultsHeaderProps = {
   planSummary: string
