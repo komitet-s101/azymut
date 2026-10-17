@@ -1,0 +1,40 @@
+[
+  {
+    "id": "culture_walk",
+    "label_pl": "Kultura i spacery",
+    "description_pl": "Muzea, zabytki i spokojne trasy piesze.",
+    "persona": ["tourist", "resident"],
+    "suggested_constraints": {
+      "max_visit_minutes": 180,
+      "categories": ["museum", "attraction"]
+    }
+  },
+  {
+    "id": "family_fun",
+    "label_pl": "Rodzinnie",
+    "description_pl": "Miejsca przyjazne dzieciom, gry i aktywność na świeżym powietrzu.",
+    "persona": ["tourist", "resident"],
+    "suggested_constraints": {
+      "min_family_friendly": 3
+    }
+  },
+  {
+    "id": "rainy_day",
+    "label_pl": "Na deszcz",
+    "description_pl": "Kino, muzea i miejsca pod dachem.",
+    "persona": ["tourist", "resident"],
+    "suggested_constraints": {
+      "is_indoor": true,
+      "min_rain_suitable": 3
+    }
+  },
+  {
+    "id": "local_flavors",
+    "label_pl": "Smaki regionu",
+    "description_pl": "Lokalne restauracje i kawiarnie w okolicy.",
+    "persona": ["resident"],
+    "suggested_constraints": {
+      "categories": ["restaurant"]
+    }
+  }
+]

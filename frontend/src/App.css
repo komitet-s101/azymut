@@ -1,0 +1,66 @@
+.app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.25rem 1rem 2rem;
+  max-width: 28rem;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.app__header h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.app__tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.125rem;
+  background: var(--surface);
+}
+
+.card h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.75rem;
+  color: var(--text-muted);
+}
+
+.api-base {
+  margin: 0 0 0.75rem;
+}
+
+.api-base code {
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.status--loading {
+  color: var(--text-muted);
+}
+
+.status--ok {
+  color: var(--ok);
+}
+
+.status--error {
+  color: var(--error);
+}

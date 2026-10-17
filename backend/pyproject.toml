@@ -1,0 +1,37 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Artur Borecki", email = "me@pufereq.pl" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115.0",
+    "httpx>=0.28.0",
+    "pydantic-settings>=2.6.0",
+    "tortoise-orm>=1.1.9",
+    "uvicorn[standard]>=0.32.0",
+]
+
+[project.scripts]
+backend = "backend.main:main"
+backend-seed = "backend.seed:main"
+
+[tool.tortoise]
+tortoise_orm = "backend.db.config.TORTOISE_ORM"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

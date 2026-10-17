@@ -1,0 +1,42 @@
+# Environment (keep templates)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local SQLite (migrate + seed to recreate)
+backend/data/backend.db
+backend/data/backend.db-*
+
+# Node / frontend build
+node_modules/
+dist/
+dist-ssr/
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# Editors (Obsidian vault UI state)
+.obsidian/
+
+# IDE (optional local overrides)
+.idea/
+.vscode/*
+!.vscode/extensions.json
