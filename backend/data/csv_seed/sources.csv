@@ -1,10 +1,13 @@
 url,accessed_at,status,what_it_confirms
 http://www.90minut.pl/mecze_druzyna.php?id=3459&id_sezon=109,2026-10-17T13:54:52,ok,Wisła II Płock – pełny terminarz III ligi 2026/27 (odczyt przez WebFetch; z boxa timeout)
+http://www.pzeriiplock.pl/aktualnosci,2026-10-17T00:00:00,ok,PZERiI Płock – program Płockich Dni Seniora 2026
 https://airjump.pl/park-trampolin-plock/kontakt/,2026-10-17T13:25:01,ok,Park Trampolin AIR JUMP Płock; Park Trampolin AIR JUMP Płock (godziny)
 https://akademia.sprwislaplock.pl/calendar/terminarz-junior-2026-27/,2026-10-17T13:35:48,ok,Hala ZST „70” – mecze Wisła Handball Academy (juniorzy); wydarzenie: ORLEN Wisła Płock JR – KS AZS AWF Warszawa; wydarzenie: ORLEN Wisła Płock JR – ENEA Orlęta Zwoleń; wydarzenie: ORLEN Wisła Płock JR – MKS Mazur Sierpc
 https://akademia.sprwislaplock.pl/calendar/terminarz-junior-mlodszy-2026-27/,2026-10-17T13:35:50,ok,wydarzenie: ORLEN Wisła Płock JM I – KPR ROKiS Radzymin; wydarzenie: ORLEN Wisła Płock JM I – KS AZS AWF Warszawa; wydarzenie: ORLEN Wisła Płock JM I – ORLEN Wisła Płock JM II; wydarzenie: ORLEN Wisła Płock JM I – UKS Diament Ostrołęka; wydarzenie: ORLEN Wisła Płock JM I – SCKS Jurand Ciechanów; wydarzenie: ORLEN Wisła Płock JM I – UKPR Agrykola Warszawa
 https://akademia.sprwislaplock.pl/calendar/terminarz-junior-mlodszy-ii-2026-2027/,2026-10-17T13:35:53,ok,wydarzenie: ORLEN Wisła Płock JM II – KPR ROKiS Radzymin; wydarzenie: ORLEN Wisła Płock JM II – KS AZS AWF Warszawa; wydarzenie: ORLEN Wisła Płock JM II – UKS Diament Ostrołęka
 https://akademia.sprwislaplock.pl/venue/zst-70/,2026-10-17T13:36:22,ok,Hala ZST „70” – mecze Wisła Handball Academy (juniorzy)
+https://aktywnysenior.org.pl/centrum-as/,2026-10-17T00:00:00,ok,"Centrum Aktywnego Seniora – zakres zajęć, 55+, zajęcia bezpłatne dla członków"
+https://aktywnysenior.org.pl/kontakt/,2026-10-17T00:00:00,ok,"Centrum Aktywnego Seniora – adres, godziny 10–16, kontakt"
 https://aquaparkplock.pl/aqua-aerobik/,2026-10-17T13:24:15,ok,Aqua aerobik w Aquaparku Płock (grupy OPEN i SENIOR 55+); Aqua aerobik w Aquaparku Płock (grupy OPEN i SENIOR 55+) (godziny)
 https://aquaparkplock.pl/cennik/,2026-10-17T13:24:18,ok,"Aquapark Płock – strefa basenowa; Aquapark Płock – strefa SPA (sauny, jacuzzi)"
 https://aquaparkplock.pl/strefa-basenowa/,2026-10-17T13:24:13,ok,Aquapark Płock – strefa basenowa; Aquapark Płock – strefa basenowa (godziny)
@@ -18,6 +21,7 @@ https://atrakcjowo.pl/atrakcja/kregielnia-hotel-czardasz-plock/,2026-10-17T13:24
 https://atrakcjowo.pl/atrakcja/lodowisko-stary-rynek-plock/,2026-10-17T13:24:43,ok,Lodowisko na Starym Rynku (sezonowe)
 https://atrakcjowo.pl/atrakcja/wesola-ciuchcia-laser-fun-plock/,2026-10-17T13:24:46,ok,Laser Fun – laserowy paintball i labirynt laserowy (Galeria Mosty); Laser Fun – laserowy paintball i labirynt laserowy (Galeria Mosty) (godziny); Sala zabaw Wesoła Ciuchcia (Galeria Mosty); Sala zabaw Wesoła Ciuchcia (Galeria Mosty) (godziny)
 https://cojestgrane.pl/polska/mazowieckie/plock/wydarzenie/abq2/mecz-ligi-centralnej-kobiet-w-pilke-reczna/jest,2026-10-17T13:37:12,ok,"Hala „Blaszak” – mecze Jutrzenki Płock (piłka ręczna kobiet); wydarzenie: Jutrzenka Płock – Korona Handball Kielce; wydarzenie: Jutrzenka Płock – mecz domowy Ligi Centralnej Kobiet; wydarzenie: Spoko Loko – koncert dla dzieci; wydarzenie: Klimakterium... i już – spektakl komediowy; wydarzenie: Klimakterium 2, czyli menopauzy szał – spektakl komediowy; wydarzenie: Z żartami nie ma żartów – 20-lecie…"
+"https://eplonski.pl/info/seniorzy-przejmuja-plock-sprawdz-koncerty,-warsztaty-i-wielki-final",2026-10-17T00:00:00,ok,"Płockie Dni Seniora 2026 – program, zaproszenia na finał"
 https://faustynaplock.pl/kontakt/,2026-10-17T13:25:23,ok,Sanktuarium Bożego Miłosierdzia
 https://funparkplock.com.pl/klienci-indywidualni/,2026-10-17T13:24:56,ok,"Fun Park Płock – paintball i SplatMaster nad Wisłą; Fun Park Płock – paintball i SplatMaster nad Wisłą (godziny); Fun Park Płock – park linowy, ścianka 8 m i dmuchańce; Fun Park Płock – park linowy, ścianka 8 m i dmuchańce (godziny)"
 https://gastro-plock.pl/,2026-10-17T00:00:00,ok,ceny wybranych spektakli Teatru Dramatycznego (agregator)
@@ -69,6 +73,7 @@ https://mdk-plock.pl/ogrod-jordanowski/,2026-10-17T13:24:28,ok,Ogród Jordanowsk
 https://mdk-plock.pl/zajecia-szachowe/,2026-10-17T13:24:26,ok,Zajęcia szachowe w MDK; Zajęcia szachowe w MDK (godziny)
 https://mdk-plock.pl/zajecia/,2026-10-17T13:24:24,ok,Młodzieżowy Dom Kultury w Płocku
 https://mdplock.pl/,2026-10-17T13:25:12,ok,Muzeum Diecezjalne w Płocku (Opactwo i Stare Muzeum); Muzeum Diecezjalne w Płocku (Opactwo i Stare Muzeum) (godziny); Żywe lekcje historii w Muzeum Diecezjalnym (grupy); Żywe lekcje historii w Muzeum Diecezjalnym (grupy) (godziny)
+"https://mopsplock.eu/web/a,215,klub-aktywnego-seniora-obchodzi-jubileusz",2026-10-17T17:47:48,ok,"MOPS – Klub Aktywnego Seniora, program tygodnia (artykuł 14.07.2023)"
 https://mosirplock.pl/,2026-10-17T13:24:03,ok,Pływalnia Miejska Podolanka (MOSiR)
 https://mosirplock.pl/memorial-im-piotra-przyborowskiego/,2026-10-17T13:56:14,ok,Pływalnia Miejska Podolanka (MOSiR); wydarzenie: Memoriał im. Piotra Przyborowskiego – zawody pływackie
 https://mosirplock.pl/obiekty/korty-tenisowe/,2026-10-17T13:26:59,ok,"Korty tenisowe MOSiR – Stadion Miejski (3 kryte, 2 odkryte); Korty tenisowe MOSiR – Stadion Miejski (3 kryte, 2 odkryte) (godziny)"
@@ -91,8 +96,11 @@ https://nowy.plock.eu/przejazdzki-ciuchcia/,2026-10-17T13:24:38,ok,Ciuchcia Tums
 https://nowy.plock.eu/sanktuarium-bozego-milosierdzia/,2026-10-17T13:24:40,ok,Sanktuarium Bożego Miłosierdzia
 https://nowy.plock.eu/sobotka/,2026-10-17T13:24:41,ok,Zalew Sobótka
 https://nowy.plock.eu/towarzystwo-naukowe-plockie/,2026-10-17T13:25:06,ok,Towarzystwo Naukowe Płockie i Biblioteka im. Zielińskich
+https://nowybip.plock.eu/zarzadzenie/cnzcUz4P,2026-10-17T00:00:00,ok,BIP Płock – zlecenie prowadzenia Centrum Aktywnego Seniora 2024–2026
 https://orkiestraplock.pl/kalendarz/,2026-10-17T13:24:57,ok,Sala koncertowa Państwowej Szkoły Muzycznej (koncerty Płockiej Orkiestry Symfonicznej); wydarzenie: Janusz Radek symfonicznie – Płocka Orkiestra Symfoniczna; wydarzenie: „Tup tup idzie noc” – koncert dla Misia (POS); wydarzenie: Koncert z okazji Narodowego Święta Niepodległości (POS)
 https://orkiestraplock.pl/repertuar/,2026-10-17T13:24:53,ok,Sala koncertowa Państwowej Szkoły Muzycznej (koncerty Płockiej Orkiestry Symfonicznej)
+"https://panoramaplock.pl/parada-olimpiada-koncerty-i-senioriada-plockie-dni-seniora-juz-od-piatku,7329688002207040a",2026-10-17T00:00:00,ok,"Płockie Dni Seniora 2026 – program (koncert H. Derej, Senioriada)"
+https://plock.givabiz.pl/company/mazowiecka-spoldzielnia-mieszkaniowa-klub-osiedlowy-plock.html,2026-10-17T00:00:00,ok,Klub Osiedlowy MSM – adres Lachmana 14 (katalog firm)
 https://plockagaleria.pl/ceny-biletow/,2026-10-17T13:31:09,ok,Płocka Galeria Sztuki
 https://plockagaleria.pl/regulamin-zwiedzania-plockiej-galerii-sztuki/,2026-10-17T13:31:13,ok,Płocka Galeria Sztuki; Płocka Galeria Sztuki (godziny)
 https://plockagaleria.pl/wydarzenie/wystawa-malarstwa-marka-sobczyka-co-siedzi-w-koncowkach-bananow-dwa/,2026-10-17T13:30:42,ok,Płocka Galeria Sztuki
@@ -100,7 +108,15 @@ https://pokis.pl/,2026-10-17T13:24:06,ok,Płocki Ośrodek Kultury i Sztuki im. T
 https://pokis.pl/onas/nasze-jednostki/pokis,2026-10-17T13:24:08,ok,Płocki Ośrodek Kultury i Sztuki im. Themersonów (POKiS) – sala koncertowa
 https://pokis.pl/zajecia-warsztaty-spotkania/pracownia-tor,2026-10-17T13:24:19,ok,Pracownia TOR (POKiS) – animacja poklatkowa
 https://pokis.pl/zajecia-warsztaty-spotkania/zajecia-plastyczne/farbiarnia,2026-10-17T13:24:17,ok,Farbiarnia (POKiS) – pracownia plastyczna dla młodzieży
+https://portalplock.pl/wiadomosci/spoldzielnia-miala-lokal-urzad-mial-pieniadze-seniorzy-maja-zapal-i-tak-powstal-klub-seniora-aktywni-razem-planow-jest-mnostwo/hnGNXVfdaapJxP5Z4VWd,2026-10-17T00:00:00,ok,"Klub Seniora Aktywni Razem – organizatorzy, program (likwidacja klubu MSM Chemik)"
 https://poznaj.plock.eu/malachowianka/,2026-10-17T13:25:19,ok,Muzeum i Archiwum Małachowianki (najstarsza szkoła w Polsce)
+https://psmlw.pl/userfiles/images/2024.09.27/harmonogram%20zaj%C4%99%C4%87%20w%20Klubie%20na%20stron%C4%99.docx%20-%20Word%2027.09.2024%2015_55_36.png,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Gitarowe%20ABC%20od%206%20lat%20Muzyczna%20Przysta%C5%84-%20wokalne%20od%206%20lat%20Papier%2C%20kamie%C5%84%2C%20no%C5%BCyce-%20kreatywne%20od%206%20lat%20Wko%C5%82o%20Weso%C5%82o-%C5%9Bwietlica%20od%205%20lat%20Ma%C5%82y%20Wirtuoz-%20podstawy%20gry%20na%20pianinie%20od%206%20lat.jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Klub%20Osiedla%20%C5%81ukasiewicza%20Zaprasza%20!%20(A5).jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Klub%20Osiedla%20%C5%81ukasiewicza(7).jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Sp%C3%B3%C5%82dzielczy%20Dom%20Kultury(1).jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Zapraszamy%20na%20zaj%C4%99cia(1).jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/2025.09.10/Zapraszamy%20na%20zaj%C4%99cia(3).jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
 https://ptsplock.pl/zawody-2026/,2026-10-17T13:24:45,ok,wydarzenie: Zawody strzeleckie KS GROT LOK – Puchar Jesieni (dzień 1); wydarzenie: Zawody strzeleckie KS GROT LOK – Puchar Jesieni (dzień 2); wydarzenie: Zawody strzeleckie KS GROT LOK – Zawody z okazji 108. rocznicy odzyskania niepodległości (dzień 1); wydarzenie: Zawody strzeleckie KS GROT LOK – Zawody z okazji 108. rocznicy odzyskania niepodległości (dzień 2); wydarzenie: Zawody strzeleckie KS …
 https://sprwislaplock.pl/bilety-na-mecze/,2026-10-17T13:36:39,ok,ORLEN Arena – mecze ORLEN Wisły Płock (piłka ręczna); wydarzenie: ORLEN Wisła Płock – PGE Wybrzeże Gdańsk; wydarzenie: ORLEN Wisła Płock – HBC Nantes; wydarzenie: ORLEN Wisła Płock – Piotrkowianin Piotrków Trybunalski; wydarzenie: ORLEN Wisła Płock – NETLAND MKS Kalisz; wydarzenie: ORLEN Wisła Płock – Rebud KPR Ostrovia Ostrów Wielkopolski; wydarzenie: ORLEN Wisła Płock – Handball Stal Mielec; wyd…
 https://sprwislaplock.pl/calendar/terminarz-2026-2027/,2026-10-17T13:36:36,ok,ORLEN Arena – mecze ORLEN Wisły Płock (piłka ręczna); wydarzenie: ORLEN Wisła Płock – PGE Wybrzeże Gdańsk; wydarzenie: ORLEN Wisła Płock – HBC Nantes; wydarzenie: ORLEN Wisła Płock – Piotrkowianin Piotrków Trybunalski; wydarzenie: ORLEN Wisła Płock – NETLAND MKS Kalisz; wydarzenie: ORLEN Wisła Płock – Rebud KPR Ostrovia Ostrów Wielkopolski; wydarzenie: ORLEN Wisła Płock – Handball Stal Mielec; wyd…
@@ -108,6 +124,7 @@ https://standup.pl/miasta/plock-stand-up,2026-10-17T13:25:02,ok,Płocki Ośrodek
 https://teatrplock.pl/pl/repertuar/10/2026/,2026-10-17T13:25:02,ok,Teatr Dramatyczny im. Jerzego Szaniawskiego; wydarzenie: Pomoc domowa; wydarzenie: Goniąc Kormorany – koncert; wydarzenie: Świętoszek – premiera; wydarzenie: Świętoszek (z audiodeskrypcją); wydarzenie: Motyle są wolne (Scena Kameralna); wydarzenie: Cudowna terapia – premiera (Piekiełko); wydarzenie: Świętoszek; wydarzenie: Wesele na Kurpiach (spektakl gościnny); wydarzenie: Genialny pomysł (Teatr …
 https://teatrplock.pl/pl/repertuar/11/2026/,2026-10-17T13:25:04,ok,Teatr Dramatyczny im. Jerzego Szaniawskiego; wydarzenie: Pomoc domowa; wydarzenie: Goniąc Kormorany – koncert; wydarzenie: Świętoszek – premiera; wydarzenie: Świętoszek (z audiodeskrypcją); wydarzenie: Motyle są wolne (Scena Kameralna); wydarzenie: Cudowna terapia – premiera (Piekiełko); wydarzenie: Świętoszek; wydarzenie: Wesele na Kurpiach (spektakl gościnny); wydarzenie: Genialny pomysł (Teatr …
 https://termowo.pl/baseny/plock/,2026-10-17T00:00:00,ok,"Aquapark Płock – strefa basenowa; Aquapark Płock – strefa SPA (sauny, jacuzzi); Pływalnia Miejska Jagiellonka (MOSiR); Pływalnia Miejska Podolanka (MOSiR); Hotel Czardasz – basen i strefa Wellness (dla gości z zewnątrz); Hotel Czardasz – basen i strefa Wellness (dla gości z zewnątrz) (godziny)"
+https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897,2026-10-17T17:47:52,ok,"Klub Seniora Aktywni Razem (Czwartaków 4) – otwarcie 9.04.2026, godziny, kontakt, finansowanie do końca 2026"
 https://turystykaplock.eu/,2026-10-17T13:24:03,ok,Informacja Turystyczna – Płocka Lokalna Organizacja Turystyczna; Informacja Turystyczna – Płocka Lokalna Organizacja Turystyczna (godziny); Rock 69 – klub muzyczny; Na Kocim Szlaku – rzeźby kotów (start przy ZOO); trasa: Na Kocim Szlaku – rzeźby kotów Inko & Gnito
 https://turystykaplock.eu/aktywnie/,2026-10-17T13:24:08,ok,Hotel Czardasz – basen i strefa Wellness (dla gości z zewnątrz); Kręgielnia w Hotelu Czardasz; Strzelnica KS GROT LOK – strzelanie rekreacyjne; Skatepark Skate Arena przy ORLEN Arenie; Zdrofit – klub fitness (Galeria Mazovia); Just GYM Płock
 https://turystykaplock.eu/art-deco/,2026-10-17T13:24:10,ok,Muzeum Mazowieckie – „Sztuka dwudziestolecia międzywojennego – art déco” i Galeria Themersonów
@@ -142,11 +159,21 @@ https://wisla-plock.pl/bilety/bilety-na-mecze-wisly-plock/,2026-10-17T13:36:09,o
 https://wisla-plock.pl/rozgrywki/ekstraklasa/,2026-10-17T13:36:07,ok,ORLEN Stadion im. Kazimierza Górskiego – mecze Wisły Płock (piłka nożna); wydarzenie: Wisła Płock – Radomiak Radom; wydarzenie: Wisła Płock – Piast Gliwice; wydarzenie: Wisła Płock – Legia Warszawa; wydarzenie: Wisła Płock – Śląsk Wrocław; wydarzenie: Wisła Płock – Raków Częstochowa; wydarzenie: Wisła Płock – Wisła Kraków; wydarzenie: Wisła Płock – GKS Katowice; wydarzenie: Wisła Płock – Pogoń Szc…
 https://www.gov.pl/web/psmplock,2026-10-17T13:24:45,ok,Sala koncertowa Państwowej Szkoły Muzycznej (koncerty Płockiej Orkiestry Symfonicznej)
 https://www.laserfun.com.pl/,2026-10-17T13:24:58,ok,Laser Fun – laserowy paintball i labirynt laserowy (Galeria Mosty)
+https://www.msmplock.pl/,2026-10-17T17:48:36,ok,Mazowiecka SM – kontakt; Dział Kulturalno-Oświatowy odsyła tylko do Facebooka
 https://www.novekino.pl/kina/przedwiosnie/,2026-10-17T13:30:03,ok,NoveKino Przedwiośnie
 https://www.novekino.pl/kina/przedwiosnie/cennik.php,2026-10-17T13:30:46,ok,NoveKino Przedwiośnie
 https://www.pokis.pl/onas/nasze-jednostki/dom-darmstadt,2026-10-17T13:24:10,ok,Dom Darmstadt (POKiS) – sala koncertowa i biblioteka niemiecka
-https://www.psmlw.pl/pl/sdk,2026-10-17T13:24:30,ok,Spółdzielczy Dom Kultury PSML-W; Spółdzielczy Dom Kultury PSML-W (godziny)
-https://www.psmlw.pl/pl/zajecia-sdk-dorosli,2026-10-17T13:24:37,ok,Spółdzielczy Dom Kultury PSML-W
+https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew,2026-10-17T17:46:02,ok,Klub Łukasiewicza PSML-W – Magiczna Mata – zajęcia ruchowe (od 6 lat) (godziny); Klub Łukasiewicza PSML-W – Mała Dekoratornia – zajęcia plastyczno-techniczne (godziny); Klub Łukasiewicza PSML-W – Tańczące Iskierki – zajęcia rytmiczne (3–6 lat) (godziny); Klub Łukasiewicza PSML-W – Kreatywny Świat Dziecka – zajęcia plastyczne (4–7 lat) (godziny); Klub Łukasiewicza PSML-W – Klubik – zajęcia świetlic…
+https://www.psmlw.pl/pl/dworcowa-polecamy,2026-10-17T17:46:16,ok,"Klub Dworcowa PSML-W – Gitarowe ABC (od 6 lat); Klub Dworcowa PSML-W – Muzyczna Przystań – zajęcia wokalne (od 6 lat); Klub Dworcowa PSML-W – Papier, Kamień, Nożyce – zajęcia kreatywne (od 6 lat); Klub Dworcowa PSML-W – Wkoło Wesoło – świetlica (od 5 lat); Klub Dworcowa PSML-W – Mały Wirtuoz – podstawy gry na pianinie (od 6 lat); Klub Dworcowa PSML-W – Chór (dorośli); Klub Dworcowa PSML-W – Zdrowy…"
+https://www.psmlw.pl/pl/harmonogram-zajec-kochanowskiego,2026-10-17T17:45:51,ok,Klub Kochanowskiego PSML-W – Pędzelek – zajęcia plastyczne (6–12 lat) (godziny)
+https://www.psmlw.pl/pl/klub-os-dworcowa,2026-10-17T17:44:40,ok,Klub Osiedla „Dworcowa” PSML-W; Klub Osiedla „Dworcowa” PSML-W (godziny)
+https://www.psmlw.pl/pl/klub-os-kochanowskiego,2026-10-17T17:44:36,ok,Klub Osiedla „Kochanowskiego” PSML-W; Klub Osiedla „Kochanowskiego” PSML-W (godziny)
+https://www.psmlw.pl/pl/klub-os-lukasiewicza,2026-10-17T17:44:38,ok,Klub Osiedla „Łukasiewicza” PSML-W; Klub Osiedla „Łukasiewicza” PSML-W (godziny)
+https://www.psmlw.pl/pl/polecamy-kochanowskiego,2026-10-17T17:45:56,ok,"Klub Kochanowskiego PSML-W – Gitarowy kącik (4–9 oraz 10–15 lat); Klub Kochanowskiego PSML-W – Trele Trele Ukulele (4–9 lat); Klub Kochanowskiego PSML-W – Pędzelek – zajęcia plastyczne (6–12 lat); Klub Kochanowskiego PSML-W – Mali Artyści – muzyka, rytmika, plastyka (2–6 lat); Klub Kochanowskiego PSML-W – Mały Wirtuoz – podstawy gry na pianinie (4–9 lat); Klub Kochanowskiego PSML-W – Gimnastyka z …"
+https://www.psmlw.pl/pl/polecamy-lukasiewicza,2026-10-17T17:46:06,ok,Klub Łukasiewicza PSML-W – Magiczna Mata – zajęcia ruchowe (od 6 lat); Klub Łukasiewicza PSML-W – Mała Dekoratornia – zajęcia plastyczno-techniczne; Klub Łukasiewicza PSML-W – Tańczące Iskierki – zajęcia rytmiczne (3–6 lat); Klub Łukasiewicza PSML-W – Kreatywny Świat Dziecka – zajęcia plastyczne (4–7 lat); Klub Łukasiewicza PSML-W – Klubik – zajęcia świetlicowe (3/4–7 i 7–15 lat); Klub Łukasiewicz…
+https://www.psmlw.pl/pl/polecamy-sdk,2026-10-17T13:24:34,ok,"Spółdzielczy Dom Kultury PSML-W (SDK) – budynek i sale; SDK PSML-W – Akademia Przedszkolaka (1,5–3 lata); SDK PSML-W – ESDEKusie (7–9 lat); SDK PSML-W – Rytmika dla smyka (2–5 lat); SDK PSML-W – Mini Art Studio (5–8 lat); SDK PSML-W – Art Studio (od 9 lat); SDK PSML-W – Studio Piosenki Dziecięcej i Młodzieżowej; SDK PSML-W – Zumba dla dzieci (5–7 lat); SDK PSML-W – Gitarowy kącik (3–6 oraz 10–15 l…"
+https://www.psmlw.pl/pl/sdk,2026-10-17T13:24:30,ok,Spółdzielczy Dom Kultury PSML-W (SDK) – budynek i sale; Spółdzielczy Dom Kultury PSML-W (SDK) – budynek i sale (godziny)
+https://www.psmlw.pl/pl/wynajem-sdk,2026-10-17T17:44:44,ok,Spółdzielczy Dom Kultury PSML-W (SDK) – budynek i sale
 https://www.roomescape.com/pol/pol/plock/roomescape-tkalnia-zagadek/tkalnia-zagadek,2026-10-17T00:00:00,ok,"Tkalnia Zagadek – adres, cena za grupę"
 https://www.transfermarkt.pl/spielbericht/index/spielbericht/4919559,2026-10-17T00:00:00,ok,Wisła II – Ząbkovia 24.10.2026: boisko boczne B2 (sprzeczne z weekendgoals)
 https://www.weekendgoals.com/pl/matches/wisa-pock-ii-vs-zbkovia-zbki-iii-liga-group-1-october-24th-2026/6a46f06a2186249b1bfbde16,2026-10-17T00:00:00,ok,"Wisła II – Ząbkovia 24.10.2026 12:00, Stadion Miejski B. Szymańskiego (agregator; sprzeczne z Transfermarkt)"
@@ -156,6 +183,11 @@ https://zoo.plock.pl/atrakcje/park-linowy/,2026-10-17T13:23:26,ok,Mini Park Lino
 https://zoo.plock.pl/bilet-laczony-zoo-aquapark/,2026-10-17T13:23:05,ok,Aquapark Płock – strefa basenowa; Ogród Zoologiczny w Płocku
 https://zoo.plock.pl/cennik/,2026-10-17T13:23:08,ok,Ogród Zoologiczny w Płocku; ZOO Płock – lekcje edukacyjne i oprowadzanie z przewodnikiem
 https://zoo.plock.pl/zwiedzanie/godziny-otwarcia/,2026-10-17T13:23:23,ok,Ogród Zoologiczny w Płocku; Ogród Zoologiczny w Płocku (godziny)
+https://www.misterwhat.pl/company/686255-mazowiecka-spoldzielnia-mieszkaniowa-klub-osiedlowy-plock,2026-10-17T00:00:00,ok,Klub Osiedlowy MSM – adres (katalog firm)
+https://nowa.msmchemik.pl/?page_id=46,2026-10-17T00:00:00,ok,"MSM Chemik – Klub Osiedlowy (3 Maja 12), brak harmonogramu"
+https://psmlw.pl/userfiles/images/2024.09.27/harmonogram%20zaj%C4%99%C4%87%20w%20Klubie%20na%20stron%C4%99.docx%20-%20Word%2027.09.2024%2015_55_48(1).png,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/KO%204%20-%20Harmonogram%20zaj%C4%99%C4%87%20dla%20doros%C5%82ych%202022.jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
+https://psmlw.pl/userfiles/images/KO%204%20Harmonogram%20zaj%C4%99%C4%87%20dla%20dzieci%202022.jpg,2026-10-17T00:00:00,ok,"PSML-W – grafika z ofertą/harmonogramem zajęć (pobrana przez https, odczyt wizualny/OCR)"
 https://termowo.pl/,2026-10-17T00:00:00,ok,"ceny Aquaparku Płock i pływalni MOSiR oraz basenu Hotelu Czardasz (agregator, stan październik 2026)"
 https://standup.pl/,2026-10-17T00:00:00,ok,miejsca stand-upów w Płocku i orientacyjne ceny
 http://ssm.wisla.plock.pl/,2026-10-17T00:00:00,ok,SSM Wisła Płock (młodzieżowa piłka nożna) – ostatni harmonogram 26–27.09; brak opublikowanego harmonogramu od 17.10 (odczyt przez WebFetch; z boxa timeout/pętla przekierowań https)
@@ -323,8 +355,22 @@ https://www.kupbilecik.pl/pl/city/29/plock,2026-10-17T13:25:01,ok,przejrzane –
 https://www.novekino.pl/kina/przedwiosnie/cennik/,2026-10-17T13:30:23,error,niedostępne (error:404)
 https://www.plockagaleria.pl/,2026-10-17T13:30:34,ok,przejrzane – brak danych wykorzystanych w rekordach
 https://www.plockagaleria.pl/pl/,2026-10-17T13:30:20,error,niedostępne (error:404)
+https://www.psmlw.pl/pl/aktualnosci,2026-10-17T17:46:22,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/aktualnosci-kochanowskiego,2026-10-17T17:45:53,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/aktualnosci-lukasiewicza,2026-10-17T17:46:04,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/aktualnosci-sdk,2026-10-17T17:44:33,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/dworcowa-aktualnosci,2026-10-17T17:46:14,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/dworcowa-staleformypracy,2026-10-17T17:46:20,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/dworcowa-zaproszenia,2026-10-17T17:46:18,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/harmonogram-zajec-dworcowa,2026-10-17T17:46:12,ok,przejrzane – brak danych wykorzystanych w rekordach
 https://www.psmlw.pl/pl/plan-pracy-sdk,2026-10-17T13:24:32,ok,przejrzane – brak danych wykorzystanych w rekordach
-https://www.psmlw.pl/pl/polecamy-sdk,2026-10-17T13:24:34,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/ppp,2026-10-17T17:44:42,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/regulamin,2026-10-17T17:44:46,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/stale-formy-pracy,2026-10-17T17:46:10,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/stale-formy-wspolpracy-kochanowskiego,2026-10-17T17:46:00,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/zajecia-sdk-dorosli,2026-10-17T13:24:37,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/zaproszenia-kochanoiwskiego,2026-10-17T17:45:57,ok,przejrzane – brak danych wykorzystanych w rekordach
+https://www.psmlw.pl/pl/zaproszenia-lukasiewicza,2026-10-17T17:46:08,ok,przejrzane – brak danych wykorzystanych w rekordach
 https://zoo.plock.pl/,2026-10-17T13:24:52,ok,przejrzane – brak danych wykorzystanych w rekordach
 https://zoo.plock.pl/atrakcje/,2026-10-17T13:23:02,ok,przejrzane – brak danych wykorzystanych w rekordach
 https://zoo.plock.pl/atrakcje/pokazowe-karmienia/,2026-10-17T13:23:32,ok,przejrzane – brak danych wykorzystanych w rekordach
