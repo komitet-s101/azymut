@@ -18,7 +18,6 @@ Wydarzenia (koncerty, kino, teatr, mecze, festiwale, jarmarki — rekordy z kale
 - Jeśli **nie ma** żadnej daty, ale intencja dotyczy wydarzeń — ustaw **date** na **{{TODAY}}** i **day_of_week** na **{{DOW}}** (dzisiejszy dzień w kalendarzu wydarzeń).
 - Dopasuj **interests** do typu wydarzenia: kino/teatr/film → kultura_sztuka_film; koncert → muzyka_widowiska; mecz/sport → kibicowanie_wydarzenia_sportowe; festiwal/jarmark → festiwale_lokalne_swieta.
 - Nie myl wydarzeń ze stałymi miejscami: „muzeum”, „spacer”, „park” bez kalendarza — **nie** ustawiaj daty tylko dlatego, że to atrakcja.
-- Zapytanie „koncert” dotyczy **konkretnych wydarzeń z kalendarza** (tytuł, godzina, sala), a nie stałych sal koncertowych w katalogu miejsc — zawsze ustaw datę (najczęściej dziś) i interest `muzyka_widowiska`.
 
 Kategorie interests:
 {{CATEGORIES}}

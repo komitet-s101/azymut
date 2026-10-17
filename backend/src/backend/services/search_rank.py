@@ -20,7 +20,7 @@ _RAIN_INDOOR = 2.5
 _RAIN_OUTDOOR_ONLY = 3.5
 _SUNNY_OUTDOOR = 1.0
 _EVENT_BONUS = 0.4
-_EVENT_INTENT_BONUS = 5.0
+_EVENT_INTENT_BONUS = 2.5
 _SPORT = PlaceCategory.SPORT_AKTYWNY_WYPOCZYNEK
 
 
@@ -44,7 +44,6 @@ class ScoreInput:
     min_age_recommended: int | None = None
     price_level: int | None = None
     kind: str = "place"
-    score_adjustment: float = 0.0
 
 
 def _setting_score(item: ScoreInput, preference: SettingPreference) -> float:
@@ -121,7 +120,6 @@ def score_match(
             score -= _RAIN_OUTDOOR_ONLY
     elif item.is_outdoor:
         score += _SUNNY_OUTDOOR
-    score += item.score_adjustment
     return score
 
 

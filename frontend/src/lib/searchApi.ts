@@ -14,8 +14,6 @@ export type SearchResult = {
   longitude: number | null
   start_date: string | null
   start_time: string | null
-  venue_name: string | null
-  description: string | null
 }
 
 export type SearchResponse = {

@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { fetchPlaceDetail } from '@/lib/placeApi'
 import { categoryLabel, priceLabel } from '@/lib/searchApi'
 import type { WalkingRoute } from '@/lib/walkingRoute'
-import type { TrailStop } from '@/lib/trail'
+import type { TrailMode, TrailStop } from '@/lib/trail'
 import { trailPathKm, trailVisitMinutes } from '@/lib/trail'
 
 type TrailDetailPanelProps = {
   stops: TrailStop[]
+  trailMode: TrailMode | null
   selectedKey: string | null
   planSummary: string
   query: string
@@ -25,6 +26,7 @@ type DetailState =
 
 export function TrailDetailPanel({
   stops,
+  trailMode,
   selectedKey,
   planSummary,
   query,
@@ -129,31 +131,41 @@ export function TrailDetailPanel({
   const visitMin = trailVisitMinutes(stops)
   const pathLabel = walkingRoute?.followsRoads ? 'pieszo po drogach' : 'w linii prostej'
 
+  const title =
+    trailMode === 'event'
+      ? stops.length === 1
+        ? 'Twoje wydarzenie'
+        : 'Plan wydarzeń'
+      : 'Twój szlak zwiedzania'
+
+  const intro =
+    trailMode === 'event'
+      ? stops.length === 1
+        ? `Dla zapytania „${query}” pokazujemy jedno wydarzenie z kalendarza — bez mieszania ze stałymi obiektami (np. salami koncertowymi).`
+        : `Dla zapytania „${query}” połączyliśmy ${stops.length} wydarzenia w jeden plan (kolejność wg godziny lub dojazdu).`
+      : `Na podstawie „${query}” ułożyliśmy spacer przez ${stops.length} blisko siebie położonych miejsc. Nie łączymy odległych punktów w jedną trasę.`
+
   return (
     <Card className="border-border/80">
       <CardHeader className="gap-2">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Route className="size-5 text-primary" aria-hidden />
-          Twój szlak zwiedzania
+          {title}
         </CardTitle>
         <p className="text-sm text-muted-foreground">{planSummary}</p>
       </CardHeader>
       <CardContent className="flex flex-col gap-3 text-sm leading-relaxed">
-        <p>
-          Na podstawie zapytania „{query}” ułożyliśmy trasę przez{' '}
-          <strong>{stops.length}</strong> {stops.length === 1 ? 'miejsce' : 'miejsca'} z najlepszym
-          dopasowaniem. Trasa na mapie jest wyznaczana pieszo po chodnikach i drogach (OSRM).
-        </p>
+        <p>{intro}</p>
         <p className="inline-flex items-center gap-2 text-muted-foreground">
           <Clock className="size-4 shrink-0 text-primary" aria-hidden />
-          Zwiedzanie: ok. {visitMin} min
+          {trailMode === 'event' ? 'Czas wydarzeń' : 'Zwiedzanie'}: ok. {visitMin} min
           {stops.length > 1
             ? ` · ${pathKm.toFixed(1)} km ${pathLabel}${walkMin ? ` · ok. ${Math.round(walkMin)} min marszu` : ''}`
             : ''}
         </p>
         <p>
-          Kliknij numer na mapie, żeby zobaczyć nazwę, opis i informacje o biletach dla danego
-          przystanku.
+          Kliknij numer na mapie, żeby zobaczyć szczegóły
+          {trailMode === 'event' ? ' wydarzenia' : ' przystanku'}.
         </p>
         <ol className="list-decimal space-y-1 pl-5 text-foreground">
           {stops.map((stop) => (

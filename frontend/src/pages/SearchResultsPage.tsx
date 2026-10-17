@@ -44,12 +44,14 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
     return () => controller.abort()
   }, [query])
 
-  const trailStops = useMemo(() => {
+  const trailPlan = useMemo(() => {
     if (state.status !== 'ready') {
-      return []
+      return { stops: [], mode: null }
     }
-    return buildTrail(state.data.results)
-  }, [state])
+    return buildTrail(state.data.results, query)
+  }, [state, query])
+
+  const trailStops = trailPlan.stops
 
   useEffect(() => {
     if (trailStops.length < 2) {
@@ -109,6 +111,7 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
             />
             <TrailDetailPanel
               stops={trailStops}
+              trailMode={trailPlan.mode}
               selectedKey={selectedStopKey}
               planSummary={state.data.summary}
               query={query}
@@ -119,7 +122,7 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
           <PlanMapPlaceholder
             label={
               state.status === 'ready' && state.data.results.length > 0
-                ? 'Brak współrzędnych do szlaku'
+                ? 'Brak powiązanej trasy — poniżej osobne propozycje'
                 : 'Pokaż na mapie'
             }
           />

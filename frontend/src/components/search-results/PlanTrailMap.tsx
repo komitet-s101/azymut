@@ -69,11 +69,6 @@ export function PlanTrailMap({
             Wyznaczamy trasę po chodnikach…
           </p>
         ) : null}
-        {!routeLoading && route && !route.followsRoads ? (
-          <p className="absolute top-3 left-3 z-[500] rounded-full bg-white/95 px-3 py-1 text-xs text-muted-foreground shadow">
-            Trasa przybliżona (linia prosta)
-          </p>
-        ) : null}
         <MapContainer
           center={center}
           zoom={13}

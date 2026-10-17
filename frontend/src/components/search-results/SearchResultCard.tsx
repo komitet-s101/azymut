@@ -13,11 +13,7 @@ type SearchResultCardProps = {
 
 export function SearchResultCard({ item, trailOrder, selected, onSelect }: SearchResultCardProps) {
   const when = [item.start_date, item.start_time].filter(Boolean).join(' · ')
-  const venueLine =
-    item.kind === 'event'
-      ? [item.venue_name, item.city].filter(Boolean).join(' · ')
-      : [item.city, item.address_line].filter(Boolean).join(' · ')
-  const placeLine = venueLine
+  const placeLine = [item.city, item.address_line].filter(Boolean).join(' · ')
   const hoursNote = item.flags.includes('check_hours') ? 'Sprawdź godziny otwarcia' : null
 
   const interactive = Boolean(onSelect)
@@ -65,9 +61,6 @@ export function SearchResultCard({ item, trailOrder, selected, onSelect }: Searc
               <MapPin className="size-4 shrink-0 text-primary" aria-hidden />
               {placeLine}
             </span>
-          ) : null}
-          {item.kind === 'event' && item.description ? (
-            <span className="line-clamp-2 text-foreground">{item.description}</span>
           ) : null}
           <span>{priceLabel(item.price_level, item.flags)}</span>
           {item.typical_visit_minutes ? <span>ok. {item.typical_visit_minutes} min</span> : null}

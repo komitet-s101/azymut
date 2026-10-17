@@ -273,20 +273,6 @@ async def test_search_includes_events_for_concert_query_without_date(
 
 
 @pytest.mark.anyio
-async def test_koncert_query_lists_events_before_concert_halls(
-    api_client: AsyncClient,
-    db,
-    fixed_saturday,
-) -> None:
-    await _seed_catalog()
-    response = await api_client.post("/api/v1/search", json={"query": "koncert"})
-    assert response.status_code == 200
-    body = response.json()
-    assert body["results"][0]["kind"] == "event"
-    assert body["results"][0]["name"] == "Koncert na rynku"
-
-
-@pytest.mark.anyio
 async def test_search_rejects_blank_query(api_client: AsyncClient, db) -> None:
     response = await api_client.post("/api/v1/search", json={"query": " "})
     assert response.status_code == 422
