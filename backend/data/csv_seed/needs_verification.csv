@@ -1,0 +1,657 @@
+record_id,file,issue,fields
+PLK-0003,places.csv,Konflikt cen: muzeumplock.eu 20 zł vs turystykaplock.eu 'wstęp bezpłatny',
+PLK-0008,places.csv,"Archiwum: pn, śr, sob 10-15; muzeum tylko po uzgodnieniu – brak stałych godzin zwiedzania i ceny",price_level;opening_hours
+PLK-0009,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0010,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0011,places.csv,Cennik aquaparkplock.pl ładowany dynamicznie – ceny z agregatora termowo.pl; potwierdzić u operatora,
+PLK-0015,places.csv,18.10.2026 pływalnia nieczynna dla klientów indywidualnych (Memoriał im. P. Przyborowskiego),
+PLK-0016,places.csv,Godziny/ceny z agregatora termowo.pl – potwierdzić na hotelczardasz.pl,
+PLK-0017,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0018,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0018,places.csv,min_age_recommended=16 to szacunek – brak w źródle,
+PLK-0019,places.csv,Brak danych w dostępnych źródłach,weekend_hours
+PLK-0020,places.csv,Brak potwierdzenia wejść indywidualnych na bieżnię,price_level
+PLK-0021,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0022,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0022,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0025,places.csv,"price_level szacunkowy – cena za tor, nie za osobę",
+PLK-0027,places.csv,Dane z agregatora – potwierdzić u hotelu,
+PLK-0028,places.csv,Brak danych w dostępnych źródłach,min_age_recommended
+PLK-0029,places.csv,Brak strony operatora – dane z agregatora,
+PLK-0034,places.csv,Konflikt godzin między stroną operatora a agregatorem; sezonowość obiektu plenerowego w październiku nieustalona,
+PLK-0035,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0036,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0037,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0037,places.csv,Brak weryfikacji działania i cen u operatora,price_level;opening_hours;description_details
+PLK-0038,places.csv,Brak cennika/godzin dla klientów indywidualnych,price_level;opening_hours;min_age_recommended
+PLK-0039,places.csv,Źródło partnerskie uczelni – potwierdzić działanie i cennik,price_level;opening_hours
+PLK-0040,places.csv,Dane z agregatora roomescape.com – potwierdzić działanie,opening_hours
+PLK-0041,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0041,places.csv,Sezon 2026/27 nieogłoszony – godziny i ceny z sezonu 2025/26 (nie przenoszono do opening_hours),opening_hours_2026
+PLK-0042,places.csv,Godziny kasy nieustalone; ceny z agregatora,opening_hours
+PLK-0043,places.csv,Godziny kasy nieustalone,opening_hours;price_level
+PLK-0044,places.csv,Seanse głównie w środy i soboty – godziny wg repertuaru (events.csv),opening_hours
+PLK-0045,places.csv,Kino otwierane 30 min przed pierwszym seansem i zamykane 15 min po rozpoczęciu ostatniego – brak stałych godzin; rezerwacja tel. 24 367 65 00,price_level;opening_hours
+PLK-0046,places.csv,Kwoty cen pochodzą z opisu w wyszukiwarce – strona cennika ładuje je dynamicznie; potwierdzić,opening_hours
+PLK-0048,places.csv,Brak danych w dostępnych źródłach,opening_hours;price_level
+PLK-0052,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0053,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0053,places.csv,Strona klubu niedostępna (błąd SSL); godziny nieustalone,opening_hours;price_level
+PLK-0054,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0055,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0056,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0057,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0058,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0059,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0060,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0060,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0061,places.csv,"Godziny dotyczą prezentacji w Kaplicy Królewskiej, nie ogólnego zwiedzania świątyni",
+PLK-0062,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0063,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0063,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0064,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0065,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0066,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0066,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0067,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0068,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0069,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0069,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0070,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0071,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0072,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0073,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0073,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0074,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0075,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0076,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0077,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0077,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0078,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0078,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0079,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0080,places.csv,"Zasady wejścia na punkt widokowy (godziny, opłata) nieustalone",price_level;opening_hours
+PLK-0081,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0081,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0082,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0082,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0083,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0084,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0085,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0085,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0086,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0087,places.csv,Sezonowe; rozkład tylko na Facebooku – w październiku działanie niepewne,price_level;opening_hours
+PLK-0088,places.csv,Sezon 2026 zakończony 13.09 – oferta nieaktywna do lata 2027,opening_hours
+PLK-0089,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0090,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0090,places.csv,Godziny – tylko w dni wydarzeń (patrz events.csv),opening_hours
+PLK-0092,places.csv,Cena biletu na mecze Jutrzenki nieustalona,price_level;opening_hours
+PLK-0093,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0094,places.csv,Adres al. Kilińskiego 4 z opisu w wyszukiwarce (strona obiektu bez adresu w treści) – potwierdzić; cena wstępu nieustalona,price_level;opening_hours
+PLK-0095,places.csv,Bezpłatność i godziny niepotwierdzone,opening_hours
+PLK-0096,places.csv,Godziny i zasady korzystania nieustalone,opening_hours
+PLK-0097,places.csv,Godziny i zasady korzystania nieustalone,opening_hours
+PLK-0098,places.csv,Godziny i zasady korzystania nieustalone,opening_hours
+PLK-0099,places.csv,Godziny i zasady korzystania nieustalone,opening_hours
+PLK-0100,places.csv,Godziny i zasady korzystania nieustalone,opening_hours
+PLK-0101,places.csv,geokodowanie nieudane,latitude;longitude
+PLK-0101,places.csv,Brak danych w dostępnych źródłach,latitude;longitude;opening_hours
+PLK-0102,places.csv,geokodowanie nieudane,latitude;longitude
+PLK-0102,places.csv,Brak danych w dostępnych źródłach,latitude;longitude;opening_hours
+PLK-0103,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0104,places.csv,geokodowanie nieudane,latitude;longitude
+PLK-0104,places.csv,Brak danych w dostępnych źródłach,latitude;longitude;opening_hours
+PLK-0105,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0106,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0107,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0108,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0109,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0110,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0111,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0112,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0113,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0114,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0115,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0116,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0117,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0118,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0119,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0119,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0120,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0121,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0122,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0123,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0124,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0125,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0126,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0127,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0128,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0129,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0130,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0131,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0132,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0133,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0134,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0135,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0136,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0137,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0138,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0139,places.csv,Brak danych w dostępnych źródłach,price_level;opening_hours
+PLK-0140,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0141,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0142,places.csv,Strona godzin otwarcia podaje tylko nagłówek 9:00–17:00 bez rozróżnienia sezonów,
+PLK-0143,places.csv,Cena za grupę – price_level nieprzypisany,price_level;opening_hours
+PLK-0144,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0144,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0145,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0145,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0146,places.csv,współrzędne ulicy/placu (brak dokładnego punktu adresowego),latitude;longitude
+PLK-0146,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0147,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0148,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0149,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0150,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0151,places.csv,Brak danych w dostępnych źródłach,opening_hours
+PLK-0153,places.csv,Strona filii zwróciła weryfikację antybotową – dane z listy filii i strony godzin otwarcia,
+PLK-0156,places.csv,geokodowanie nieudane,latitude;longitude
+PLK-0156,places.csv,Brak danych w dostępnych źródłach,latitude;longitude
+PLK-0165,places.csv,Strona placówki za weryfikacją antybotową (nie obchodzono) – adres i godziny ze strony godzin otwarcia; brak opisu oferty,
+PLK-R004,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R008,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R015,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R016,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R020,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R023,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R025,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R028,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R029,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R030,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R032,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R033,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R035,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R036,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R039,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R041,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R042,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R043,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R046,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R048,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R052,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R054,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R057,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R059,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R060,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R063,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R064,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R065,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R066,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R067,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R070,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-R071,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
+PLK-E0006,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0007,events.csv,"Miejsce meczu nie podane – prawdopodobnie hala Blaszak, niepotwierdzone",price_level;place_id
+PLK-E0008,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0009,events.csv,Cena/zapisy nieustalone,price_level
+PLK-E0010,events.csv,Cena biletu nieustalona,price_level
+PLK-E0012,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
+PLK-E0013,events.csv,Cena nieustalona,price_level
+PLK-E0014,events.csv,Cena biletu nieustalona,price_level
+PLK-E0015,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
+PLK-E0016,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0017,events.csv,"Godzina, kategorie wiekowe i zasady wstępu dla widzów nieustalone",start_time;price_level
+PLK-E0021,events.csv,Wydarzenie trwa 22–24.10.2026 (start_date = dzień pierwszy); ceny poszczególnych wydarzeń różne,start_time;price_level
+PLK-E0023,events.csv,Cena nieustalona,price_level
+PLK-E0024,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0025,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
+PLK-E0027,events.csv,Cena nieustalona,price_level
+PLK-E0028,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0030,events.csv,Cena nieustalona,price_level
+PLK-E0037,events.csv,Cena biletu nieustalona,price_level
+PLK-E0039,events.csv,Godzina nieustalona; miejsce i bezpłatny wstęp na podstawie wcześniejszego meczu domowego (6.09),start_time;price_level
+PLK-E0042,events.csv,Cena nieustalona,price_level
+PLK-E0043,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0044,events.csv,Trwa 6–9.11.2026; zasady udziału i opłaty nieustalone,start_time;price_level
+PLK-E0045,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
+PLK-E0046,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
+PLK-E0047,events.csv,Cena nieustalona,price_level
+PLK-E0049,events.csv,Cena nieustalona,price_level
+PLK-E0050,events.csv,Cena nieustalona,price_level
+PLK-E0051,events.csv,Cena nieustalona,price_level
+PLK-E0052,events.csv,Cena nieustalona,price_level
+PLK-E0053,events.csv,Cena nieustalona,price_level
+PLK-E0054,events.csv,Cena nieustalona,price_level
+PLK-E0055,events.csv,Wykonawca nie podany w listingu – do uzupełnienia,
+PLK-E0057,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0059,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0060,events.csv,Dzień (14 lub 15.11) i godzina nieustalone; miejsce na podstawie wcześniejszego meczu domowego,start_time;price_level
+PLK-E0062,events.csv,Cena biletu nieustalona,price_level
+PLK-E0063,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
+PLK-E0066,events.csv,Cena nieustalona,price_level
+PLK-E0067,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0068,events.csv,Cena 50 zł z listingu cojestgrane.pl – podział normalny/ulgowy nieustalony,
+PLK-E0069,events.csv,Cena nieustalona,price_level
+PLK-E0070,events.csv,Cena nieustalona,price_level
+PLK-E0071,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0072,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0073,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0074,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0075,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0076,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0077,events.csv,Cena nieustalona,price_level
+PLK-E0078,events.csv,Cena biletu nieustalona,price_level
+PLK-E0080,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0081,events.csv,Cena nieustalona,price_level
+PLK-E0082,events.csv,Cena nieustalona,price_level
+PLK-E0083,events.csv,Cena nieustalona,price_level
+PLK-E0084,events.csv,Cena biletu nieustalona,price_level
+PLK-E0085,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0086,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0087,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0088,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0089,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0090,events.csv,Cena biletu nieustalona,price_level
+PLK-E0091,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0092,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0093,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0094,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0095,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
+PLK-E0096,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
+PLK-E0097,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0098,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0099,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0100,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0101,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0102,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0103,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0104,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0105,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0106,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0107,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0108,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0109,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0110,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0111,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0112,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0113,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0114,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0115,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0116,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0117,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0118,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0119,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0120,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0121,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0122,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0123,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0124,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0125,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+REG-0004,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0005,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0006,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0007,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0008,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0009,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0011,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0012,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0013,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0014,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0015,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0016,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0017,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0018,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0023,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0024,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0025,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0026,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0027,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0028,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0029,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0030,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0031,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0032,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0033,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0034,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0035,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0036,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0037,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0038,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0039,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0040,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0041,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0042,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0044,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0045,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0046,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0047,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0048,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0049,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0050,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0051,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0053,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0055,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0056,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0058,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0068,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0070,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0083,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0084,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0085,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0086,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0087,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0106,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0108,places.csv,adres nie został znaleziony w Nominatim – użyto środka miejscowości,latitude;longitude
+REG-0108,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0109,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0110,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0111,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0112,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0117,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0118,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0119,places.csv,adres nie został znaleziony w Nominatim – użyto środka miejscowości,latitude;longitude
+REG-0119,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0120,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0122,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0123,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0124,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0125,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0126,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0129,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0130,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0131,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0132,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0133,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0134,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0135,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0136,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0137,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0138,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0139,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0140,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0141,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0142,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0143,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0145,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0146,places.csv,adres nie został znaleziony w Nominatim – użyto środka miejscowości,latitude;longitude
+REG-0146,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0148,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0149,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0150,places.csv,adres nie został znaleziony w Nominatim – użyto środka miejscowości,latitude;longitude
+REG-0150,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0151,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
+REG-0001,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0001,places.csv,godziny zajęć i ceny (godziny pracy pn–pt 12–20 wg wcześniejszego odczytu – do potwierdzenia),
+REG-0002,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0002,places.csv,"zasady wejścia / wynajmu, ceny",
+REG-0003,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0003,places.csv,ceny biletów na mecze,
+REG-0004,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0004,places.csv,"sezon 2026/27: termin otwarcia, godziny i cennik wypożyczalni (ostatnie znane: wstęp wolny, łyżwy 5 zł/h)",
+REG-0005,places.csv,godziny animatora,
+REG-0006,places.csv,godziny otwarcia,
+REG-0010,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0010,places.csv,godziny otwarcia (agregator: pn–pt 11–14) i ceny – potwierdzić telefonicznie,
+REG-0011,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0011,places.csv,dostępność wnętrza poza mszami,
+REG-0012,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0012,places.csv,dostępność wnętrza,
+REG-0013,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0013,places.csv,dostępność (zwykle tylko z zewnątrz),
+REG-0014,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0014,places.csv,dostępność,
+REG-0015,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0016,places.csv,w sezonie lęgowym zakaz wstępu na wyspy,
+REG-0019,places.csv,sezon spływów (od kiedy do kiedy),
+REG-0020,places.csv,sezon i godziny wypożyczalni,
+REG-0021,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0021,places.csv,ceny i minimalna liczba osób (oferta grupowa),
+REG-0022,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0022,places.csv,restauracja zamknięta – nie dodawać jako gastronomii,
+REG-0023,places.csv,dokładny punkt startu,
+REG-0024,places.csv,dokładny punkt startu,
+REG-0025,places.csv,dokładny punkt startu,
+REG-0026,places.csv,dokładny punkt startu,
+REG-0027,places.csv,dokładny punkt startu,
+REG-0028,places.csv,dokładny punkt startu,
+REG-0029,places.csv,dokładny punkt startu,
+REG-0030,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0030,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0031,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0031,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0032,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0032,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0033,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0033,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0034,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0034,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0035,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0035,places.csv,opis i dostępność – źródło tylko rejestr zabytków,
+REG-0036,places.csv,"stan zagospodarowania (projekt ścieżki i tarasów z 2024 – czy zrealizowany), dojście",
+REG-0037,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0037,places.csv,dostępność wnętrza poza mszami,
+REG-0039,places.csv,punkt startu,
+REG-0040,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0040,places.csv,dostępność terenu dla osób z zewnątrz,
+REG-0041,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0041,places.csv,dostępność wnętrza,
+REG-0042,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0043,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0043,places.csv,"aktualna oferta zajęć, godziny, nadchodzące wydarzenia (strona GOKiS przekierowuje na stronę gminy)",
+REG-0044,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0044,places.csv,"dokładny adres, cennik jazd, czy przyjmuje jeźdźców rekreacyjnych (katalog stajni)",
+REG-0047,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0047,places.csv,dostępność wnętrza,
+REG-0048,places.csv,dojście do grodziska,
+REG-0049,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0049,places.csv,dostępność (prywatny?),
+REG-0050,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0050,places.csv,dostępność wnętrza,
+REG-0052,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0052,places.csv,harmonogram i ceny zajęć 2026/27,
+REG-0056,places.csv,dostępność terenu cmentarza,
+REG-0057,places.csv,czy obiekt jest dostępny do oglądania,
+REG-0066,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0066,places.csv,ceny zależne od wydarzenia,
+REG-0067,places.csv,dokładne godziny otwarcia pływalni (przyjęto 7:00–22:00 z przedziałów cennika),
+REG-0068,places.csv,godziny kortów (sezon do końca października),
+REG-0069,places.csv,godzina zamknięcia = zmierzch (zmienna),
+REG-0071,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0071,places.csv,ceny biletów na mecze,
+REG-0073,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0073,places.csv,godziny dostępności / zwiedzania,
+REG-0074,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0074,places.csv,godziny dostępności / zwiedzania,
+REG-0075,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0075,places.csv,godziny dostępności / zwiedzania,
+REG-0076,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0076,places.csv,godziny dostępności / zwiedzania,
+REG-0077,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0077,places.csv,dostępność terenu (obiekt prywatny?),
+REG-0078,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0078,places.csv,"dostęp – budynek szkoły, tylko z zewnątrz",
+REG-0079,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0079,places.csv,godziny dostępności / zwiedzania,
+REG-0080,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0080,places.csv,godziny dostępności / zwiedzania,
+REG-0081,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0081,places.csv,godziny dostępności / zwiedzania,
+REG-0082,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0082,places.csv,godziny dostępności / zwiedzania,
+REG-0083,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0083,places.csv,"ceny wypożyczalni, sezon kąpieliska 2027",
+REG-0084,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0084,places.csv,kąpieliska i wypożyczalnie – oferta sezonowa do potwierdzenia,
+REG-0085,places.csv,punkt startowy ścieżki,
+REG-0090,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0090,places.csv,cena i program zajęć edukacyjnych 2026/27 do potwierdzenia,
+REG-0092,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0092,places.csv,godziny otwarcia i ceny wystaw w Ratuszu nieustalone,
+REG-0094,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0094,places.csv,cena i grafik zajęć,
+REG-0095,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0095,places.csv,"cena, wiek i grafik zajęć",
+REG-0096,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0096,places.csv,"cena, wiek i grafik zajęć",
+REG-0097,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0097,places.csv,"cena, wiek i grafik zajęć",
+REG-0098,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0098,places.csv,"cena, wiek i grafik zajęć",
+REG-0099,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0099,places.csv,ceny biletów zależne od wydarzenia,
+REG-0101,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0101,places.csv,cena i terminy szkółki,
+REG-0102,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0102,places.csv,cena i terminy,
+REG-0103,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0103,places.csv,ceny biletów na mecze; potwierdzenie stadionu jako areny Kasztelana,
+REG-0104,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0104,places.csv,"lokalizacja lodowiska, termin otwarcia sezonu 2026/27, ceny, godziny",
+REG-0105,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0105,places.csv,godziny i cennik siłowni,
+REG-0106,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0106,places.csv,"dokładny adres, zasady udostępniania",
+REG-0107,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0107,places.csv,czy wejścia dla osób z zewnątrz; cena; adres dokładny,
+REG-0108,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0108,places.csv,godziny otwarcia kościoła; dokładny adres,
+REG-0109,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0109,places.csv,adres dokładny; godziny dostępności,
+REG-0110,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0110,places.csv,numer adresu; godziny,
+REG-0112,places.csv,dokładny adres i współrzędne,
+REG-0113,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0113,places.csv,zasady i ceny zwiedzania stajni,
+REG-0116,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0116,places.csv,czy wstęp dla widzów jest bezpłatny,
+REG-0117,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0117,places.csv,"oferta dzienna (plaża, sprzęt) – sezonowa, ceny",
+REG-0118,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0119,places.csv,godziny Izby Edukacji Leśnej,
+REG-0121,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0121,places.csv,godziny i ceny,
+REG-0122,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0122,places.csv,"czy wypożyczalnia nadal działa, ceny, godziny",
+REG-0123,places.csv,oznakowanie w terenie,
+REG-0124,places.csv,oznakowanie w terenie,
+REG-0125,places.csv,oznakowanie w terenie,
+REG-0126,places.csv,oznakowanie w terenie,
+REG-0129,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0129,places.csv,dostępność obiektów (park / wnętrza),
+REG-0131,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0131,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0132,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0132,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0133,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0133,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0134,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0134,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0135,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0135,places.csv,dostępność terenu klasztoru,
+REG-0136,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0136,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0137,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0137,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0138,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0138,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0139,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0139,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0140,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0140,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0141,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0141,places.csv,opis i dostępność – źródło: rejestr zabytków,
+REG-0142,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0142,places.csv,"ceny biletów, trybuny",
+REG-0143,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0143,places.csv,"ceny biletów, trybuny",
+REG-0144,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0144,places.csv,"ceny biletów, trybuny",
+REG-0145,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0145,places.csv,"ceny biletów, trybuny",
+REG-0146,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0146,places.csv,"ceny biletów, trybuny",
+REG-0147,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0147,places.csv,"ceny biletów, trybuny",
+REG-0148,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0148,places.csv,"ceny biletów, trybuny",
+REG-0149,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0149,places.csv,"ceny biletów, trybuny",
+REG-0150,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0150,places.csv,"ceny biletów, trybuny",
+REG-0151,places.csv,cena nieznana (nie wpisano 0),price_level;price_max_pln
+REG-0151,places.csv,"ceny biletów, trybuny",
+REG-E0002,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0003,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0004,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0005,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0007,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0008,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0009,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0010,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0011,events.csv,brak godziny rozpoczęcia,start_time
+REG-E0011,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0012,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0013,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0014,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0015,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0016,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0017,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0019,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0021,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0022,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0023,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0024,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0025,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0026,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0027,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0028,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0028,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0029,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0029,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0030,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0030,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0031,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0032,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0033,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0034,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0035,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0036,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0037,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0037,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0038,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0038,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0039,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0039,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0040,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0041,events.csv,brak godziny rozpoczęcia,start_time
+REG-E0041,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0042,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0044,events.csv,data/godzina niepotwierdzona (termin szacowany lub mecz bez daty w kolejce),start_date;start_time
+REG-E0044,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0045,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-E0046,events.csv,cena/wejściówka nieznana,price_level;price_max_pln;is_free
+REG-0022,places.csv,Restauracja Młynarzówka w Cierszewie nieczynna od 7.11.2022 wg strony ośrodka – ścieżka 'Przy regionalnym stole' nie może jej używać,gastro
+-,predefined_routes.csv,"Ścieżki 'Przy regionalnym stole' i 'Festiwal smaków' nie zbudowane: restauracja w Cierszewie nieczynna od 2022, brak dat 2026 Kasztelańskiego Festiwalu Smaków / Sierpeckiego Smaku",route
+-,events.csv,"POMINIĘTO mecz Skrwa Łukomie – Stegny Wyszogród (2026-10-17, Liga okręgowa, grupa Płock 2026/27): Łukomie (Stopin 10) – poza listą gmin, do decyzji",venue
+-,events.csv,"POMINIĘTO mecz Polonia Radzanowo – Amator Maszewo (2026-10-24, Liga okręgowa, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Szkolna 3, Radzanowo)",venue
+-,events.csv,"POMINIĘTO mecz Skrwa Łukomie – Zryw Bielsk (2026-10-24, Liga okręgowa, grupa Płock 2026/27): Łukomie (Stopin 10) – poza listą gmin, do decyzji",venue
+-,events.csv,"POMINIĘTO mecz Sparta Mochowo – Szopen Sanniki (2026-10-24, Liga okręgowa, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Polonia Radzanowo – Unia Iłów (2026-11-07, Liga okręgowa, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Szkolna 3, Radzanowo)",venue
+-,events.csv,"POMINIĘTO mecz Skrwa Łukomie – Wicher Cieszewo (2026-11-07, Liga okręgowa, grupa Płock 2026/27): Łukomie (Stopin 10) – poza listą gmin, do decyzji",venue
+-,events.csv,"POMINIĘTO mecz Sparta Mochowo – Stegny Wyszogród (2026-11-07, Liga okręgowa, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Unia Czermno – Wisła Główina-Sobowo (2026-10-25, Klasa A, grupa Płock 2026/27): radarmeczy: 'orientacyjnie' Stadion Leśny Gąbin; gabin.pl wskazuje boisko w Czermnie – sprzeczne",venue
+-,events.csv,"POMINIĘTO mecz Unia Czermno – Stoczniowiec II Płock (2026-11-14, Klasa A, grupa Płock 2026/27): radarmeczy: 'orientacyjnie' Stadion Leśny Gąbin; gabin.pl wskazuje boisko w Czermnie – sprzeczne",venue
+-,events.csv,"POMINIĘTO mecz Delta II Słupno – Mazur II Gostynin (2026-10-18, Klasa B, grupa Płock 2026/27): adres domowy nieznany (18.10 gra na 'Stadion Victoria' w Wykowie)",venue
+-,events.csv,"POMINIĘTO mecz Zjednoczeni Bulkowo – Orkan II Sochaczew (2026-10-18, Klasa B, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Spójnia Mała Wieś – Sparta II Mochowo (2026-10-18, Klasa B, grupa Płock 2026/27): gm. Mała Wieś – daleko (ok. 40 km)",venue
+-,events.csv,"POMINIĘTO mecz Sparta Nowe Miszewo – Orzeł Goleszyn (2026-10-17, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Szkolna 2)",venue
+-,events.csv,"POMINIĘTO mecz Wisła Nowy Duninów – Zjednoczeni Bulkowo (2026-10-24, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Wrocławska 3)",venue
+-,events.csv,"POMINIĘTO mecz Orzeł Goleszyn – Szopen II Sanniki (2026-10-25, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny",venue
+-,events.csv,"POMINIĘTO mecz Sparta II Mochowo – Sparta Nowe Miszewo (2026-10-25, Klasa B, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Mazur II Gostynin – Spójnia Mała Wieś (2026-10-24, Klasa B, grupa Płock 2026/27): adres domowy nieznany",venue
+-,events.csv,"POMINIĘTO mecz Zjednoczeni Bulkowo – Orzeł Goleszyn (2026-11-08, Klasa B, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Spójnia Mała Wieś – ULKS Ciółkowo (2026-11-07, Klasa B, grupa Płock 2026/27): gm. Mała Wieś – daleko (ok. 40 km)",venue
+-,events.csv,"POMINIĘTO mecz Sparta Nowe Miszewo – Mazur II Gostynin (2026-11-07, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Szkolna 2)",venue
+-,events.csv,"POMINIĘTO mecz Delta II Słupno – Spójnia Mała Wieś (2026-11-15, Klasa B, grupa Płock 2026/27): adres domowy nieznany (18.10 gra na 'Stadion Victoria' w Wykowie)",venue
+-,events.csv,"POMINIĘTO mecz Wisła Nowy Duninów – Gotard Rybno (2026-10-31, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny (Wrocławska 3)",venue
+-,events.csv,"POMINIĘTO mecz Orzeł Goleszyn – Orkan II Sochaczew (2026-11-15, Klasa B, grupa Płock 2026/27): radarmeczy: adres orientacyjny",venue
+-,events.csv,"POMINIĘTO mecz Sparta II Mochowo – Zjednoczeni Bulkowo (2026-11-14, Klasa B, grupa Płock 2026/27): adres nieznany",venue
+-,events.csv,"POMINIĘTO mecz Mazur II Gostynin – Szopen II Sanniki (2026-11-14, Klasa B, grupa Płock 2026/27): adres domowy nieznany",venue

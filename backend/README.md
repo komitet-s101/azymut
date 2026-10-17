@@ -1,6 +1,6 @@
 # Leisure planner backend
 
-FastAPI + Tortoise ORM + SQLite for the hackathon leisure-time planner (Sierpc / Gostynin).
+FastAPI + Tortoise ORM + SQLite for the hackathon leisure-time planner (Płock and surrounding gminas).
 
 ## Setup
 
@@ -11,7 +11,7 @@ cp .env.example .env   # optional
 uv run tortoise init models          # first time only (migrations package)
 uv run tortoise makemigrations       # after model changes
 uv run tortoise migrate              # apply migrations (required before seed)
-uv run backend-seed                  # load demo catalog from data/seed/catalog.json
+uv run backend-seed                  # load catalog from data/csv_seed/
 ```
 
 Reset catalog to seed file contents (without deleting the DB file):

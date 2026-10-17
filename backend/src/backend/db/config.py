@@ -8,7 +8,7 @@ DATA_DIR = BACKEND_ROOT / "data"
 DB_DIR = DATA_DIR
 DB_PATH = DB_DIR / "backend.db"
 INTEREST_PACKAGES_PATH = DATA_DIR / "interest-packages.json"
-SEED_CATALOG_PATH = DATA_DIR / "seed" / "catalog.json"
+SEED_CSV_DIR = DATA_DIR / "csv_seed"
 
 
 def build_tortoise_orm(db_path: Path | None = None) -> dict[str, Any]:

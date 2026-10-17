@@ -6,7 +6,7 @@ Exit criteria from [MASTER-PLAN.md](../MASTER-PLAN.md).
 
 - [x] Tortoise models: `Place`, `OpeningHours`, `PredefinedRoute`, `RouteStop` ([catalog-db-design.md](../design/catalog-db-design.md))
 - [x] Migration `0001_initial` in `src/backend/db/migrations/`
-- [x] Seed: `data/seed/catalog.json` (12 places, 3 routes, Sierpc/Gostynin)
+- [x] Seed: `data/csv_seed/` (316 places, 97 routes, events and verification metadata)
 - [x] `uv run backend-seed` and `uv run backend-seed --force`
 - [x] Automated checks: `tests/test_seed_catalog.py`
 - [x] Tests use isolated SQLite (`tests/conftest.py`, `tests/db_helpers.py`)
@@ -39,7 +39,7 @@ asyncio.run(main())
 "
 ```
 
-Expected: `places 12`, `routes 3`.
+Expected: `places 316`, `routes 97` (after `backend-seed --force`).
 
 ## Reset catalog
 

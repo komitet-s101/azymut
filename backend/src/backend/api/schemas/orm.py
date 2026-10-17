@@ -36,7 +36,7 @@ def _build_orm_schemas() -> None:
     OpeningHoursOut = pydantic_model_creator(
         OpeningHours,
         name="OpeningHoursOut",
-        exclude=("id", "place", "place_id"),
+        exclude=("id", "place", "place_id", "season_note", "source_url"),
     )
     PlaceSummaryOut = pydantic_model_creator(
         Place,
@@ -56,7 +56,7 @@ def _build_orm_schemas() -> None:
     PlaceOutBase = pydantic_model_creator(
         Place,
         name="PlaceOutBase",
-        exclude=("opening_hours", "route_stops"),
+        exclude=("opening_hours", "route_stops", "events"),
     )
     RouteOutBase = pydantic_model_creator(
         PredefinedRoute,
