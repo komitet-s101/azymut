@@ -156,6 +156,56 @@ PLK-0153,places.csv,Strona filii zwróciła weryfikację antybotową – dane z 
 PLK-0156,places.csv,geokodowanie nieudane,latitude;longitude
 PLK-0156,places.csv,Brak danych w dostępnych źródłach,latitude;longitude
 PLK-0165,places.csv,Strona placówki za weryfikacją antybotową (nie obchodzono) – adres i godziny ze strony godzin otwarcia; brak opisu oferty,
+PLK-0166,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0167,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0168,places.csv,Brak danych w dostępnych źródłach,price_level
+PLK-0169,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0170,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0171,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0172,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0173,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0174,places.csv,Wiek 6–19 lat wg oferty 2022/23 (/pl/ppp) – w grafice 2025/26 wieku nie podano; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0175,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0176,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0177,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0178,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0179,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0180,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0181,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0182,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0183,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0184,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0185,places.csv,Godziny wyłącznie z harmonogramu 2024/25; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0186,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0187,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0188,places.csv,W harmonogramie 2024/25 „Gimnastyka dla pań” pn/śr/czw 11–13 – nie przeniesiono jako godzin 2025/26; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0189,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0190,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0191,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0192,places.csv,Wiek sprzeczny w grafikach: 7–15 lat (harmonogram) vs 6–10 lat (oferta); Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0193,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0194,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0195,places.csv,"Grafika oferty podaje grupy 3–6 i od 7 lat, harmonogram 4–7 i 7–15; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.",price_level
+PLK-0196,places.csv,Podano tylko godzinę rozpoczęcia; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0197,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0198,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0199,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level
+PLK-0200,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0201,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0202,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0203,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0204,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0205,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0206,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0207,places.csv,W 2022/23 chór „Jesienny Promień” wt 13:30–14:50 – godzin nie przeniesiono; Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0208,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0209,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0210,places.csv,Dane odczytane z grafiki (odczyt wizualny/OCR) opublikowanej 10.09.2025 – sezon 2025/26; brak publikacji oferty na 2026/27 na psmlw.pl (aktualizacje tylko na Facebooku – nie sprawdzano). Odpłatność i terminy do potwierdzenia telefonicznie.,price_level;opening_hours
+PLK-0211,places.csv,Źródła prasowe z kwietnia 2026; finansowanie zapewnione do końca 2026 r.,price_level
+PLK-0212,places.csv,Miesięczny harmonogram zajęć niepublikowany na stronie (tylko media społecznościowe) – brak godzin poszczególnych zajęć,price_level
+PLK-0213,places.csv,Nominatim nie dopasował numeru – współrzędne przybliżone (ulica),latitude;longitude
+PLK-0213,places.csv,Program wg artykułu MOPS z 14.07.2023 – aktualność w 2026/27 niepotwierdzona; godziny i odpłatność nieustalone,price_level;opening_hours
+PLK-0214,places.csv,"Adres klubu tylko z katalogów firm (givabiz/misterwhat); strona MSM nie publikuje oferty – zajęcia, godziny i dostępność dla niemieszkańców nieustalone",price_level;opening_hours;description_details
 PLK-R004,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
 PLK-R008,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
 PLK-R015,predefined_routes.csv,price_level_max pusty – część przystanków bez znanej ceny,price_level_max
@@ -199,92 +249,94 @@ PLK-E0014,events.csv,Cena biletu nieustalona,price_level
 PLK-E0015,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
 PLK-E0016,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
 PLK-E0017,events.csv,"Godzina, kategorie wiekowe i zasady wstępu dla widzów nieustalone",start_time;price_level
-PLK-E0021,events.csv,Wydarzenie trwa 22–24.10.2026 (start_date = dzień pierwszy); ceny poszczególnych wydarzeń różne,start_time;price_level
-PLK-E0023,events.csv,Cena nieustalona,price_level
-PLK-E0024,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0025,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
-PLK-E0027,events.csv,Cena nieustalona,price_level
-PLK-E0028,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0030,events.csv,Cena nieustalona,price_level
-PLK-E0037,events.csv,Cena biletu nieustalona,price_level
-PLK-E0039,events.csv,Godzina nieustalona; miejsce i bezpłatny wstęp na podstawie wcześniejszego meczu domowego (6.09),start_time;price_level
-PLK-E0042,events.csv,Cena nieustalona,price_level
-PLK-E0043,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
-PLK-E0044,events.csv,Trwa 6–9.11.2026; zasady udziału i opłaty nieustalone,start_time;price_level
-PLK-E0045,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
-PLK-E0046,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
-PLK-E0047,events.csv,Cena nieustalona,price_level
+PLK-E0021,events.csv,Cena biletu nieustalona,price_level
+PLK-E0022,events.csv,Wydarzenie trwa 22–24.10.2026 (start_date = dzień pierwszy); ceny poszczególnych wydarzeń różne,start_time;price_level
+PLK-E0024,events.csv,Cena nieustalona,price_level
+PLK-E0025,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0026,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
+PLK-E0028,events.csv,Źródła różnią się: Senioriada od 10:00 (panoramaplock) vs 17:00 (PZERiI); miejsce części porannej nieustalone,
+PLK-E0029,events.csv,Cena nieustalona,price_level
+PLK-E0030,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0032,events.csv,Cena nieustalona,price_level
+PLK-E0039,events.csv,Cena biletu nieustalona,price_level
+PLK-E0041,events.csv,Godzina nieustalona; miejsce i bezpłatny wstęp na podstawie wcześniejszego meczu domowego (6.09),start_time;price_level
+PLK-E0044,events.csv,Cena nieustalona,price_level
+PLK-E0045,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0046,events.csv,Trwa 6–9.11.2026; zasady udziału i opłaty nieustalone,start_time;price_level
+PLK-E0047,events.csv,Boisko sprzeczne w źródłach; cena/wstęp nieustalone,price_level;place_id
+PLK-E0048,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
 PLK-E0049,events.csv,Cena nieustalona,price_level
-PLK-E0050,events.csv,Cena nieustalona,price_level
 PLK-E0051,events.csv,Cena nieustalona,price_level
 PLK-E0052,events.csv,Cena nieustalona,price_level
 PLK-E0053,events.csv,Cena nieustalona,price_level
 PLK-E0054,events.csv,Cena nieustalona,price_level
-PLK-E0055,events.csv,Wykonawca nie podany w listingu – do uzupełnienia,
-PLK-E0057,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0059,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
-PLK-E0060,events.csv,Dzień (14 lub 15.11) i godzina nieustalone; miejsce na podstawie wcześniejszego meczu domowego,start_time;price_level
-PLK-E0062,events.csv,Cena biletu nieustalona,price_level
-PLK-E0063,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
-PLK-E0066,events.csv,Cena nieustalona,price_level
-PLK-E0067,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0068,events.csv,Cena 50 zł z listingu cojestgrane.pl – podział normalny/ulgowy nieustalony,
-PLK-E0069,events.csv,Cena nieustalona,price_level
-PLK-E0070,events.csv,Cena nieustalona,price_level
-PLK-E0071,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
-PLK-E0072,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
-PLK-E0073,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
-PLK-E0074,events.csv,Godzina meczu jeszcze nieustalona,start_time
-PLK-E0075,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
-PLK-E0076,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0077,events.csv,Cena nieustalona,price_level
-PLK-E0078,events.csv,Cena biletu nieustalona,price_level
-PLK-E0080,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
-PLK-E0081,events.csv,Cena nieustalona,price_level
-PLK-E0082,events.csv,Cena nieustalona,price_level
+PLK-E0055,events.csv,Cena nieustalona,price_level
+PLK-E0056,events.csv,Cena nieustalona,price_level
+PLK-E0057,events.csv,Wykonawca nie podany w listingu – do uzupełnienia,
+PLK-E0059,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0061,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0062,events.csv,Dzień (14 lub 15.11) i godzina nieustalone; miejsce na podstawie wcześniejszego meczu domowego,start_time;price_level
+PLK-E0064,events.csv,Cena biletu nieustalona,price_level
+PLK-E0065,events.csv,Dane z listingu cojestgrane.pl (KupBilecik) – opis i cena do potwierdzenia u organizatora,
+PLK-E0068,events.csv,Cena nieustalona,price_level
+PLK-E0069,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0070,events.csv,Cena 50 zł z listingu cojestgrane.pl – podział normalny/ulgowy nieustalony,
+PLK-E0071,events.csv,Cena nieustalona,price_level
+PLK-E0072,events.csv,Cena nieustalona,price_level
+PLK-E0073,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0074,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0075,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0076,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0077,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0078,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0079,events.csv,Cena nieustalona,price_level
+PLK-E0080,events.csv,Cena biletu nieustalona,price_level
+PLK-E0082,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
 PLK-E0083,events.csv,Cena nieustalona,price_level
-PLK-E0084,events.csv,Cena biletu nieustalona,price_level
-PLK-E0085,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0086,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
-PLK-E0087,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0084,events.csv,Cena nieustalona,price_level
+PLK-E0085,events.csv,Cena nieustalona,price_level
+PLK-E0086,events.csv,Cena biletu nieustalona,price_level
+PLK-E0087,events.csv,Zasady wstępu (cena) nieustalone,price_level
 PLK-E0088,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
-PLK-E0089,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0090,events.csv,Cena biletu nieustalona,price_level
-PLK-E0091,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
-PLK-E0092,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
-PLK-E0093,events.csv,Godzina meczu jeszcze nieustalona,start_time
-PLK-E0094,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0095,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
-PLK-E0096,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
-PLK-E0097,events.csv,Zasady wstępu (cena) nieustalone,price_level
-PLK-E0098,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0099,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0100,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
-PLK-E0101,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
-PLK-E0102,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0103,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0089,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0090,events.csv,Godziny rozpoczęcia i zasady wstępu dla widzów nieustalone,start_time;price_level
+PLK-E0091,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0092,events.csv,Cena biletu nieustalona,price_level
+PLK-E0093,events.csv,Godzina i przeciwnik nieustaleni na stronie źródłowej (tylko daty),start_time;price_level
+PLK-E0094,events.csv,Godzina meczu jeszcze nieogłoszona (w terminarzu 00:00),start_time
+PLK-E0095,events.csv,Godzina meczu jeszcze nieustalona,start_time
+PLK-E0096,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0097,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
+PLK-E0098,events.csv,Zasady wstępu (cena) nieustalone; 9.01 o 12:00 w ZST70 zaplanowano dwa mecze (JM I i JM II) – możliwa kolizja/korekta,price_level
+PLK-E0099,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0100,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0101,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0102,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0103,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
 PLK-E0104,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0105,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
-PLK-E0106,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
-PLK-E0107,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
-PLK-E0108,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0109,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
-PLK-E0110,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
-PLK-E0111,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
-PLK-E0112,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0113,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
-PLK-E0114,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0105,events.csv,Zasady wstępu (cena) nieustalone,price_level
+PLK-E0106,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0107,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0108,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0109,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0110,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
+PLK-E0111,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0112,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0113,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0114,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
 PLK-E0115,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
-PLK-E0116,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
-PLK-E0117,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
-PLK-E0118,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
-PLK-E0119,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0116,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0117,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0118,events.csv,Godzina nieogłoszona (w terminarzu 00:00); cena wg obecnego cennika,start_time
+PLK-E0119,events.csv,Cena biletu nieustalona; hala wg wcześniejszych zapowiedzi klubu – potwierdzić,price_level
 PLK-E0120,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
 PLK-E0121,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
 PLK-E0122,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
 PLK-E0123,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
 PLK-E0124,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
-PLK-E0125,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0125,events.csv,"Data wg terminarza klubu (kolejka może zostać przesunięta), godzina nieustalona; cena wg obecnego cennika – może się zmienić",start_time
+PLK-E0126,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
+PLK-E0127,events.csv,"Boisko sprzeczne w źródłach; cena/wstęp nieustalone; data = pierwszy dzień kolejki wg 90minut.pl, godzina nieustalona",start_time;price_level;place_id
 REG-0004,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
 REG-0005,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude
 REG-0006,places.csv,"współrzędne = środek miejscowości/ulicy, nie dokładny punkt",latitude;longitude

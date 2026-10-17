@@ -8,17 +8,17 @@ Stan: 2026-10-17 (Europe/Warsaw). Zakres: wyłącznie miasto Płock (gminy ości
 
 ## Liczby rekordów
 
-- places.csv: 165
-- opening_hours.csv: 355
+- places.csv: 214
+- opening_hours.csv: 395
 - predefined_routes.csv: 71
-- route_stops.csv: 212
-- events.csv: 125
-- sources.csv: 331
-- needs_verification.csv: 286
+- route_stops.csv: 224
+- events.csv: 127
+- sources.csv: 377
+- needs_verification.csv: 338
 
-Miejsca: współrzędne 161/165, znany price_level 102/165, godziny otwarcia 59/165. Status: verified 33, partial 79, unverified 53.
+Miejsca: współrzędne 210/214, znany price_level 102/214, godziny otwarcia 74/214. Status: verified 33, partial 84, unverified 97.
 
-Trasy: oficjalne 6, redakcyjne 65. Wydarzenia wg statusu: upcoming 114, unverified 10, ongoing 1. Zakres dat wydarzeń: 2026-10-17 – 2027-05-29.
+Trasy: oficjalne 6, redakcyjne 65. Wydarzenia wg statusu: upcoming 116, unverified 10, ongoing 1. Zakres dat wydarzeń: 2026-10-17 – 2027-05-29.
 
 ## Miejsca, wydarzenia i trasy wg kategorii
 
@@ -26,17 +26,17 @@ Trasy: oficjalne 6, redakcyjne 65. Wydarzenia wg statusu: upcoming 114, unverifi
 |---|---|---|---|---|
 | historia_zabytki | 26 | 19 | 0 | 5 |
 | sakralne_wielokulturowosc | 11 | 2 | 0 | 5 |
-| kultura_sztuka_film | 7 | 26 | 34 | 8 |
-| muzyka_widowiska | 4 | 4 | 15 | 7 |
-| festiwale_lokalne_swieta | 0 | 1 | 1 | 3 |
+| kultura_sztuka_film | 7 | 29 | 34 | 8 |
+| muzyka_widowiska | 4 | 20 | 16 | 7 |
+| festiwale_lokalne_swieta | 0 | 6 | 2 | 3 |
 | przyroda_spacery_widoki | 12 | 5 | 0 | 4 |
-| sport_aktywny_wypoczynek | 22 | 12 | 0 | 6 |
+| sport_aktywny_wypoczynek | 31 | 19 | 0 | 6 |
 | kibicowanie_wydarzenia_sportowe | 5 | 4 | 73 | 5 |
-| zabawa_gry_adrenalina | 17 | 6 | 0 | 11 |
-| warsztaty_nauka_pasje | 23 | 7 | 2 | 7 |
+| zabawa_gry_adrenalina | 18 | 12 | 0 | 11 |
+| warsztaty_nauka_pasje | 62 | 8 | 2 | 7 |
 | jedzenie_lokalne_smaki | 31 | 6 | 0 | 3 |
-| rzemioslo_pamiatki_produkty | 5 | 1 | 0 | 2 |
-| relaks_wypoczynek | 2 | 10 | 0 | 5 |
+| rzemioslo_pamiatki_produkty | 5 | 11 | 0 | 2 |
+| relaks_wypoczynek | 2 | 22 | 0 | 5 |
 
 Wydarzenia sportowe wg dyscypliny: piłka nożna 27, piłka ręczna 26, siatkówka 13, strzelectwo sportowe 6, pływanie 1.
 Wydarzenia sportowe wg płci: male 58, female 8, nieustalona 7; wg wieku: senior 53, junior_mlodszy 10, nieustalony 7, junior 3.
@@ -53,6 +53,9 @@ Wydarzenia sportowe wg płci: male 58, female 8, nieustalona 7; wg wieku: senior
 - Zgodnie z decyzją użytkownika usunięto pojedyncze siłownie plenerowe / ścieżki zdrowia (skwer gier, Aleja Nowaka, Jar Rosicy, park przy Zielonej); zostają parki, skatepark i Orliki.
 - Pominięto: Happy Park (Stróżewko – gm. Radzanowo), Muzeum Memów (tylko festiwalowo), SpeedShot (firma atrakcji mobilnych).
 
+- PSML-W (rozdzielenie organizatora, miejsc i ofert): organizator = Płocka Spółdzielnia Mieszkaniowa Lokatorsko-Własnościowa (ul. Obrońców Westerplatte 6a) – opisany w rekordach. Miejsca: SDK (Krzywoustego 3, PLK-0057), Kluby Osiedli Kochanowskiego, Łukasiewicza, Dworcowa – osobne rekordy z godzinami otwarcia z psmlw.pl. Każde stałe zajęcie = osobny rekord „SDK PSML-W – …” / „Klub … PSML-W – …” (enrollment). Oferta odczytana z grafik (odczyt wizualny/OCR) z 10.09.2025 = sezon 2025/26 – na psmlw.pl brak oferty 2026/27, więc wszystkie zajęcia mają status unverified. Godziny zajęć tylko dla Klubu Łukasiewicza (harmonogram „Startujemy 15 września”, 2025/26) i Pędzelka (Kochanowskiego, harmonogram 2024/25 – oznaczone). Starych harmonogramów (SDK /pl/ppp 2022/23, Dworcowa 2022/23, Kochanowskiego 2024/25) nie traktowano jako aktualnych.
+- Inne kluby osiedlowe/seniora w Płocku: Klub Seniora „Aktywni Razem” (Czwartaków 4, od 9.04.2026), Centrum Aktywnego Seniora (Otolińska 6), Klub Aktywnego Seniora MOPS (Synagogalna 4 – źródło z 2023, unverified), Klub Osiedlowy MSM (Lachmana 14 – adres tylko z katalogów firm). Pominięto: klub MSM „Chemik” przy Czwartaków 4 (zlikwidowany wiosną 2026 – lokal przejął Klub „Aktywni Razem”), Klub Seniora PCK (Misjonarska 22 – działał do 30.06.2026). Nie znaleziono rad osiedli ani świetlic osiedlowych z publiczną ofertą zajęć.
+
 ## Główne luki
 - Godziny otwarcia gastronomii: sprawdzono strony własne Browaru Tumskiego i Karczmy Pod Strzechą – brak godzin w treści (strony JS / odsyłają do Facebooka i systemu zamówień); pozostałe lokale nie mają własnych stron z godzinami w źródłach PLOT. Pole puste.
 - SSM Wisła Płock: to stowarzyszenie młodzieżowej PIŁKI NOŻNEJ (nie siatkówki). Strona https przekierowuje w pętli (z boxa timeout); przez WebFetch dostępne tylko harmonogramy do 26–27.09.2026 – brak opublikowanych terminów od 17.10. Juniorskie ligi MZPN (laczynaspilka.pl) wymagają JS – nieparsowane. Wisła Płock nie gra w CLJ U-17 2026/27.
@@ -63,6 +66,7 @@ Wydarzenia sportowe wg płci: male 58, female 8, nieustalona 7; wg wieku: senior
 - Jutrzenka: turniej młodziczek U13 24.10 bez miejsca – pominięty; mecze seniorek 6.11/21.11/12.12 bez godziny i przeciwnika.
 - Wisła II: miejsce meczów sprzeczne (boczne boisko B2 przy ORLEN Stadionie wg Transfermarkt / Stadion Miejski im. B. Szymańskiego wg weekendgoals) – bez place_id.
 - Ceny: NoveKino, Fabryka Zagadek, Kraina Wrażeń, strzelnica GROT (rekreacyjnie), Zoolandia, rejsy „Marianna”, bilety Jutrzenki i KPS, koncerty POS, mecze Wisły II.
+- PSML-W / kluby osiedlowe: brak cen wszystkich zajęć; brak oferty i harmonogramów na sezon 2026/27 (spółdzielnia publikuje bieżące informacje tylko na Facebooku – nie sprawdzano); strona /pl/plan-pracy-sdk pusta – brak godzin zajęć SDK; aktualności SDK kończą się na 12.05.2025 (brak zapowiedzi wydarzeń). Sprzeczne grupy wiekowe w grafikach Klubu Łukasiewicza (Mała Dekoratornia 7–15 vs 6–10; Klubik). MSM i MSM „Chemik” – oferta klubów niepublikowana poza Facebookiem. Senioriada 24.10 – godzina i miejsce części porannej sprzeczne w źródłach.
 
 
 ## Źródła niedostępne / zablokowane

@@ -240,11 +240,11 @@ PLK-H0238,PLK-0055,2,15:00,18:15,zajęcia w roku szkolnym,https://mdk-plock.pl/z
 PLK-H0239,PLK-0056,0,15:00,18:15,Klub Sprawności Fizycznej,https://mdk-plock.pl/ogrod-jordanowski/
 PLK-H0240,PLK-0056,2,15:00,18:15,Klub Sprawności Fizycznej,https://mdk-plock.pl/ogrod-jordanowski/
 PLK-H0241,PLK-0056,4,15:00,18:15,Klub Sprawności Fizycznej,https://mdk-plock.pl/ogrod-jordanowski/
-PLK-H0242,PLK-0057,0,08:00,19:00,,https://www.psmlw.pl/pl/sdk
-PLK-H0243,PLK-0057,1,08:00,19:00,,https://www.psmlw.pl/pl/sdk
-PLK-H0244,PLK-0057,2,08:00,19:00,,https://www.psmlw.pl/pl/sdk
-PLK-H0245,PLK-0057,3,08:00,19:00,,https://www.psmlw.pl/pl/sdk
-PLK-H0246,PLK-0057,4,08:00,19:00,,https://www.psmlw.pl/pl/sdk
+PLK-H0242,PLK-0057,0,08:00,19:00,godziny pracy placówki,https://www.psmlw.pl/pl/sdk
+PLK-H0243,PLK-0057,1,08:00,19:00,godziny pracy placówki,https://www.psmlw.pl/pl/sdk
+PLK-H0244,PLK-0057,2,08:00,19:00,godziny pracy placówki,https://www.psmlw.pl/pl/sdk
+PLK-H0245,PLK-0057,3,08:00,19:00,godziny pracy placówki,https://www.psmlw.pl/pl/sdk
+PLK-H0246,PLK-0057,4,08:00,19:00,godziny pracy placówki,https://www.psmlw.pl/pl/sdk
 PLK-H0247,PLK-0061,0,10:00,15:00,prezentacja audiowizualna w Kaplicy Królewskiej po zgłoszeniu,https://turystykaplock.eu/bazylika-katedralna-pw-wniebowziecia-najswietszej-maryi-panny/
 PLK-H0248,PLK-0061,1,10:00,15:00,prezentacja audiowizualna w Kaplicy Królewskiej po zgłoszeniu,https://turystykaplock.eu/bazylika-katedralna-pw-wniebowziecia-najswietszej-maryi-panny/
 PLK-H0249,PLK-0061,2,10:00,15:00,prezentacja audiowizualna w Kaplicy Królewskiej po zgłoszeniu,https://turystykaplock.eu/bazylika-katedralna-pw-wniebowziecia-najswietszej-maryi-panny/
@@ -354,6 +354,46 @@ PLK-H0352,PLK-0165,2,10:00,18:00,,https://ksiaznicaplocka.pl/o-nas/godziny-otwar
 PLK-H0353,PLK-0165,3,10:00,18:00,,https://ksiaznicaplocka.pl/o-nas/godziny-otwarcia/
 PLK-H0354,PLK-0165,4,10:00,18:00,,https://ksiaznicaplocka.pl/o-nas/godziny-otwarcia/
 PLK-H0355,PLK-0165,5,10:00,14:00,,https://ksiaznicaplocka.pl/o-nas/godziny-otwarcia/
+PLK-H0356,PLK-0166,0,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-kochanowskiego
+PLK-H0357,PLK-0166,2,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-kochanowskiego
+PLK-H0358,PLK-0166,1,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-kochanowskiego
+PLK-H0359,PLK-0166,3,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-kochanowskiego
+PLK-H0360,PLK-0166,4,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-kochanowskiego
+PLK-H0361,PLK-0167,0,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-lukasiewicza
+PLK-H0362,PLK-0167,2,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-lukasiewicza
+PLK-H0363,PLK-0167,1,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-lukasiewicza
+PLK-H0364,PLK-0167,3,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-lukasiewicza
+PLK-H0365,PLK-0167,4,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-lukasiewicza
+PLK-H0366,PLK-0168,0,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-dworcowa
+PLK-H0367,PLK-0168,2,08:00,16:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-dworcowa
+PLK-H0368,PLK-0168,1,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-dworcowa
+PLK-H0369,PLK-0168,3,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-dworcowa
+PLK-H0370,PLK-0168,4,11:00,19:00,godziny otwarcia klubu,https://www.psmlw.pl/pl/klub-os-dworcowa
+PLK-H0371,PLK-0185,0,14:30,16:30,sezon 2024/25 (harmonogram z 27.09.2024) – aktualność niepotwierdzona,https://www.psmlw.pl/pl/harmonogram-zajec-kochanowskiego
+PLK-H0372,PLK-0191,0,14:30,16:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0373,PLK-0192,1,15:00,18:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0374,PLK-0193,2,14:30,16:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0375,PLK-0194,3,15:00,18:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0376,PLK-0195,4,14:30,16:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0377,PLK-0195,4,16:00,18:00,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0378,PLK-0196,1,11:30,,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0379,PLK-0196,3,11:30,,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0380,PLK-0197,1,16:30,17:20,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0381,PLK-0197,3,16:30,17:20,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0382,PLK-0198,1,17:30,18:20,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0383,PLK-0198,3,17:30,18:20,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0384,PLK-0199,1,18:30,18:55,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0385,PLK-0199,3,18:30,18:55,sezon 2025/26 (grafika PSML-W z 10.09.2025) – aktualność w sezonie 2026/27 niepotwierdzona,https://www.psmlw.pl/pl/Harmonogram-zajec-lukasiew
+PLK-H0386,PLK-0211,0,10:00,14:00,2026 (klub finansowany do końca 2026 r.); przy wykładach i wydarzeniach także w innych godzinach,https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897
+PLK-H0387,PLK-0211,1,10:00,14:00,2026 (klub finansowany do końca 2026 r.); przy wykładach i wydarzeniach także w innych godzinach,https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897
+PLK-H0388,PLK-0211,2,10:00,14:00,2026 (klub finansowany do końca 2026 r.); przy wykładach i wydarzeniach także w innych godzinach,https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897
+PLK-H0389,PLK-0211,3,10:00,14:00,2026 (klub finansowany do końca 2026 r.); przy wykładach i wydarzeniach także w innych godzinach,https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897
+PLK-H0390,PLK-0211,4,10:00,14:00,2026 (klub finansowany do końca 2026 r.); przy wykładach i wydarzeniach także w innych godzinach,https://tp.com.pl/artykul/to-wazne-miejsce-dla-n1808897
+PLK-H0391,PLK-0212,0,10:00,16:00,,https://aktywnysenior.org.pl/kontakt/
+PLK-H0392,PLK-0212,1,10:00,16:00,,https://aktywnysenior.org.pl/kontakt/
+PLK-H0393,PLK-0212,2,10:00,16:00,,https://aktywnysenior.org.pl/kontakt/
+PLK-H0394,PLK-0212,3,10:00,16:00,,https://aktywnysenior.org.pl/kontakt/
+PLK-H0395,PLK-0212,4,10:00,16:00,,https://aktywnysenior.org.pl/kontakt/
 REG-H0001,REG-0051,0,17:00,21:00,sezon marzec–grudzień,https://gok.slupno.eu/orlik/
 REG-H0002,REG-0051,1,17:00,21:00,sezon marzec–grudzień,https://gok.slupno.eu/orlik/
 REG-H0003,REG-0051,2,17:00,21:00,sezon marzec–grudzień,https://gok.slupno.eu/orlik/
