@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     llm_base_url: str = "http://localhost:11434/v1"
     llm_model: str = "speakleash/bielik-11b-v2.3-instruct:Q4_K_M"
     llm_api_key: str = ""
+    llm_timeout_seconds: float = 120.0
+    llm_max_tokens: int = 2048
+    llm_temperature: float = 0.2
+    llm_retry_temperature: float = 0.1
     planner_stub: bool = True
 
     weather_provider: str = "stub"
