@@ -1,0 +1,111 @@
+import { useEffect } from 'react'
+import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet'
+import L from 'leaflet'
+
+import { Card } from '@/components/ui/card'
+import type { WalkingRoute } from '@/lib/walkingRoute'
+import type { TrailStop } from '@/lib/trail'
+
+type LatLngTuple = [number, number]
+
+type PlanTrailMapProps = {
+  stops: TrailStop[]
+  route: WalkingRoute | null
+  routeLoading: boolean
+  selectedKey: string | null
+  onSelectStop: (key: string) => void
+}
+
+function stopIcon(order: number, selected: boolean): L.DivIcon {
+  return L.divIcon({
+    className: '',
+    html: `<span style="
+      display:flex;align-items:center;justify-content:center;
+      width:28px;height:28px;border-radius:9999px;
+      background:${selected ? '#0b3d91' : '#ffffff'};
+      color:${selected ? '#ffffff' : '#0b3d91'};
+      border:2px solid #0b3d91;font-weight:700;font-size:13px;
+      box-shadow:0 2px 6px rgba(15,23,42,0.25);
+    ">${order}</span>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14],
+  })
+}
+
+function FitTrailBounds({ positions }: { positions: LatLngTuple[] }) {
+  const map = useMap()
+  useEffect(() => {
+    if (positions.length === 0) {
+      return
+    }
+    if (positions.length === 1) {
+      map.setView(positions[0], 14)
+      return
+    }
+    map.fitBounds(L.latLngBounds(positions), { padding: [36, 36], maxZoom: 15 })
+  }, [map, positions])
+  return null
+}
+
+export function PlanTrailMap({
+  stops,
+  route,
+  routeLoading,
+  selectedKey,
+  onSelectStop,
+}: PlanTrailMapProps) {
+  const stopPositions: LatLngTuple[] = stops.map((stop) => [stop.lat, stop.lon])
+  const pathPositions = route?.positions ?? stopPositions
+  const center: LatLngTuple = stopPositions[0] ?? [52.5468, 19.7064]
+
+  return (
+    <Card className="gap-0 overflow-hidden border-border/80 py-0">
+      <div className="relative h-[min(42vh,320px)] w-full min-h-[220px] bg-muted">
+        {routeLoading ? (
+          <p
+            className="absolute top-3 left-3 z-[500] rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-foreground shadow"
+            role="status"
+          >
+            Wyznaczamy trasę po chodnikach…
+          </p>
+        ) : null}
+        {!routeLoading && route && !route.followsRoads ? (
+          <p className="absolute top-3 left-3 z-[500] rounded-full bg-white/95 px-3 py-1 text-xs text-muted-foreground shadow">
+            Trasa przybliżona (linia prosta)
+          </p>
+        ) : null}
+        <MapContainer
+          center={center}
+          zoom={13}
+          className="h-full w-full z-0"
+          scrollWheelZoom={false}
+          attributionControl={false}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <FitTrailBounds positions={pathPositions.length > 1 ? pathPositions : stopPositions} />
+          {pathPositions.length > 1 ? (
+            <Polyline
+              positions={pathPositions}
+              pathOptions={{
+                color: '#0b3d91',
+                weight: 5,
+                opacity: route?.followsRoads ? 0.9 : 0.45,
+                dashArray: route?.followsRoads ? undefined : '8 10',
+              }}
+            />
+          ) : null}
+          {stops.map((stop) => (
+            <Marker
+              key={stop.key}
+              position={[stop.lat, stop.lon]}
+              icon={stopIcon(stop.order, stop.key === selectedKey)}
+              eventHandlers={{
+                click: () => onSelectStop(stop.key),
+              }}
+            />
+          ))}
+        </MapContainer>
+      </div>
+    </Card>
+  )
+}

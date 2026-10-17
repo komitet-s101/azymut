@@ -10,6 +10,8 @@ export type SearchResult = {
   price_level: number | null
   typical_visit_minutes: number | null
   address_line: string | null
+  latitude: number | null
+  longitude: number | null
   start_date: string | null
   start_time: string | null
 }
