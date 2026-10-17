@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { clearUserContext } from '@/lib/userContextStorage'
 
 const useDeviceMock = (): boolean => {
   const raw = import.meta.env.VITE_DEVICE_MOCK
@@ -29,15 +31,31 @@ export function DeviceFrame({
     )
   }
 
+  function handleResetLocalData() {
+    clearUserContext()
+    window.location.reload()
+  }
+
   return (
-    <div className="device-mock-host">
-      <div className="marvel-device iphone-x">
-        <div className="notch" />
-        <div className={cn('screen screen-app', className)}>
-          <div className="screen-app-scroll">{children}</div>
-          {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
+    <>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        className="fixed top-4 right-4 z-50 border-slate-300/80 bg-white/90 shadow-sm backdrop-blur-sm"
+        onClick={handleResetLocalData}
+      >
+        Resetuj dane
+      </Button>
+      <div className="device-mock-host">
+        <div className="marvel-device iphone-x">
+          <div className="notch" />
+          <div className={cn('screen screen-app', className)}>
+            <div className="screen-app-scroll">{children}</div>
+            {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
