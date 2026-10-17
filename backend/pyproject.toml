@@ -12,6 +12,7 @@ dependencies = [
     "httpx>=0.28.0",
     "pydantic-settings>=2.6.0",
     "tortoise-orm>=1.1.9",
+    "tzdata>=2026.5",
     "uvicorn[standard]>=0.32.0",
 ]
 
