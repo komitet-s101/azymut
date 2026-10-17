@@ -86,7 +86,9 @@ def _place_to_candidate(
         "name": place.name,
         "category": place.category,
         "typical_visit_minutes": place.typical_visit_minutes,
-        "price_level": int(place.price_level),
+        "price_level": None
+        if place.price_level is None
+        else int(place.price_level),
         "price_max_pln": price_max,
         "is_indoor": place.is_indoor,
         "is_outdoor": place.is_outdoor,

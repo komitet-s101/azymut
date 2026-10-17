@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from tortoise import Tortoise
 
 from backend.api.errors import http_exception_handler, validation_exception_handler
-from backend.api.routers import health, interest_packages, plan, places, routes, weather
+from backend.api.routers import health, interest_packages, plan, places, routes, search, weather
 from backend.db.config import DB_DIR, TORTOISE_ORM
 from backend.settings import get_settings
 from fastapi.exceptions import RequestValidationError
@@ -46,6 +46,7 @@ def create_app() -> FastAPI:
     app.include_router(routes.router, prefix="/api/v1")
     app.include_router(interest_packages.router, prefix="/api/v1")
     app.include_router(plan.router, prefix="/api/v1")
+    app.include_router(search.router, prefix="/api/v1")
     app.include_router(weather.router, prefix="/api/v1")
 
     if settings.admin_enabled:

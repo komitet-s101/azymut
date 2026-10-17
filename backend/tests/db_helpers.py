@@ -16,5 +16,5 @@ async def init_test_db(db_path: Path) -> dict[str, Any]:
     except Exception:
         pass
     await migrate(config=config)
-    await Tortoise.init(config=config)
+    await Tortoise.init(config=config, _enable_global_fallback=True)
     return config

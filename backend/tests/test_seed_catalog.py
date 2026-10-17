@@ -64,6 +64,8 @@ async def test_seed_catalog_spot_checks(seeded_db) -> None:
     place = await Place.get(external_id="PLK-0001")
     hours = await OpeningHours.filter(place_id=place.id).count()
     assert hours > 0
+    unknown_price = await Place.get(external_id="PLK-0020")
+    assert unknown_price.price_level is None
 
     event = await Event.get(external_id="PLK-E0001")
     venue = await Place.get(id=event.place_id)
