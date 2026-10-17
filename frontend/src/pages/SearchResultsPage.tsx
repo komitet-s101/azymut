@@ -1,4 +1,4 @@
-import { CloudSun, Lightbulb, Route, Ticket } from 'lucide-react'
+import { CloudSun, Lightbulb, Ticket } from 'lucide-react'
 
 import { EventPlaceholderCard } from '@/components/home/EventPlaceholderCard'
 import { WavePageHeader } from '@/components/layout/WavePageHeader'
@@ -17,7 +17,7 @@ type SearchResultsPageProps = {
 }
 
 export function SearchResultsPage({
-  query,
+  query: _query,
   onBack,
   results = DEFAULT_SEARCH_RESULTS,
 }: SearchResultsPageProps) {
@@ -25,22 +25,12 @@ export function SearchResultsPage({
     <div className="flex min-h-full flex-col">
       <WavePageHeader
         onBack={onBack}
-        header={<PlanResultsHeader query={query} />}
+        header={<PlanResultsHeader planSummary={results.planSummary} />}
         contentClassName="pt-[max(1rem,calc(env(safe-area-inset-top)+0.25rem))]"
       />
       <div
         className="home-surface-texture flex flex-1 flex-col gap-6 px-5 pt-7 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
       >
-        <section aria-labelledby="plan-summary-heading" className="flex flex-col gap-3">
-          <h2
-            id="plan-summary-heading"
-            className="flex items-center gap-2 text-lg font-semibold text-foreground"
-          >
-            <Route className="size-5 shrink-0 text-primary" aria-hidden />
-            {results.planSummary}
-          </h2>
-        </section>
-
         <PlanMapPlaceholder label={results.mapLabel} />
 
         <div className="flex flex-col gap-3" role="list">

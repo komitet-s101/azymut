@@ -13,9 +13,14 @@ const useDeviceMock = (): boolean => {
 type DeviceFrameProps = {
   children: ReactNode
   className?: string
+  showBottomFade?: boolean
 }
 
-export function DeviceFrame({ children, className }: DeviceFrameProps) {
+export function DeviceFrame({
+  children,
+  className,
+  showBottomFade = true,
+}: DeviceFrameProps) {
   if (!useDeviceMock()) {
     return (
       <div className={cn('mx-auto flex min-h-dvh w-full max-w-lg flex-col', className)}>
@@ -30,7 +35,7 @@ export function DeviceFrame({ children, className }: DeviceFrameProps) {
         <div className="notch" />
         <div className={cn('screen screen-app', className)}>
           <div className="screen-app-scroll">{children}</div>
-          <div className="screen-app-fade" aria-hidden />
+          {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
         </div>
       </div>
     </div>

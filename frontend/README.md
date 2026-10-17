@@ -36,7 +36,10 @@ Home screen design spec: [docs/superpowers/specs/2026-10-17-home-screen-design.m
 
 ## Flow (mock)
 
-1. **Home** — wyszukiwarka AI.
-2. **Wyniki** (`SearchResultsPage`) — po wysłaniu zapytania; dane z `src/data/searchResultsPlaceholders.ts`. Przycisk „Wróć” wraca na home (stan w `App.tsx`, bez react-router na razie).
+1. **Onboarding** (`OnboardingPage`) — pierwsze uruchomienie; zapis `localStorage` (`azymut_user_context_v1`). Aby powtórzyć: wyczyść ten klucz w devtools.
+2. **Home** — wyszukiwarka AI.
+3. **Wyniki** (`SearchResultsPage`) — po wysłaniu zapytania; dane z `src/data/searchResultsPlaceholders.ts`. Przycisk „Wróć” wraca na home (stan w `App.tsx`, bez react-router na razie).
+
+Onboarding spec: [docs/superpowers/specs/2026-10-17-onboarding-design.md](../docs/superpowers/specs/2026-10-17-onboarding-design.md).
 
 Build plan: [backend/docs/build-plan/MASTER-PLAN.md](../backend/docs/build-plan/MASTER-PLAN.md).

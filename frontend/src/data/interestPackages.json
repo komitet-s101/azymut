@@ -1,0 +1,26 @@
+[
+  {
+    "id": "culture_walk",
+    "label_pl": "Kultura i spacery",
+    "description_pl": "Muzea, zabytki i spokojne trasy piesze.",
+    "persona": ["tourist", "resident"]
+  },
+  {
+    "id": "family_fun",
+    "label_pl": "Rodzinnie",
+    "description_pl": "Miejsca przyjazne dzieciom, gry i aktywność na świeżym powietrzu.",
+    "persona": ["tourist", "resident"]
+  },
+  {
+    "id": "rainy_day",
+    "label_pl": "Na deszcz",
+    "description_pl": "Kino, muzea i miejsca pod dachem.",
+    "persona": ["tourist", "resident"]
+  },
+  {
+    "id": "local_flavors",
+    "label_pl": "Smaki regionu",
+    "description_pl": "Lokalne restauracje i kawiarnie w okolicy.",
+    "persona": ["resident"]
+  }
+]
