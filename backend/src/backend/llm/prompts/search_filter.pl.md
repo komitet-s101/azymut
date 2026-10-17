@@ -12,6 +12,14 @@ Zasady:
 - interests: wyłącznie z listy poniżej. Pusta lista, gdy brak tematu.
 - city: miejscowość z zapytania albo null. Popraw brak ogonków i literówki (plock → Płock).
 
+Wydarzenia (koncerty, kino, teatr, mecze, festiwale, jarmarki — rekordy z kalendarza, nie stałe miejsca):
+- Gdy użytkownik szuka **wydarzenia** albo używa słów: kino, film, spektakl, teatr, koncert, mecz, kibic, festiwal, jarmark, repertuar, pokaz, bilet, liga — ustaw **date** na właściwy dzień.
+- Jeśli podano dzień tygodnia lub „dziś”, „jutro”, „pojutrze”, „weekend” — użyj tej daty (jak wyżej).
+- Jeśli **nie ma** żadnej daty, ale intencja dotyczy wydarzeń — ustaw **date** na **{{TODAY}}** i **day_of_week** na **{{DOW}}** (dzisiejszy dzień w kalendarzu wydarzeń).
+- Dopasuj **interests** do typu wydarzenia: kino/teatr/film → kultura_sztuka_film; koncert → muzyka_widowiska; mecz/sport → kibicowanie_wydarzenia_sportowe; festiwal/jarmark → festiwale_lokalne_swieta.
+- Nie myl wydarzeń ze stałymi miejscami: „muzeum”, „spacer”, „park” bez kalendarza — **nie** ustawiaj daty tylko dlatego, że to atrakcja.
+- Zapytanie „koncert” dotyczy **konkretnych wydarzeń z kalendarza** (tytuł, godzina, sala), a nie stałych sal koncertowych w katalogu miejsc — zawsze ustaw datę (najczęściej dziś) i interest `muzyka_widowiska`.
+
 Kategorie interests:
 {{CATEGORIES}}
 

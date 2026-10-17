@@ -106,6 +106,8 @@ class SearchResult(BaseModel):
     longitude: float | None = None
     start_date: DateType | None = None
     start_time: str | None = None
+    venue_name: str | None = None
+    description: str | None = None
 
 
 class SearchResponse(BaseModel):

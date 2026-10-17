@@ -7,9 +7,11 @@ import pytest
 
 from backend.llm.client import LLMUnavailableError
 from backend.llm.query_parser import (
+    apply_search_defaults,
     coerce_search_filter,
     parse_search_query,
     parse_search_query_rules,
+    query_event_intent,
 )
 from backend.settings import Settings
 
@@ -317,6 +319,41 @@ async def test_parser_skips_llm_without_api_key() -> None:
     )
     assert parsed.source == "rules"
     _assert_case(parsed.filter, POLISH_QUERIES[0])
+
+
+def test_cinema_query_sets_today_for_event_calendar() -> None:
+    filt = parse_search_query_rules("kino w Płocku", today=TODAY)
+    assert filt.date == TODAY
+    assert filt.day_of_week == TODAY.weekday()
+    assert query_event_intent("kino w Płocku", filt) is True
+
+
+def test_museum_query_does_not_force_event_date() -> None:
+    filt = parse_search_query_rules("muzeum w Płocku", today=TODAY)
+    assert filt.date is None
+    assert query_event_intent("muzeum w Płocku", filt) is False
+
+
+def test_apply_search_defaults_after_llm_without_date() -> None:
+    base = coerce_search_filter(
+        {
+            "date": None,
+            "day_of_week": None,
+            "time_budget_minutes": None,
+            "adults": 1,
+            "children": 0,
+            "child_ages": [],
+            "max_price_level": None,
+            "price_strict": False,
+            "setting": "either",
+            "setting_strict": False,
+            "interests": ["muzyka_widowiska"],
+            "city": "Płock",
+        },
+        today=TODAY,
+    )
+    updated = apply_search_defaults(base, "koncert w Płocku", TODAY)
+    assert updated.date == TODAY
 
 
 def test_coerce_messy_llm_payload() -> None:

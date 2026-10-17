@@ -107,6 +107,19 @@ _STRICT_MARKERS = ("tylko", "koniecznie", "musi", "wylacznie")
 _OUTDOOR_RE = re.compile(r"swiezym powietrzu|na dworze|na zewnatrz|pod chmurka|w plenerze|\bplener\b|\bspacer")
 _INDOOR_RE = re.compile(r"pod dachem|w srodku|w domu|w budynku")
 _FREE_RE = re.compile(r"bezplatn\w*|darmow\w*|za darmo|wstep wolny|nie chce placic|bez oplat")
+_EVENT_QUERY_RE = re.compile(
+    r"\b(wydarzen\w*|koncert\w*|spektakl\w*|mecz\w*|festiwal\w*|jarmark\w*|"
+    r"repertuar\w*|pokaz\w*|wystep\w*|bilet\w*|kino\w*|film\w*|teatr\w*|"
+    r"kibic\w*|liga\b|derby|kalend\w* imprez)"
+)
+_EVENT_INTERESTS = frozenset(
+    {
+        PlaceCategory.KIBICOWANIE_WYDARZENIA_SPORTOWE,
+        PlaceCategory.MUZYKA_WIDOWISKA,
+        PlaceCategory.FESTIWALE_LOKALNE_SWIETA,
+    }
+)
+_CULTURE_EVENT_HINTS = ("kino", "film", "spektakl", "teatr", "pokaz", "wystep", "bilet")
 _HOUR_WORDS = {
     "jedna": 60,
     "dwie": 120,
@@ -501,13 +514,40 @@ def _city(text: str) -> str | None:
     return found[2]
 
 
+def query_event_intent(query: str, filt: SearchFilter) -> bool:
+    text = fold(query)
+    if _EVENT_QUERY_RE.search(text):
+        return True
+    interests = set(filt.interests)
+    if interests & _EVENT_INTERESTS:
+        return True
+    if PlaceCategory.KULTURA_SZTUKA_FILM in interests and any(
+        hint in text for hint in _CULTURE_EVENT_HINTS
+    ):
+        return True
+    return False
+
+
+def apply_search_defaults(
+    filt: SearchFilter,
+    query: str,
+    today: date,
+) -> SearchFilter:
+    updated = filt
+    if updated.date is None and query_event_intent(query, updated):
+        updated = updated.model_copy(
+            update={"date": today, "day_of_week": today.weekday()},
+        )
+    return _with_resolved_date(updated, today)
+
+
 def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:
     text = fold(query)
     target_date, weekday = _when(text, today)
     max_price, price_strict = _price(text)
     setting, setting_strict = _setting(text)
     minutes = _minutes(text)
-    return SearchFilter(
+    filt = SearchFilter(
         date=target_date,
         day_of_week=weekday,
         time_budget_minutes=minutes,
@@ -519,6 +559,7 @@ def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:
         interests=_interests(text),
         city=_city(text),
     )
+    return apply_search_defaults(filt, query, today)
 
 
 def _system_prompt(today: date) -> str:
@@ -584,7 +625,11 @@ async def parse_search_query(
             return ParsedQuery(filter=rules, source="rules")
         llm = LLMClient(resolved_settings)
     try:
-        parsed = await _from_llm(llm, query, today=resolved_today)
+        parsed = apply_search_defaults(
+            await _from_llm(llm, query, today=resolved_today),
+            query,
+            resolved_today,
+        )
     except (LLMUnavailableError, ValidationError, ValueError, json.JSONDecodeError):
         return ParsedQuery(filter=rules, source="rules")
     return ParsedQuery(filter=parsed, source="llm")

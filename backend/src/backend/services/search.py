@@ -25,7 +25,13 @@ from backend.api.schemas.weather import (
 from backend.db.models import Event, OpeningHours, Place, PriceLevel
 from backend.llm.client import LLMClient, LLMUnavailableError
 from backend.llm.parser import extract_json_object
-from backend.llm.query_parser import ParsedQuery, parse_search_query
+from backend.llm.query_parser import ParsedQuery, parse_search_query, query_event_intent
+from backend.services.search_events import (
+    event_name_boost,
+    filter_events_for_query,
+    prioritize_event_results,
+    venue_place_penalty,
+)
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
 from backend.services.weather import get_weather_service
 from backend.settings import Settings, get_settings
@@ -350,8 +356,9 @@ async def search_catalog(
             for place in places
             if place.id not in any_hours or place.id in open_today
         ]
-    events = await _candidate_events(filt)
+    events = filter_events_for_query(await _candidate_events(filt), request.query)
 
+    event_intent = query_event_intent(request.query, filt)
     scored_inputs: list[ScoreInput] = []
     place_by_key: dict[str, Place] = {}
     event_by_key: dict[str, Event] = {}
@@ -371,6 +378,7 @@ async def search_catalog(
                 min_age_recommended=place.min_age_recommended,
                 price_level=_price_int(place.price_level),
                 kind="place",
+                score_adjustment=-venue_place_penalty(place.name, event_intent=event_intent),
             )
         )
     for event in events:
@@ -383,17 +391,29 @@ async def search_catalog(
                 key=key,
                 category=category,
                 family_friendly=2,
-                rain_suitable=2,
+                rain_suitable=4,
                 physical_activity_level=activity,
+                is_indoor=True,
+                is_outdoor=False,
                 price_level=_event_price(event),
                 kind="event",
+                score_adjustment=event_name_boost(event.name, request.query),
             )
         )
 
     lat = request.lat if request.lat is not None else _PLOCK_LAT
     lon = request.lon if request.lon is not None else _PLOCK_LON
     bias = await _weather_bias(filt.date, lat, lon)
-    ranked = rank_matches(scored_inputs, filt, bias)[: request.limit]
+    ranked = prioritize_event_results(
+        rank_matches(
+            scored_inputs,
+            filt,
+            bias,
+            event_intent=event_intent,
+        ),
+        limit=request.limit,
+        event_intent=event_intent,
+    )
 
     results: list[SearchResult] = []
     for item, score in ranked:
@@ -439,6 +459,8 @@ async def search_catalog(
                 longitude=event.longitude,
                 start_date=event.start_date,
                 start_time=event.start_time,
+                venue_name=event.venue_name,
+                description=event.description,
             )
         )
 
