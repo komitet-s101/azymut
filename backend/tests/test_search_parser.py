@@ -321,6 +321,17 @@ async def test_parser_skips_llm_without_api_key() -> None:
     _assert_case(parsed.filter, POLISH_QUERIES[0])
 
 
+def test_stop_count_from_numeric_phrase() -> None:
+    filt = parse_search_query_rules("3 miejsca na spacer w Płocku", today=TODAY)
+    assert filt.stop_count == 3
+
+
+def test_stop_count_ignores_hours_phrase() -> None:
+    filt = parse_search_query_rules("mam 3 godziny wolnego", today=TODAY)
+    assert filt.stop_count is None
+    assert filt.time_budget_minutes == 180
+
+
 def test_cinema_query_sets_today_for_event_calendar() -> None:
     filt = parse_search_query_rules("kino w Płocku", today=TODAY)
     assert filt.date == TODAY

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from backend.api.schemas.plan import UserProfile
 from backend.api.schemas.search import PlaceCategory, SearchFilter, SettingPreference
 
 _PRIMARY_CATEGORY = 6.0
@@ -43,6 +44,10 @@ class ScoreInput:
     is_outdoor: bool = False
     min_age_recommended: int | None = None
     price_level: int | None = None
+    game_interactivity: int = 0
+    gastro_intensity: int = 0
+    cultural_education: int = 0
+    nature_relaxation: int = 0
     kind: str = "place"
 
 
@@ -69,6 +74,27 @@ def _setting_score(item: ScoreInput, preference: SettingPreference) -> float:
     return never
 
 
+def _profile_score(item: ScoreInput, profile: UserProfile | None) -> float:
+    if profile is None:
+        return 0.0
+    score = 0.0
+    score += item.game_interactivity * (profile.likes_games / 5) * 0.35
+    score += item.physical_activity_level * (
+        profile.physical_activity_preference / 5
+    ) * 0.35
+    gastro_pref = profile.gastro_intensity_preference
+    if profile.bmi is not None and profile.bmi >= 27:
+        gastro_pref = min(gastro_pref, 2)
+    score += (5 - abs(item.gastro_intensity - gastro_pref)) * 0.08
+    if profile.prefer_outdoor and item.is_outdoor:
+        score += 1.2
+    elif not profile.prefer_outdoor and item.is_indoor:
+        score += 0.4
+    score += item.cultural_education * 0.06
+    score += item.nature_relaxation * 0.06
+    return score
+
+
 def _age_score(item: ScoreInput, filt: SearchFilter) -> float:
     kids = filt.group.children > 0 or bool(filt.group.child_ages)
     if not kids or item.min_age_recommended is None:
@@ -90,6 +116,7 @@ def score_match(
     weather: WeatherBias,
     *,
     event_intent: bool = False,
+    profile: UserProfile | None = None,
 ) -> float:
     score = _EVENT_BONUS if item.kind == "event" else 0.0
     if item.kind == "event" and event_intent:
@@ -107,6 +134,7 @@ def score_match(
     if kids:
         score += item.family_friendly * _FAMILY
     score += _age_score(item, filt)
+    score += _profile_score(item, profile)
     score += _setting_score(item, filt.setting)
 
     if item.price_level is None and filt.max_price_level == 0:
@@ -129,9 +157,19 @@ def rank_matches(
     weather: WeatherBias,
     *,
     event_intent: bool = False,
+    profile: UserProfile | None = None,
 ) -> list[tuple[ScoreInput, float]]:
     scored = [
-        (item, score_match(item, filt, weather, event_intent=event_intent))
+        (
+            item,
+            score_match(
+                item,
+                filt,
+                weather,
+                event_intent=event_intent,
+                profile=profile,
+            ),
+        )
         for item in items
     ]
     scored.sort(key=lambda pair: (-pair[1], pair[0].key))

@@ -128,6 +128,24 @@ _HOUR_WORDS = {
     "piec": 300,
     "szesc": 360,
 }
+_STOP_COUNT_WORDS = {
+    "jedno": 1,
+    "jedna": 1,
+    "jeden": 1,
+    "dwa": 2,
+    "dwie": 2,
+    "trzy": 3,
+    "cztery": 4,
+    "piec": 5,
+    "szesc": 6,
+}
+_STOP_COUNT_RE = re.compile(
+    r"(\d+)\s*(miejsc\w*|atrakcj\w*|punkt\w*|propozycj\w*|stop\w*)\b"
+)
+_STOP_COUNT_WORD_RE = re.compile(
+    r"\b(jedn\w+|dwa|dwie|trzy|czter\w*|piec|szesc)\s+"
+    r"(miejsc\w*|atrakcj\w*|punkt\w*|propozycj\w*|stop\w*)\b"
+)
 
 
 @dataclass(frozen=True)
@@ -317,6 +335,7 @@ def coerce_search_filter(payload: dict[str, Any], *, today: date) -> SearchFilte
             "setting_strict": _as_bool(payload.get("setting_strict")),
             "interests": _interests_value(payload.get("interests")),
             "city": canonical_city(payload.get("city") if isinstance(payload.get("city"), str) else None),
+            "stop_count": _stop_count_value(payload.get("stop_count")),
         }
     )
     return _with_resolved_date(filt, today)
@@ -390,6 +409,28 @@ def _party(text: str) -> SearchGroup:
     if children is None:
         children = 0
     return SearchGroup(adults=adults, children=children, child_ages=ages)
+
+
+def _stop_count_value(value: Any) -> int | None:
+    number = _as_int(value)
+    if number is not None and 1 <= number <= 10:
+        return number
+    return None
+
+
+def _stop_count(text: str) -> int | None:
+    digits = _STOP_COUNT_RE.search(text)
+    if digits:
+        count = int(digits.group(1))
+        if 1 <= count <= 10:
+            return count
+    words = _STOP_COUNT_WORD_RE.search(text)
+    if words:
+        stem = words.group(1)
+        for key, count in _STOP_COUNT_WORDS.items():
+            if stem == key or stem.startswith(key):
+                return count
+    return None
 
 
 def _minutes(text: str) -> int | None:
@@ -558,6 +599,7 @@ def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:
         setting_strict=setting_strict,
         interests=_interests(text),
         city=_city(text),
+        stop_count=_stop_count(text),
     )
     return apply_search_defaults(filt, query, today)
 

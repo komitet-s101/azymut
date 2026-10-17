@@ -6,6 +6,8 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from backend.api.schemas.plan import Persona, UserConstraints, UserProfile
+
 
 class PlaceCategory(StrEnum):
     HISTORIA_ZABYTKI = "historia_zabytki"
@@ -57,6 +59,7 @@ class SearchFilter(BaseModel):
     setting_strict: bool = False
     interests: list[PlaceCategory] = Field(default_factory=list)
     city: str | None = None
+    stop_count: int | None = Field(default=None, ge=1, le=10)
 
     @model_validator(mode="after")
     def _sync(self) -> SearchFilter:
@@ -69,11 +72,23 @@ class SearchFilter(BaseModel):
         return self
 
 
+class SearchUserPreferences(BaseModel):
+    """Opcjonalne preferencje z onboardingu (kategorie, profil, ograniczenia)."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    persona: Persona | None = None
+    interest_tag_ids: list[str] = Field(default_factory=list)
+    profile: UserProfile | None = None
+    constraints: UserConstraints | None = None
+
+
 class SearchRequest(BaseModel):
     query: str = Field(min_length=1, max_length=1000)
     lat: float | None = Field(default=None, ge=-90, le=90)
     lon: float | None = Field(default=None, ge=-180, le=180)
     limit: int = Field(default=15, ge=1, le=30)
+    user_preferences: SearchUserPreferences | None = None
 
     @field_validator("query", mode="before")
     @classmethod
@@ -143,6 +158,7 @@ def search_filter_json_schema() -> dict[str, object]:
             "setting_strict",
             "interests",
             "city",
+            "stop_count",
         ],
         "properties": {
             "date": nullable({"type": "string"}),
@@ -163,6 +179,7 @@ def search_filter_json_schema() -> dict[str, object]:
                 "items": {"type": "string", "enum": categories},
             },
             "city": nullable({"type": "string"}),
+            "stop_count": nullable({"type": "integer"}),
         },
     }
 

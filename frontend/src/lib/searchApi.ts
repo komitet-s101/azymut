@@ -1,3 +1,5 @@
+import type { UserContextLocal } from '@/types/userContext'
+
 export type SearchResult = {
   kind: 'place' | 'event'
   id: number
@@ -16,12 +18,25 @@ export type SearchResult = {
   start_time: string | null
 }
 
+export type SearchUserPreferencesPayload = {
+  persona?: UserContextLocal['persona']
+  interest_tag_ids?: string[]
+  profile?: UserContextLocal['profile']
+  constraints?: UserContextLocal['constraints']
+}
+
+export type SearchFilterOut = {
+  time_budget_minutes: number | null
+  stop_count: number | null
+}
+
 export type SearchResponse = {
   query: string
   summary: string
   parser: 'llm' | 'rules'
   weather_note: string | null
   weather_raining: boolean
+  filter: SearchFilterOut
   results: SearchResult[]
 }
 
@@ -64,6 +79,20 @@ export function priceLabel(level: number | null, flags: string[]): string {
   return 'Wyższa cena'
 }
 
+export function searchPreferencesFromContext(
+  context: UserContextLocal | null,
+): SearchUserPreferencesPayload | undefined {
+  if (!context?.onboarding_completed_at) {
+    return undefined
+  }
+  return {
+    persona: context.persona,
+    interest_tag_ids: context.interest_tag_ids,
+    profile: context.profile,
+    constraints: context.constraints,
+  }
+}
+
 function apiBase(): string {
   const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
   return configured.replace(/\/$/, '')
@@ -72,11 +101,19 @@ function apiBase(): string {
 export async function searchNaturalLanguage(
   query: string,
   signal?: AbortSignal,
+  userPreferences?: SearchUserPreferencesPayload,
 ): Promise<SearchResponse> {
+  const body: {
+    query: string
+    user_preferences?: SearchUserPreferencesPayload
+  } = { query }
+  if (userPreferences) {
+    body.user_preferences = userPreferences
+  }
   const response = await fetch(`${apiBase()}/api/v1/search`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ query }),
+    body: JSON.stringify(body),
     signal,
   })
   if (!response.ok) {

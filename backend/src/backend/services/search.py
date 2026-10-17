@@ -26,6 +26,10 @@ from backend.db.models import Event, OpeningHours, Place, PriceLevel
 from backend.llm.client import LLMClient, LLMUnavailableError
 from backend.llm.parser import extract_json_object
 from backend.llm.query_parser import ParsedQuery, parse_search_query, query_event_intent
+from backend.services.search_preferences import (
+    merge_user_preferences,
+    preferences_query_suffix,
+)
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
 from backend.services.weather import get_weather_service
 from backend.settings import Settings, get_settings
@@ -131,12 +135,65 @@ def _kids(filt: SearchFilter) -> bool:
     return filt.group.children > 0 or bool(filt.group.child_ages)
 
 
+def _place_visit_minutes(place: Place) -> int:
+    if place.typical_visit_minutes is not None and place.typical_visit_minutes > 0:
+        return place.typical_visit_minutes
+    return 30
+
+
+def _event_visit_minutes(event: Event) -> int:
+    duration = _minutes_between(event.start_time, event.end_time)
+    if duration is not None and duration > 0:
+        return duration
+    return 120
+
+
+def _pack_ranked_within_budget(
+    ranked: list[tuple[ScoreInput, float]],
+    *,
+    place_by_key: dict[str, Place],
+    event_by_key: dict[str, Event],
+    budget_minutes: int | None,
+    limit: int,
+    stop_count: int | None = None,
+    places_only: bool = False,
+) -> list[tuple[ScoreInput, float]]:
+    """Budżet czasu jest sumą czasu zwiedzania / wydarzeń, nie limitem na jeden punkt."""
+    pool = [
+        pair
+        for pair in ranked
+        if not places_only or pair[0].kind == "place"
+    ]
+    target = stop_count if stop_count is not None else limit
+    target = min(target, limit)
+
+    def visit_minutes(item: ScoreInput) -> int:
+        if item.kind == "place":
+            return _place_visit_minutes(place_by_key[item.key])
+        return _event_visit_minutes(event_by_key[item.key])
+
+    if budget_minutes is None:
+        return pool[:target]
+
+    picked: list[tuple[ScoreInput, float]] = []
+    total = 0
+    for item, score in pool:
+        duration = visit_minutes(item)
+        if duration > budget_minutes:
+            continue
+        if total + duration > budget_minutes:
+            continue
+        picked.append((item, score))
+        total += duration
+        if len(picked) >= target:
+            break
+    return picked
+
+
 async def _candidate_places(filt: SearchFilter) -> list[Place]:
     qs = Place.all()
     if filt.city:
         qs = qs.filter(city__iexact=filt.city)
-    if filt.time_budget_minutes is not None:
-        qs = qs.filter(typical_visit_minutes__lte=filt.time_budget_minutes)
     if _kids(filt):
         qs = qs.filter(adult_only=False)
     if filt.setting_strict and filt.setting is SettingPreference.OUTDOOR:
@@ -163,8 +220,7 @@ async def _open_place_ids(day_of_week: int) -> tuple[set[int], set[int]]:
 
 def _event_blocked(event: Event, filt: SearchFilter) -> bool:
     if filt.time_budget_minutes is not None:
-        duration = _minutes_between(event.start_time, event.end_time)
-        if duration is not None and duration > filt.time_budget_minutes:
+        if _event_visit_minutes(event) > filt.time_budget_minutes:
             return True
     if filt.price_strict and filt.max_price_level is not None and not event.is_free:
         price = _price_int(event.price_level)
@@ -334,12 +390,19 @@ async def search_catalog(
     settings: Settings | None = None,
 ) -> SearchResponse:
     resolved_settings = settings or get_settings()
+    resolved_today = today or warsaw_today()
+    llm_query = request.query + preferences_query_suffix(request.user_preferences)
     parsed: ParsedQuery = await parse_search_query(
-        request.query,
-        today=today or warsaw_today(),
+        llm_query,
+        today=resolved_today,
         settings=resolved_settings,
     )
-    filt = parsed.filter
+    filt = merge_user_preferences(parsed.filter, request.user_preferences)
+    profile = (
+        request.user_preferences.profile
+        if request.user_preferences is not None
+        else None
+    )
     places = await _candidate_places(filt)
     any_hours: set[int] = set()
     open_today: set[int] = set()
@@ -370,6 +433,10 @@ async def search_catalog(
                 is_outdoor=bool(place.is_outdoor),
                 min_age_recommended=place.min_age_recommended,
                 price_level=_price_int(place.price_level),
+                game_interactivity=place.game_interactivity or 0,
+                gastro_intensity=place.gastro_intensity or 0,
+                cultural_education=place.cultural_education or 0,
+                nature_relaxation=place.nature_relaxation or 0,
                 kind="place",
             )
         )
@@ -399,7 +466,20 @@ async def search_catalog(
         filt,
         bias,
         event_intent=event_intent,
-    )[: request.limit]
+        profile=profile,
+    )
+    pack_limit = request.limit
+    if filt.stop_count is not None:
+        pack_limit = max(request.limit, filt.stop_count)
+    ranked = _pack_ranked_within_budget(
+        ranked,
+        place_by_key=place_by_key,
+        event_by_key=event_by_key,
+        budget_minutes=filt.time_budget_minutes,
+        limit=pack_limit,
+        stop_count=filt.stop_count,
+        places_only=filt.stop_count is not None and not event_intent,
+    )
 
     results: list[SearchResult] = []
     for item, score in ranked:

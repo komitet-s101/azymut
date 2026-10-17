@@ -15,7 +15,8 @@ export type TrailPlan = {
   mode: TrailMode | null
 }
 
-const MAX_STOPS = 4
+/** Twardy limit bezpieczeństwa — nie cel budowy szlaku. */
+const HARD_MAX_STOPS = 12
 /** Maks. odległość między kolejnymi przystankami szlaku miejsc (km). */
 const MAX_LEG_KM = 6
 /** Maks. rozpiętość całego szlaku miejsc (km). */
@@ -46,6 +47,29 @@ function hasCoords(item: SearchResult): boolean {
     Number.isFinite(item.latitude) &&
     Number.isFinite(item.longitude)
   )
+}
+
+export function visitMinutes(item: SearchResult): number {
+  if (item.typical_visit_minutes !== null && item.typical_visit_minutes > 0) {
+    return item.typical_visit_minutes
+  }
+  return item.kind === 'event' ? 120 : 30
+}
+
+function fitsBudget(
+  items: SearchResult[],
+  candidate: SearchResult,
+  budgetMinutes: number | null | undefined,
+): boolean {
+  if (budgetMinutes === null || budgetMinutes === undefined) {
+    return true
+  }
+  const duration = visitMinutes(candidate)
+  if (duration > budgetMinutes) {
+    return false
+  }
+  const total = items.reduce((sum, item) => sum + visitMinutes(item), 0)
+  return total + duration <= budgetMinutes
 }
 
 export function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -139,28 +163,47 @@ function toTrailStops(ordered: SearchResult[]): TrailStop[] {
   }))
 }
 
-function pickEventTrail(events: SearchResult[]): SearchResult[] {
-  const withCoords = events.filter(hasCoords).slice(0, MAX_STOPS)
+function pickEventTrail(
+  events: SearchResult[],
+  budgetMinutes: number | null | undefined,
+): SearchResult[] {
+  const withCoords = events.filter(hasCoords)
   if (withCoords.length === 0) {
     return []
   }
-  return orderEventsByTime(withCoords)
+  const ordered = orderEventsByTime(withCoords)
+  const picked: SearchResult[] = []
+  for (const event of ordered) {
+    if (picked.length >= HARD_MAX_STOPS) {
+      break
+    }
+    if (!fitsBudget(picked, event, budgetMinutes)) {
+      continue
+    }
+    picked.push(event)
+  }
+  return picked
 }
 
-function pickCoherentPlaceCluster(places: SearchResult[]): SearchResult[] {
+function pickCoherentPlaceCluster(
+  places: SearchResult[],
+  budgetMinutes: number | null | undefined,
+): SearchResult[] {
   const withCoords = places.filter(hasCoords)
   if (withCoords.length === 0) {
     return []
   }
-  if (withCoords.length === 1) {
-    return withCoords
+
+  const seed = withCoords[0]
+  if (!fitsBudget([], seed, budgetMinutes)) {
+    return []
   }
 
-  const cluster: SearchResult[] = [withCoords[0]]
-  let current = withCoords[0]
+  const cluster: SearchResult[] = [seed]
+  let current = seed
   const remaining = withCoords.slice(1)
 
-  while (cluster.length < MAX_STOPS && remaining.length > 0) {
+  while (cluster.length < HARD_MAX_STOPS && remaining.length > 0) {
     let bestIndex = -1
     let bestDistance = Infinity
     for (let index = 0; index < remaining.length; index += 1) {
@@ -174,6 +217,10 @@ function pickCoherentPlaceCluster(places: SearchResult[]): SearchResult[] {
       break
     }
     const candidate = remaining[bestIndex]
+    if (!fitsBudget(cluster, candidate, budgetMinutes)) {
+      remaining.splice(bestIndex, 1)
+      continue
+    }
     const trial = [...cluster, candidate]
     if (maxSpanKm(trial) > MAX_SPAN_KM) {
       break
@@ -183,32 +230,39 @@ function pickCoherentPlaceCluster(places: SearchResult[]): SearchResult[] {
     current = candidate
   }
 
-  if (cluster.length >= 2) {
-    return orderNearestNeighbor(cluster)
+  if (cluster.length === 1) {
+    return cluster
   }
-
-  const nearestOther = withCoords[1]
-  if (nearestOther && distanceBetween(withCoords[0], nearestOther) <= MAX_LEG_KM) {
-    return orderNearestNeighbor([withCoords[0], nearestOther]).slice(0, MAX_STOPS)
-  }
-
-  return []
+  return orderNearestNeighbor(cluster)
 }
 
-export function buildTrail(results: SearchResult[], query: string): TrailPlan {
+export function buildTrail(
+  results: SearchResult[],
+  query: string,
+  timeBudgetMinutes?: number | null,
+  stopCount?: number | null,
+): TrailPlan {
   const events = results.filter((item) => item.kind === 'event')
   const places = results.filter((item) => item.kind === 'place')
   const eventIntent = queryEventIntent(query, results)
 
+  const cap = stopCount !== null && stopCount !== undefined ? stopCount : undefined
+
   if (eventIntent) {
-    const ordered = pickEventTrail(events)
+    let ordered = pickEventTrail(events, timeBudgetMinutes)
+    if (cap !== undefined) {
+      ordered = ordered.slice(0, cap)
+    }
     if (ordered.length === 0) {
       return { stops: [], mode: null }
     }
     return { stops: toTrailStops(ordered), mode: 'event' }
   }
 
-  const ordered = pickCoherentPlaceCluster(places)
+  let ordered = pickCoherentPlaceCluster(places, timeBudgetMinutes)
+  if (cap !== undefined) {
+    ordered = ordered.slice(0, cap)
+  }
   if (ordered.length === 0) {
     return { stops: [], mode: null }
   }
@@ -226,10 +280,5 @@ export function trailPathKm(stops: TrailStop[]): number {
 }
 
 export function trailVisitMinutes(stops: TrailStop[]): number {
-  return stops.reduce((sum, stop) => {
-    if (stop.result.kind === 'event') {
-      return sum + (stop.result.typical_visit_minutes ?? 120)
-    }
-    return sum + (stop.result.typical_visit_minutes ?? 30)
-  }, 0)
+  return stops.reduce((sum, stop) => sum + visitMinutes(stop.result), 0)
 }

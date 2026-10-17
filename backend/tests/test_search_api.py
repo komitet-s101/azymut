@@ -235,8 +235,12 @@ async def test_search_endpoint_filters_and_reranks_for_weather(
     assert "Kawiarnia poniedziałkowa" not in sunny_names
     assert "Jarmark niedzielny" not in sunny_names
     assert "Mecz ligowy" not in sunny_names
-    assert "Koncert na rynku" in sunny_names
     assert "Muzeum Mazowieckie" in sunny_names
+    visit_total = sum(
+        item["typical_visit_minutes"] or (120 if item["kind"] == "event" else 30)
+        for item in sunny_body["results"]
+    )
+    assert visit_total <= sunny_body["filter"]["time_budget_minutes"]
     skwer = next(item for item in sunny_body["results"] if item["name"] == "Skwer bez cennika")
     assert "price_unconfirmed" in skwer["flags"]
     assert "check_hours" in skwer["flags"]
@@ -253,6 +257,48 @@ async def test_search_endpoint_filters_and_reranks_for_weather(
     assert rainy_body["weather_raining"] is True
     assert rainy_body["results"][0]["name"] == "Muzeum Mazowieckie"
     assert rainy_body["results"][0]["name"] != sunny_names[0]
+
+
+@pytest.mark.anyio
+async def test_search_returns_requested_stop_count(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _seed_catalog()
+    response = await api_client.post(
+        "/api/v1/search",
+        json={"query": "3 miejsca na spacer w Płocku"},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["filter"]["stop_count"] == 3
+    assert len(body["results"]) == 3
+    assert all(item["kind"] == "place" for item in body["results"])
+
+
+@pytest.mark.anyio
+async def test_search_packs_results_within_total_time_budget(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+    weather: dict[str, bool],
+) -> None:
+    await _seed_catalog()
+    response = await api_client.post(
+        "/api/v1/search",
+        json={"query": EXAMPLE},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    budget = body["filter"]["time_budget_minutes"]
+    assert budget == 180
+    total = sum(
+        item["typical_visit_minutes"] or (120 if item["kind"] == "event" else 30)
+        for item in body["results"]
+    )
+    assert total <= budget
+    assert "Całodniowa wycieczka" not in [item["name"] for item in body["results"]]
 
 
 @pytest.mark.anyio

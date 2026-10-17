@@ -8,7 +8,12 @@ import { PlanTrailMap } from '@/components/search-results/PlanTrailMap'
 import { PlanResultsHeader } from '@/components/search-results/PlanResultsHeader'
 import { SearchResultCard } from '@/components/search-results/SearchResultCard'
 import { TrailDetailPanel } from '@/components/search-results/TrailDetailPanel'
-import { searchNaturalLanguage, type SearchResponse } from '@/lib/searchApi'
+import {
+  searchNaturalLanguage,
+  searchPreferencesFromContext,
+  type SearchResponse,
+} from '@/lib/searchApi'
+import { loadUserContext } from '@/lib/userContextStorage'
 import { buildTrail, resultKey } from '@/lib/trail'
 import { fetchWalkingRoute, straightLineRoute, type WalkingRoute } from '@/lib/walkingRoute'
 
@@ -32,7 +37,8 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
     const controller = new AbortController()
     setState({ status: 'loading' })
     setSelectedStopKey(null)
-    searchNaturalLanguage(query, controller.signal)
+    const userPreferences = searchPreferencesFromContext(loadUserContext())
+    searchNaturalLanguage(query, controller.signal, userPreferences)
       .then((data) => setState({ status: 'ready', data }))
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === 'AbortError') {
@@ -48,7 +54,12 @@ export function SearchResultsPage({ query, onBack }: SearchResultsPageProps) {
     if (state.status !== 'ready') {
       return { stops: [], mode: null }
     }
-    return buildTrail(state.data.results, query)
+    return buildTrail(
+      state.data.results,
+      query,
+      state.data.filter?.time_budget_minutes ?? null,
+      state.data.filter?.stop_count ?? null,
+    )
   }, [state, query])
 
   const trailStops = trailPlan.stops
