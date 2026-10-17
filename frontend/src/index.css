@@ -103,6 +103,11 @@ body {
   height: 0;
 }
 
+/* Miejsce pod gradient zanikania na dole ramki telefonu */
+.screen-app-scroll > * {
+  padding-bottom: max(5.5rem, calc(4.5rem + env(safe-area-inset-bottom)));
+}
+
 .screen-app-fade {
   position: absolute;
   right: 0;

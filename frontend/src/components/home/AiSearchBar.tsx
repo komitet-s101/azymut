@@ -10,9 +10,10 @@ const SEARCH_LABEL = 'Wyszukiwanie planu w języku naturalnym'
 
 type AiSearchBarProps = {
   className?: string
+  onSearch?: (query: string) => void
 }
 
-export function AiSearchBar({ className }: AiSearchBarProps) {
+export function AiSearchBar({ className, onSearch }: AiSearchBarProps) {
   const [query, setQuery] = useState('')
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -20,8 +21,10 @@ export function AiSearchBar({ className }: AiSearchBarProps) {
     if (!query.trim()) {
       return
     }
-    if (import.meta.env.DEV) {
-      console.info('[AiSearchBar] submit (UI only):', query.trim())
+    const trimmed = query.trim()
+    onSearch?.(trimmed)
+    if (import.meta.env.DEV && !onSearch) {
+      console.info('[AiSearchBar] submit (UI only):', trimmed)
     }
   }
 
