@@ -39,13 +39,13 @@ from backend.services.search_events import (
 )
 from backend.services.search_preferences import (
     merge_user_preferences,
-    preferences_query_suffix,
+    preferences_system_context,
     resolve_interest_layers,
 )
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
 from backend.services.search_venue_mention import (
     mention_scores_for_catalog,
-    strong_mention_keys,
+    venue_focus_keys,
 )
 from backend.services.weather import get_weather_service
 from backend.settings import Settings, get_settings
@@ -488,11 +488,11 @@ async def search_catalog(
 ) -> SearchResponse:
     resolved_settings = settings or get_settings()
     resolved_today = today or warsaw_today()
-    llm_query = request.query + preferences_query_suffix(request.user_preferences)
     parsed: ParsedQuery = await parse_search_query(
-        llm_query,
+        request.query,
         today=resolved_today,
         settings=resolved_settings,
+        preference_context=preferences_system_context(request.user_preferences),
     )
     query_time_budget = parsed.filter.time_budget_minutes
     query_stop_count = parsed.filter.stop_count
@@ -520,7 +520,7 @@ async def search_catalog(
     events = await _candidate_events(filt)
     events = filter_events_for_query(events, request.query)
     mention_scores = mention_scores_for_catalog(request.query, places, events)
-    pin_keys = strong_mention_keys(mention_scores)
+    pin_keys = venue_focus_keys(mention_scores)
     venue_focus = bool(pin_keys)
     if venue_focus:
         filt = filt.model_copy(update={"setting": SettingPreference.EITHER})

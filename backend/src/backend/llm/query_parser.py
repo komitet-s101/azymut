@@ -643,6 +643,56 @@ def apply_search_defaults(
     return updated
 
 
+def merge_rules_with_llm_filter(
+    rules: SearchFilter,
+    llm: SearchFilter,
+    query: str,
+    *,
+    today: date,
+) -> SearchFilter:
+    """Reguły PL wygrywają przy jawnym sygnale w zapytaniu; reszta z LLM."""
+    text = fold(query)
+    updates: dict[str, Any] = {}
+
+    if _minutes(text) is not None:
+        updates["time_budget_minutes"] = rules.time_budget_minutes
+    if _stop_count(text) is not None:
+        updates["stop_count"] = rules.stop_count
+
+    when_date, _when_dow = _when(text, today)
+    if when_date is not None:
+        updates["date"] = rules.date
+        updates["day_of_week"] = rules.day_of_week
+
+    price_max, _price_strict = _price(text)
+    if price_max is not None:
+        updates["max_price_level"] = rules.max_price_level
+        updates["price_strict"] = rules.price_strict
+
+    setting, setting_strict = _setting(text)
+    if setting != SettingPreference.EITHER or setting_strict:
+        updates["setting"] = rules.setting
+        updates["setting_strict"] = rules.setting_strict
+
+    if _interests(text):
+        updates["interests"] = rules.interests
+
+    if _city(text) is not None:
+        updates["city"] = rules.city
+
+    rules_party = _party(text)
+    if (
+        rules_party.children > 0
+        or rules_party.child_ages
+        or rules_party.adults > 1
+        or re.search(r"bez dzieci|bez dziecka|dla doros|sami doros|tylko doros", text)
+    ):
+        updates["group"] = rules_party
+
+    merged = llm.model_copy(update=updates) if updates else llm
+    return _with_resolved_date(merged, today)
+
+
 def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:
     text = fold(query)
     target_date, weekday = _when(text, today)
@@ -665,15 +715,19 @@ def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:
     return apply_search_defaults(filt, query, today)
 
 
-def _system_prompt(today: date) -> str:
+def _system_prompt(today: date, preference_context: str | None = None) -> str:
     template = (_PROMPTS / "search_filter.pl.md").read_text(encoding="utf-8")
     categories = "\n".join(f"- {item.value}" for item in PlaceCategory)
-    return (
+    prompt = (
         template.replace("{{TODAY}}", today.isoformat())
         .replace("{{WEEKDAY}}", _WEEKDAYS_PL[today.weekday()])
         .replace("{{DOW}}", str(today.weekday()))
         .replace("{{CATEGORIES}}", categories)
     )
+    extra = (preference_context or "").strip()
+    if extra:
+        prompt = f"{prompt}\n\n{extra}"
+    return prompt
 
 
 def _retry_message(error: str) -> str:
@@ -688,9 +742,13 @@ async def _from_llm(
     query: str,
     *,
     today: date,
+    preference_context: str | None = None,
 ) -> SearchFilter:
     messages: list[dict[str, str]] = [
-        {"role": "system", "content": _system_prompt(today)},
+        {
+            "role": "system",
+            "content": _system_prompt(today, preference_context),
+        },
         {"role": "user", "content": query.strip()},
     ]
     last_error = "invalid"
@@ -718,6 +776,7 @@ async def parse_search_query(
     today: date | None = None,
     client: LLMClient | None = None,
     settings: Settings | None = None,
+    preference_context: str | None = None,
 ) -> ParsedQuery:
     resolved_today = today or date.today()
     rules = parse_search_query_rules(query, today=resolved_today)
@@ -728,11 +787,19 @@ async def parse_search_query(
             return ParsedQuery(filter=rules, source="rules")
         llm = LLMClient(resolved_settings)
     try:
-        parsed = apply_search_defaults(
-            await _from_llm(llm, query, today=resolved_today),
+        llm_filter = await _from_llm(
+            llm,
             query,
-            resolved_today,
+            today=resolved_today,
+            preference_context=preference_context,
         )
+        merged = merge_rules_with_llm_filter(
+            rules,
+            llm_filter,
+            query,
+            today=resolved_today,
+        )
+        parsed = apply_search_defaults(merged, query, resolved_today)
     except (LLMUnavailableError, ValidationError, ValueError, json.JSONDecodeError):
         return ParsedQuery(filter=rules, source="rules")
     return ParsedQuery(filter=parsed, source="llm")

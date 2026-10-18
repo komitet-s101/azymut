@@ -71,6 +71,12 @@ def resolve_interest_layers(
     return InterestLayers(query=query, preference=preference)
 
 
+def preferences_system_context(prefs: SearchUserPreferences | None) -> str:
+    """Tekst do system promptu LLM — nie doklejaj do zapytania użytkownika."""
+    block = preferences_query_suffix(prefs)
+    return block.strip()
+
+
 def preferences_query_suffix(prefs: SearchUserPreferences | None) -> str:
     if prefs is None:
         return ""

@@ -6,6 +6,7 @@ from backend.db.models import Place, PriceLevel
 from backend.services.search_venue_mention import (
     mention_scores_for_catalog,
     strong_mention_keys,
+    venue_focus_keys,
 )
 
 
@@ -55,3 +56,17 @@ async def test_mention_katedra(db) -> None:
     assert scores[f"place:{cathedral.id}"] >= 12
     pins = strong_mention_keys(scores)
     assert f"place:{cathedral.id}" in pins
+    assert f"place:{cathedral.id}" in venue_focus_keys(scores)
+
+
+@pytest.mark.anyio
+async def test_venue_focus_off_when_many_generic_muzeum_hits(db) -> None:
+    places = [
+        await _place("Muzeum Mazowieckie", category="historia_zabytki"),
+        await _place("Muzeum Sztuki Nowoczesnej", category="historia_zabytki"),
+        await _place("Muzeum Diecezjalne", category="historia_zabytki"),
+        await _place("Muzeum Rzeźby", category="historia_zabytki"),
+    ]
+    scores = mention_scores_for_catalog("muzeum w Płocku", places, [])
+    assert len(strong_mention_keys(scores)) >= 3
+    assert venue_focus_keys(scores) == set()

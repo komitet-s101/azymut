@@ -223,3 +223,11 @@ def mention_scores_for_catalog(
 
 def strong_mention_keys(scores: dict[str, float]) -> set[str]:
     return {key for key, value in scores.items() if value >= _STRONG_MENTION_SCORE}
+
+
+def venue_focus_keys(scores: dict[str, float]) -> set[str]:
+    """Tryb „konkretny obiekt” tylko przy ≤3 mocnych trafieniach (nie cała kategoria)."""
+    pinned = strong_mention_keys(scores)
+    if not pinned or len(pinned) > 3:
+        return set()
+    return pinned

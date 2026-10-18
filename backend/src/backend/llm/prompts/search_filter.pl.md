@@ -23,9 +23,10 @@ Wydarzenia (koncerty, kino, teatr, mecze, festiwale, jarmarki — rekordy z kale
 Kategorie interests:
 {{CATEGORIES}}
 
-Jeśli w wiadomości jest blok „Preferencje z onboardingu”, to **kontekst pomocniczy**, nie nadpisanie woli użytkownika:
-- **Pierwszeństwo ma treść zapytania** (przed blokiem preferencji): temat, kategorie `interests`, cena, indoor/outdoor, liczba osób, czas, `stop_count`, data.
-- Preferencje **uzupełniają tylko pola null / puste** (np. brak tematu → możesz dodać kategorie z onboardingu; brak czasu → nie wymyślaj z onboardingu w JSON — czas z onboardingu i tak ustawi backend).
+Jeśli w **instrukcji systemowej** (poniżej listy kategorii) jest blok „Preferencje z onboardingu”, to **kontekst pomocniczy** — użytkownik go nie widzi w swojej wiadomości:
+- **Pierwszeństwo ma wyłącznie treść wiadomości użytkownika**: temat, kategorie `interests`, cena, indoor/outdoor, liczba osób, czas, `stop_count`, data.
+- Preferencje **nie wypełniają** `time_budget_minutes`, `stop_count`, `date`, `day_of_week`, `setting` ani `group` — te pola ustawia backend z onboardingu, jeśli użytkownik ich nie podał.
+- W `interests` możesz dodać kategorie z onboardingu **tylko gdy** użytkownik w ogóle nie podał tematu (pusta lista po interpretacji zapytania).
 - Gdy użytkownik poda konkretny temat (np. muzeum, kino, spacer), **nie** dopisuj do `interests` kategorii wyłącznie z onboardingu.
 
 Zwróć wyłącznie JSON zgodny ze schematem.

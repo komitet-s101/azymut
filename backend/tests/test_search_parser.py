@@ -10,13 +10,17 @@ from backend.llm.query_parser import (
     apply_search_defaults,
     coerce_search_filter,
     explicit_search_filter_for_summary,
+    merge_rules_with_llm_filter,
     parse_search_query,
     parse_search_query_rules,
     query_event_intent,
     query_excerpt,
 )
+from backend.api.schemas.plan import PartyConstraints, UserConstraints, UserProfile
+from backend.api.schemas.search import SearchUserPreferences
+from backend.services.search_preferences import preferences_system_context
 from backend.services.search import summarize_search_response
-from backend.api.schemas.search import SearchFilter, SettingPreference
+from backend.api.schemas.search import PlaceCategory, SearchFilter, SettingPreference
 from backend.settings import Settings
 
 TODAY = date(2026, 10, 17)
@@ -316,6 +320,56 @@ async def test_parser_falls_back_when_llm_is_down() -> None:
 
 
 @pytest.mark.anyio
+async def test_parser_puts_onboarding_in_system_not_user_message() -> None:
+    prefs = SearchUserPreferences(
+        interest_tag_ids=["sport_aktywny_wypoczynek"],
+        profile=UserProfile(
+            bmi=None,
+            likes_games=2,
+            prefer_outdoor=True,
+            gastro_intensity_preference=2,
+            physical_activity_preference=4,
+        ),
+        constraints=UserConstraints(
+            budget_max_pln=0,
+            available_minutes=180,
+            day_of_week=5,
+            window_start="10:00",
+            window_end="18:00",
+            party=PartyConstraints(adults=2, kids_ages=[]),
+        ),
+    )
+    query = "muzeum w Płocku w piątek"
+    llm_case = dict(POLISH_QUERIES[0])
+    llm_case["query"] = query
+    llm_case["dow"] = 5
+    client = FakeLLM([_llm_json(llm_case)])
+    context = preferences_system_context(prefs)
+    assert "Preferencje z onboardingu" in context
+    parsed = await parse_search_query(
+        query,
+        today=TODAY,
+        client=client,  # type: ignore[arg-type]
+        preference_context=context,
+    )
+    assert parsed.source == "llm"
+    messages = client.calls[0]["messages"]
+    user_content = messages[-1]["content"]
+    system_content = messages[0]["content"]
+    assert "Preferencje z onboardingu" not in user_content
+    assert "Preferencje z onboardingu" in system_content
+    assert parsed.filter.day_of_week == 4
+
+
+def test_merge_rules_restore_time_when_llm_omits_budget() -> None:
+    query = "mam dwie godziny na muzeum"
+    rules = parse_search_query_rules(query, today=TODAY)
+    llm = SearchFilter(time_budget_minutes=None, interests=[PlaceCategory.HISTORIA_ZABYTKI])
+    merged = merge_rules_with_llm_filter(rules, llm, query, today=TODAY)
+    assert merged.time_budget_minutes == 120
+
+
+@pytest.mark.anyio
 async def test_parser_skips_llm_without_api_key() -> None:
     parsed = await parse_search_query(
         str(POLISH_QUERIES[0]["query"]),
@@ -426,7 +480,8 @@ def test_explicit_summary_filter_omits_default_city() -> None:
     assert filt.city is None
     assert filt.time_budget_minutes == 120
     assert filt.day_of_week == 4
-    assert filt.setting == SettingPreference.EITHER
+    assert filt.setting == SettingPreference.OUTDOOR
+    assert filt.setting_strict is False
 
 
 def test_plan_lead_prefers_query_excerpt_over_onboarding_chips() -> None:
