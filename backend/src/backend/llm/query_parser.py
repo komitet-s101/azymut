@@ -566,6 +566,39 @@ def interests_from_query_text(query: str) -> list[PlaceCategory]:
     return _interests(fold(query))
 
 
+def query_excerpt(query: str, max_len: int = 120) -> str:
+    collapsed = re.sub(r"\s+", " ", query.strip())
+    if not collapsed:
+        return ""
+    if len(collapsed) <= max_len:
+        return collapsed
+    cut = collapsed[:max_len]
+    if " " in cut:
+        cut = cut.rsplit(" ", 1)[0]
+    return cut.rstrip(".,;:") + "…"
+
+
+def explicit_search_filter_for_summary(query: str, *, today: date) -> SearchFilter:
+    """Filtr tylko z sygnałów w tekście zapytania — do chipów w nagłówku planu."""
+    text = fold(query)
+    target_date, weekday = _when(text, today)
+    max_price, price_strict = _price(text)
+    setting, setting_strict = _setting(text)
+    return SearchFilter(
+        date=target_date,
+        day_of_week=weekday,
+        time_budget_minutes=_minutes(text),
+        group=_party(text),
+        max_price_level=max_price,
+        price_strict=price_strict,
+        setting=setting,
+        setting_strict=setting_strict,
+        interests=[],
+        city=_city(text),
+        stop_count=_stop_count(text),
+    )
+
+
 def _city(text: str) -> str | None:
     found: tuple[int, int, str] | None = None
     for name, stem in _CITY_STEMS:

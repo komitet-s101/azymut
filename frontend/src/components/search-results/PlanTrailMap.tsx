@@ -63,10 +63,10 @@ export function PlanTrailMap({
   mapKey = 'default',
 }: PlanTrailMapProps) {
   const stopPositions: LatLngTuple[] = stops.map((stop) => [stop.lat, stop.lon])
-  const pathPositions =
-    route && route.positions.length >= 2 ? route.positions : stopPositions
+  const roadPath: LatLngTuple[] =
+    route?.followsRoads && route.positions.length >= 2 ? route.positions : []
   const center: LatLngTuple = stopPositions[0] ?? DEFAULT_CENTER
-  const showPath = pathPositions.length >= 2
+  const showPath = roadPath.length >= 2
   const deferMapMount = routeLoading && stops.length >= 2
 
   if (deferMapMount) {
@@ -86,16 +86,15 @@ export function PlanTrailMap({
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <FitTrailBounds
-            positions={showPath ? pathPositions : stopPositions.length > 0 ? stopPositions : [center]}
+            positions={showPath ? roadPath : stopPositions.length > 0 ? stopPositions : [center]}
           />
           {showPath ? (
             <Polyline
-              positions={pathPositions}
+              positions={roadPath}
               pathOptions={{
                 color: '#0b3d91',
                 weight: 5,
-                opacity: route?.followsRoads ? 0.9 : 0.45,
-                dashArray: route?.followsRoads ? undefined : '8 10',
+                opacity: 0.9,
               }}
             />
           ) : null}

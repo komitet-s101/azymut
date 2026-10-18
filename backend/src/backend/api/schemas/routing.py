@@ -9,7 +9,7 @@ class WalkWaypoint(BaseModel):
 
 
 class WalkRouteRequest(BaseModel):
-    waypoints: list[WalkWaypoint] = Field(min_length=2, max_length=8)
+    waypoints: list[WalkWaypoint] = Field(min_length=2, max_length=12)
 
 
 class WalkRouteResponse(BaseModel):

@@ -35,3 +35,12 @@ async def test_walk_route_returns_road_geometry(
     assert body["duration_minutes"] == 18.0
     assert len(body["coordinates"]) == 3
     assert body["coordinates"][0] == [52.55, 19.7]
+
+
+async def test_walk_route_accepts_up_to_twelve_waypoints(
+    api_client: AsyncClient,
+    mock_osrm: None,
+) -> None:
+    waypoints = [{"lat": 52.55 + index * 0.001, "lon": 19.7 + index * 0.001} for index in range(10)]
+    response = await api_client.post("/api/v1/routing/walk", json={"waypoints": waypoints})
+    assert response.status_code == 200

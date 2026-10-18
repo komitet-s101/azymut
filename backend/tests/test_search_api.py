@@ -384,6 +384,40 @@ async def test_search_prioritizes_named_venue_in_query(
 
 
 @pytest.mark.anyio
+async def test_search_summary_lead_uses_query_not_onboarding_profile(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _seed_catalog()
+    query = (
+        "Chciałbym spędzić popołudnie z rodziną, może coś kulturalnego w centrum miasta, "
+        "nie koniecznie sport i nie aquapark, mamy około dwie godziny w piątek"
+    )
+    response = await api_client.post(
+        "/api/v1/search",
+        json={
+            "query": query,
+            "user_preferences": {
+                "tourist_geography_scope": "plock_city",
+                "profile": {
+                    "bmi": None,
+                    "likes_games": 2,
+                    "prefer_outdoor": True,
+                    "gastro_intensity_preference": 2,
+                    "physical_activity_preference": 3,
+                },
+            },
+        },
+    )
+    assert response.status_code == 200
+    summary = response.json()["summary"]
+    assert "Chciałbym spędzić" in summary
+    assert "świeżym powietrzu" not in summary.casefold()
+    assert "3 godziny" not in summary
+
+
+@pytest.mark.anyio
 async def test_open_saturday_query_outdoor_profile_favors_outdoor_sport(
     api_client: AsyncClient,
     db,

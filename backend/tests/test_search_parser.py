@@ -9,10 +9,14 @@ from backend.llm.client import LLMUnavailableError
 from backend.llm.query_parser import (
     apply_search_defaults,
     coerce_search_filter,
+    explicit_search_filter_for_summary,
     parse_search_query,
     parse_search_query_rules,
     query_event_intent,
+    query_excerpt,
 )
+from backend.services.search import summarize_search_response
+from backend.api.schemas.search import SearchFilter, SettingPreference
 from backend.settings import Settings
 
 TODAY = date(2026, 10, 17)
@@ -405,3 +409,45 @@ def test_coerce_messy_llm_payload() -> None:
         "historia_zabytki",
     ]
     assert filt.city == "Płock"
+
+
+def test_query_excerpt_truncates_on_word_boundary() -> None:
+    long = "a " * 80
+    excerpt = query_excerpt(long.strip())
+    assert excerpt.endswith("…")
+    assert len(excerpt) <= 123
+
+
+def test_explicit_summary_filter_omits_default_city() -> None:
+    filt = explicit_search_filter_for_summary(
+        "chcę spokojny spacer i coś kulturalnego na piątek, mam dwie godziny",
+        today=TODAY,
+    )
+    assert filt.city is None
+    assert filt.time_budget_minutes == 120
+    assert filt.day_of_week == 4
+    assert filt.setting == SettingPreference.EITHER
+
+
+def test_plan_lead_prefers_query_excerpt_over_onboarding_chips() -> None:
+    query = (
+        "Chciałbym spędzić popołudnie z rodziną, może coś kulturalnego w centrum miasta, "
+        "nie koniecznie sport, mamy około dwie godziny w piątek"
+    )
+    merged = SearchFilter(
+        time_budget_minutes=180,
+        day_of_week=4,
+        setting=SettingPreference.OUTDOOR,
+        city="Płock",
+    )
+    summary = summarize_search_response(
+        query,
+        merged,
+        [],
+        venue_focus=False,
+        today=TODAY,
+    )
+    assert "Chciałbym spędzić" in summary
+    assert "świeżym powietrzu" not in summary.casefold()
+    assert "Płock" not in summary
+    assert "piątek" in summary.casefold()

@@ -25,7 +25,13 @@ from backend.api.schemas.weather import (
 from backend.db.models import Event, OpeningHours, Place, PriceLevel
 from backend.llm.client import LLMClient, LLMUnavailableError
 from backend.llm.parser import extract_json_object
-from backend.llm.query_parser import ParsedQuery, parse_search_query, query_event_intent
+from backend.llm.query_parser import (
+    ParsedQuery,
+    explicit_search_filter_for_summary,
+    parse_search_query,
+    query_event_intent,
+    query_excerpt,
+)
 from backend.services.search_events import (
     event_name_boost,
     filter_events_for_query,
@@ -110,15 +116,21 @@ def summarize_search_response(
     results: list[SearchResult],
     *,
     venue_focus: bool,
+    today: date,
 ) -> str:
-    """Nagłówek planu: przy konkretnym obiekcie — nazwy trafień, nie profil z onboardingu."""
+    """Nagłówek planu: venue → nazwy; inaczej skrót zapytania + chipy tylko z tekstu."""
     if venue_focus and results:
         return " · ".join(item.name for item in results[:_VENUE_FOCUS_RESULT_CAP])
-    summary = summarize_filter(filt)
+
     stripped = query.strip()
-    if summary == "Propozycje na Twój czas" and stripped:
-        return stripped[:120]
-    return summary
+    excerpt = query_excerpt(stripped)
+    chips = summarize_filter(
+        explicit_search_filter_for_summary(stripped, today=today),
+    )
+    if chips == "Propozycje na Twój czas":
+        chips = ""
+    parts = [part for part in (excerpt, chips) if part]
+    return " · ".join(parts) if parts else "Propozycje na Twój czas"
 
 
 def _weather_note(bias: WeatherBias, setting: SettingPreference) -> str | None:
@@ -670,6 +682,7 @@ async def search_catalog(
             filt,
             results,
             venue_focus=venue_focus,
+            today=resolved_today,
         ),
         filter=filt,
         parser=parsed.source,

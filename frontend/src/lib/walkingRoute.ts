@@ -18,6 +18,24 @@ function sleep(ms: number): Promise<void> {
   })
 }
 
+function mergeLegPositions(
+  merged: [number, number][],
+  leg: [number, number][],
+): [number, number][] {
+  if (leg.length === 0) {
+    return merged
+  }
+  if (merged.length === 0) {
+    return [...leg]
+  }
+  const last = merged[merged.length - 1]
+  const first = leg[0]
+  if (last[0] === first[0] && last[1] === first[1]) {
+    return [...merged, ...leg.slice(1)]
+  }
+  return [...merged, ...leg]
+}
+
 async function fetchWalkingRouteOnce(
   stops: TrailStop[],
   signal?: AbortSignal,
@@ -38,6 +56,9 @@ async function fetchWalkingRouteOnce(
     distance_km: number
     duration_minutes: number | null
   }
+  if (!data.coordinates || data.coordinates.length < 2) {
+    throw new Error('Brak geometrii trasy.')
+  }
   return {
     positions: data.coordinates,
     distanceKm: data.distance_km,
@@ -46,11 +67,44 @@ async function fetchWalkingRouteOnce(
   }
 }
 
+async function fetchWalkingRouteChained(
+  stops: TrailStop[],
+  signal?: AbortSignal,
+): Promise<WalkingRoute> {
+  let positions: [number, number][] = []
+  let distanceKm = 0
+  let durationMinutes = 0
+  let hasDuration = true
+
+  for (let index = 0; index < stops.length - 1; index += 1) {
+    const legStops = [stops[index], stops[index + 1]]
+    const leg = await fetchWalkingRouteOnce(legStops, signal)
+    positions = mergeLegPositions(positions, leg.positions)
+    distanceKm += leg.distanceKm
+    if (leg.durationMinutes === null) {
+      hasDuration = false
+    } else {
+      durationMinutes += leg.durationMinutes
+    }
+  }
+
+  if (positions.length < 2) {
+    throw new Error('Brak geometrii trasy.')
+  }
+
+  return {
+    positions,
+    distanceKm,
+    durationMinutes: hasDuration ? durationMinutes : null,
+    followsRoads: true,
+  }
+}
+
 /** Pieszy routing OSRM przez backend; kilka prób przy chwilowych błędach sieci. */
 export async function fetchWalkingRoute(
   stops: TrailStop[],
   signal?: AbortSignal,
-  maxAttempts = 3,
+  maxAttempts = 5,
 ): Promise<WalkingRoute> {
   let lastError: unknown
   for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
@@ -69,6 +123,18 @@ export async function fetchWalkingRoute(
       }
     }
   }
+
+  if (stops.length > 2) {
+    try {
+      return await fetchWalkingRouteChained(stops, signal)
+    } catch (error: unknown) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw error
+      }
+      lastError = error
+    }
+  }
+
   throw lastError instanceof Error
     ? lastError
     : new Error('Nie udało się wyznaczyć trasy pieszej.')

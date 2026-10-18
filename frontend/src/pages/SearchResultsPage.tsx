@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { CloudSun, ListChecks, Ticket } from 'lucide-react'
 
 import { WavePageHeader } from '@/components/layout/WavePageHeader'
@@ -30,7 +30,7 @@ import { appLayout } from '@/lib/appLayout'
 import { loadUserContext } from '@/lib/userContextStorage'
 import { cn } from '@/lib/utils'
 import { buildTrail, resultKey, type TrailMode } from '@/lib/trail'
-import { fetchWalkingRoute, straightLineRoute, type WalkingRoute } from '@/lib/walkingRoute'
+import { fetchWalkingRoute, type WalkingRoute } from '@/lib/walkingRoute'
 
 type SearchResultsPageProps = {
   query: string
@@ -62,6 +62,7 @@ export function SearchResultsPage({
   const [selectedStopKey, setSelectedStopKey] = useState<string | null>(null)
   const [walkingRoute, setWalkingRoute] = useState<WalkingRoute | null>(null)
   const [routeLoading, setRouteLoading] = useState(false)
+  const routeFetchGeneration = useRef(0)
 
   useEffect(() => {
     if (isPredefined) {
@@ -135,22 +136,36 @@ export function SearchResultsPage({
 
   useEffect(() => {
     if (trailStops.length < 2) {
-      setWalkingRoute(trailStops.length === 1 ? straightLineRoute(trailStops) : null)
+      setWalkingRoute(null)
       setRouteLoading(false)
       return
     }
     const controller = new AbortController()
+    const generation = routeFetchGeneration.current + 1
+    routeFetchGeneration.current = generation
     setRouteLoading(true)
-    setWalkingRoute(straightLineRoute(trailStops))
+    setWalkingRoute(null)
     fetchWalkingRoute(trailStops, controller.signal)
-      .then((route) => setWalkingRoute(route))
+      .then((route) => {
+        if (routeFetchGeneration.current !== generation) {
+          return
+        }
+        setWalkingRoute(route)
+      })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === 'AbortError') {
           return
         }
-        setWalkingRoute(straightLineRoute(trailStops))
+        if (routeFetchGeneration.current !== generation) {
+          return
+        }
+        setWalkingRoute(null)
       })
-      .finally(() => setRouteLoading(false))
+      .finally(() => {
+        if (routeFetchGeneration.current === generation) {
+          setRouteLoading(false)
+        }
+      })
     return () => controller.abort()
   }, [trailSignature])
 
