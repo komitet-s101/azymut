@@ -140,7 +140,7 @@ export function OnboardingPage({ entry, onComplete, onCancel }: OnboardingPagePr
     setSelectedRouteId(null)
   }
 
-  function handleFinish() {
+  function handleFinish(overrides?: { selectedRouteId?: number | null }) {
     const form: OnboardingFormState = {
       persona,
       interestTagIds,
@@ -149,7 +149,7 @@ export function OnboardingPage({ entry, onComplete, onCancel }: OnboardingPagePr
       childrenCount,
       customInterests,
       preferOutdoor,
-      selectedRouteId,
+      selectedRouteId: overrides?.selectedRouteId ?? selectedRouteId,
       touristGeographyScope,
     }
     const context = buildUserContextFromOnboarding(form)
@@ -162,6 +162,15 @@ export function OnboardingPage({ entry, onComplete, onCancel }: OnboardingPagePr
     }
     saveUserContext(context)
     onComplete()
+  }
+
+  function handleSelectRoute(routeId: number | null) {
+    if (routeId === null) {
+      setSelectedRouteId(null)
+      return
+    }
+    setSelectedRouteId(routeId)
+    handleFinish({ selectedRouteId: routeId })
   }
 
   function goBack() {
@@ -236,7 +245,7 @@ export function OnboardingPage({ entry, onComplete, onCancel }: OnboardingPagePr
           interestTagIds={interestTagIds}
           geographyScope={touristGeographyScope}
           selectedRouteId={selectedRouteId}
-          onSelectRoute={setSelectedRouteId}
+          onSelectRoute={handleSelectRoute}
         />
       ) : null}
       {stepId === 'profile' ? (
