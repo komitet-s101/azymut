@@ -20,6 +20,7 @@ export default defineConfig({
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
+      allowedHosts: ['localhost', '12.0.0.1', "azymut.pufereq.pl"],
     },
   },
 })
