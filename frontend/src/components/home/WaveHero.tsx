@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 
 import { WavePageHeader } from '@/components/layout/WavePageHeader'
+import { appLayout } from '@/lib/appLayout'
+import { cn } from '@/lib/utils'
 
 type WaveHeroProps = {
   header: ReactNode
@@ -11,7 +13,10 @@ export function WaveHero({ header, children }: WaveHeroProps) {
   return (
     <WavePageHeader
       header={header}
-      contentClassName="pt-[max(2.5rem,calc(env(safe-area-inset-top)+1rem))] px-5"
+      contentClassName={cn(
+        'pt-[max(2.5rem,calc(env(safe-area-inset-top)+1rem))]',
+        appLayout.pageX,
+      )}
     >
       {children}
     </WavePageHeader>

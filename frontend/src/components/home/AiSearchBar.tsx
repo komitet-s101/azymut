@@ -3,6 +3,7 @@ import { Search, Sparkles } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 const PLACEHOLDER = 'Opisz, jak chcesz spędzić czas…'
@@ -35,7 +36,10 @@ export function AiSearchBar({ className, onSearch }: AiSearchBarProps) {
       role="search"
     >
       <Sparkles
-        className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-primary"
+        className={cn(
+          'pointer-events-none absolute top-1/2 left-4 -translate-y-1/2',
+          appLayout.searchInputIcon,
+        )}
         aria-hidden
       />
       <Input
@@ -44,16 +48,19 @@ export function AiSearchBar({ className, onSearch }: AiSearchBarProps) {
         onChange={(e) => setQuery(e.target.value)}
         placeholder={PLACEHOLDER}
         aria-label={SEARCH_LABEL}
-        className="h-12 rounded-full border-0 bg-white pr-14 pl-12 text-base shadow-md text-foreground placeholder:text-muted-foreground"
+        className={cn(
+          appLayout.inputField,
+          'border-0 pr-14 pl-12 text-base shadow-md placeholder:text-muted-foreground',
+        )}
       />
       <Button
         type="submit"
         size="icon-sm"
         variant="default"
-        className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full"
+        className="absolute top-1/2 right-2 -translate-y-1/2 rounded-full text-primary-foreground"
         aria-label="Szukaj planu"
       >
-        <Search className="size-4" aria-hidden />
+        <Search className="size-4 shrink-0 text-current" aria-hidden />
       </Button>
     </form>
   )

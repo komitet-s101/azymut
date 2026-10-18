@@ -8,6 +8,7 @@ import {
 } from '@/components/onboarding/onboardingButtonStyles'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 import type { Persona, TouristGeographyScope } from '@/types/userContext'
 
@@ -54,24 +55,23 @@ function GeographyOption({
       type="button"
       onClick={onSelect}
       className={cn(
-        'flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left text-sm shadow-sm transition-colors',
-        active
-          ? 'border-primary bg-secondary ring-1 ring-primary/20'
-          : 'border-border/80 bg-card hover:border-border',
+        appLayout.choiceCard,
+        'flex w-full items-start gap-3',
+        active ? appLayout.choiceCardActive : appLayout.choiceCardIdle,
       )}
     >
       <span
         className={cn(
-          'flex size-9 shrink-0 items-center justify-center rounded-lg',
-          active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
+          appLayout.choiceIconWrap,
+          active ? appLayout.choiceIconWrapActive : appLayout.choiceIconWrapIdle,
         )}
         aria-hidden
       >
-        <Icon className="size-4" />
+        <Icon className={appLayout.choiceIcon} />
       </span>
       <span className="flex flex-col gap-0.5">
         <span className="font-medium text-foreground">{title}</span>
-        <span className="text-xs leading-snug text-muted-foreground">{description}</span>
+        <span className={appLayout.bodyMuted}>{description}</span>
       </span>
     </button>
   )
@@ -96,8 +96,8 @@ export function ProfileStep({
   return (
     <>
       <OnboardingStepHeading>{INTRO}</OnboardingStepHeading>
-      <div className="flex flex-col gap-4">
-        <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+      <div className={appLayout.sectionStack}>
+        <label className={appLayout.fieldLabel}>
           Wiek
           <Input
             type="number"
@@ -107,7 +107,7 @@ export function ProfileStep({
             placeholder="np. 18"
             value={age}
             onChange={(e) => onAgeChange(e.target.value)}
-            className="h-12 rounded-full border-border/80 bg-white px-4 shadow-sm"
+            className={appLayout.inputField}
           />
         </label>
 
@@ -119,17 +119,15 @@ export function ProfileStep({
               aria-checked={hasChildren}
               onClick={() => onHasChildrenChange(!hasChildren)}
               className={cn(
-                'flex items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm shadow-sm',
-                hasChildren
-                  ? 'border-primary bg-secondary ring-1 ring-primary/20'
-                  : 'border-border/80 bg-card',
+                appLayout.toggleRow,
+                hasChildren ? appLayout.choiceCardActive : appLayout.choiceCardIdle,
               )}
             >
               <span>Mam dzieci</span>
               <span className="text-muted-foreground">{hasChildren ? 'Tak' : 'Nie'}</span>
             </button>
             {hasChildren ? (
-              <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+              <label className={appLayout.fieldLabel}>
                 Liczba dzieci
                 <Input
                   type="number"
@@ -139,7 +137,7 @@ export function ProfileStep({
                   placeholder="np. 2"
                   value={childrenCount}
                   onChange={(e) => onChildrenCountChange(e.target.value)}
-                  className="h-12 rounded-full border-border/80 bg-white px-4 shadow-sm"
+                  className={appLayout.inputField}
                 />
               </label>
             ) : null}
@@ -147,7 +145,7 @@ export function ProfileStep({
         ) : null}
 
         {persona === 'tourist' ? (
-          <div className="flex flex-col gap-2">
+          <div className={appLayout.listStack}>
             <p className="text-sm font-medium text-foreground">Gdzie szukasz planów?</p>
             <GeographyOption
               active={touristGeographyScope === 'plock_city'}
@@ -172,10 +170,8 @@ export function ProfileStep({
           aria-checked={preferOutdoor}
           onClick={() => onPreferOutdoorChange(!preferOutdoor)}
           className={cn(
-            'flex items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm shadow-sm',
-            preferOutdoor
-              ? 'border-primary bg-secondary ring-1 ring-primary/20'
-              : 'border-border/80 bg-card',
+            appLayout.toggleRow,
+            preferOutdoor ? appLayout.choiceCardActive : appLayout.choiceCardIdle,
           )}
         >
           <span>Wolę aktywności na świeżym powietrzu</span>

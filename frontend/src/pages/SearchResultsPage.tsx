@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CloudSun, Ticket } from 'lucide-react'
+import { CloudSun, ListChecks, Ticket } from 'lucide-react'
 
 import { WavePageHeader } from '@/components/layout/WavePageHeader'
+import { PlanExportActions } from '@/components/search-results/PlanExportActions'
 import { PlanInfoCard } from '@/components/search-results/PlanInfoCard'
 import { PlanMapPlaceholder } from '@/components/search-results/PlanMapPlaceholder'
 import { PlanTrailMap } from '@/components/search-results/PlanTrailMap'
@@ -11,10 +12,11 @@ import { PredefinedRouteCallout } from '@/components/search-results/PredefinedRo
 import { SearchPlanLoadingScreen } from '@/components/search-results/SearchPlanLoadingScreen'
 import { SearchQueryCallout } from '@/components/search-results/SearchQueryCallout'
 import { SearchResultCard } from '@/components/search-results/SearchResultCard'
+import { PlanPlaceDetailSheet } from '@/components/search-results/PlanPlaceDetailSheet'
 import { TrailDetailPanel } from '@/components/search-results/TrailDetailPanel'
 import {
   enrichRouteDetailForMap,
-  routePlanSummary,
+  routeHeroLead,
   routeStopsToTrail,
 } from '@/lib/predefinedRoutePlan'
 import { fetchRouteDetail, type RouteDetail } from '@/lib/routeApi'
@@ -23,7 +25,10 @@ import {
   searchPreferencesFromContext,
   type SearchResponse,
 } from '@/lib/searchApi'
+import { buildPlanExportDocument } from '@/lib/buildPlanExportDocument'
+import { appLayout } from '@/lib/appLayout'
 import { loadUserContext } from '@/lib/userContextStorage'
+import { cn } from '@/lib/utils'
 import { buildTrail, resultKey, type TrailMode } from '@/lib/trail'
 import { fetchWalkingRoute, straightLineRoute, type WalkingRoute } from '@/lib/walkingRoute'
 
@@ -146,7 +151,7 @@ export function SearchResultsPage({
 
   const summary = useMemo(() => {
     if (isPredefined && predefinedState.status === 'ready') {
-      return routePlanSummary(predefinedState.route)
+      return routeHeroLead(predefinedState.route)
     }
     if (!isPredefined && searchState.status === 'ready') {
       return searchState.data.summary
@@ -192,6 +197,49 @@ export function SearchResultsPage({
     return searchState.data.results
   }, [isPredefined, trailStops, searchState])
 
+  const selectedItem = useMemo(() => {
+    if (!selectedStopKey) {
+      return null
+    }
+    return orderedResults.find((item) => resultKey(item) === selectedStopKey) ?? null
+  }, [orderedResults, selectedStopKey])
+
+  const selectedTrailOrder = useMemo(() => {
+    if (!selectedStopKey) {
+      return undefined
+    }
+    return trailStops.find((stop) => stop.key === selectedStopKey)?.order
+  }, [selectedStopKey, trailStops])
+
+  const planExportDocument = useMemo(() => {
+    const title = isPredefined && predefinedRouteName ? predefinedRouteName : 'Twój plan na dziś'
+    const contextLabel = isPredefined
+      ? `Trasa predefiniowana: ${predefinedRouteName || 'Azymut'}`
+      : `Wyszukiwanie: „${query.trim()}”`
+    const fallbackResults =
+      searchState.status === 'ready' ? searchState.data.results : []
+    return buildPlanExportDocument({
+      title,
+      subtitle: summary,
+      contextLabel,
+      ticketNote: ticket,
+      weatherNote: weather,
+      trailStops,
+      fallbackResults,
+      walkingRoute,
+    })
+  }, [
+    isPredefined,
+    predefinedRouteName,
+    query,
+    summary,
+    ticket,
+    weather,
+    trailStops,
+    searchState,
+    walkingRoute,
+  ])
+
   const resultsHeading = 'Pasujące miejsca i wydarzenia'
   const showTrailMap =
     !pageError &&
@@ -219,13 +267,13 @@ export function SearchResultsPage({
   }
 
   return (
-    <div className="flex min-h-full flex-col">
+    <div className="relative flex min-h-full flex-col">
       <WavePageHeader
         onBack={onBack}
         header={<PlanResultsHeader planSummary={summary} />}
         contentClassName="pt-[max(1rem,calc(env(safe-area-inset-top)+0.25rem))]"
       />
-      <div className="home-surface-texture flex flex-1 flex-col gap-8 px-5 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+      <div className={cn('home-surface-texture', appLayout.pageContent, appLayout.pageBottom)}>
         {isPredefined ? (
           <PredefinedRouteCallout
             routeName={predefinedRouteName}
@@ -266,6 +314,7 @@ export function SearchResultsPage({
               trailMode={trailPlan.mode}
               selectedKey={selectedStopKey}
               walkingRoute={walkingRoute}
+              onSelectStop={setSelectedStopKey}
             />
           </>
         ) : !isPredefined ? (
@@ -278,13 +327,19 @@ export function SearchResultsPage({
           />
         ) : null}
 
-        <div className="flex flex-col gap-3">
+        <div className={appLayout.listStack}>
           <PlanInfoCard icon={Ticket}>{ticket}</PlanInfoCard>
           <PlanInfoCard icon={CloudSun}>{weather}</PlanInfoCard>
         </div>
 
-        <section className="flex flex-col gap-4" aria-labelledby="search-results-heading">
-          <PlanSectionHeading id="search-results-heading" title={resultsHeading} />
+        <PlanExportActions document={planExportDocument} />
+
+        <section className={appLayout.sectionStack} aria-labelledby="search-results-heading">
+          <PlanSectionHeading
+            id="search-results-heading"
+            title={resultsHeading}
+            icon={ListChecks}
+          />
           {pageError ? <p role="alert">{pageError}</p> : null}
           {!isPredefined &&
           searchState.status === 'ready' &&
@@ -297,7 +352,7 @@ export function SearchResultsPage({
             <p>Brak przystanków z lokalizacją na mapie dla tej trasy.</p>
           ) : null}
           {!pageError ? (
-            <ol className="flex flex-col gap-3">
+            <ol className={cn('m-0 list-none p-0', appLayout.listStack)}>
               {orderedResults.map((item) => {
                 const key = resultKey(item)
                 const trailOrder = trailStops.find((stop) => stop.key === key)?.order
@@ -306,10 +361,8 @@ export function SearchResultsPage({
                     <SearchResultCard
                       item={item}
                       trailOrder={trailOrder}
-                      selected={trailOrder !== undefined && selectedStopKey === key}
-                      onSelect={
-                        trailOrder !== undefined ? () => setSelectedStopKey(key) : undefined
-                      }
+                      selected={selectedStopKey === key}
+                      onSelect={() => setSelectedStopKey(key)}
                     />
                   </li>
                 )
@@ -318,6 +371,13 @@ export function SearchResultsPage({
           ) : null}
         </section>
       </div>
+
+      <PlanPlaceDetailSheet
+        open={selectedItem !== null}
+        item={selectedItem}
+        trailOrder={selectedTrailOrder}
+        onClose={() => setSelectedStopKey(null)}
+      />
     </div>
   )
 }

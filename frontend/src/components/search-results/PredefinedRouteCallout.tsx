@@ -1,5 +1,8 @@
 import { Clock, MapPin, Signpost } from 'lucide-react'
 
+import { appLayout } from '@/lib/appLayout'
+import { cn } from '@/lib/utils'
+
 type PredefinedRouteCalloutProps = {
   routeName: string
   durationMinutesApprox?: number | null
@@ -51,30 +54,26 @@ export function PredefinedRouteCallout({
       : null
 
   return (
-    <figure className="rounded-xl border border-primary/20 bg-white px-3 py-2.5 shadow-sm ring-1 ring-primary/5">
-      <figcaption className="text-[0.6875rem] font-semibold uppercase tracking-wide text-primary/80">
-        Wybrana trasa
-      </figcaption>
-      <blockquote className="mt-1 font-heading text-base font-semibold leading-snug text-foreground">
-        {trimmed}
-      </blockquote>
+    <figure className={appLayout.callout}>
+      <figcaption className={appLayout.calloutLabel}>Wybrana trasa</figcaption>
+      <blockquote className={appLayout.calloutBody}>{trimmed}</blockquote>
       {duration || locationLine || stops ? (
-        <div className="mt-2 flex flex-col gap-1.5 text-sm text-muted-foreground">
+        <div className={cn(appLayout.metaStack, 'mt-2')}>
           {duration ? (
-            <span className="inline-flex items-center gap-1.5">
-              <Clock className="size-4 shrink-0 text-primary" aria-hidden />
+            <span className={appLayout.metaRow}>
+              <Clock className={appLayout.metaIcon} aria-hidden />
               {duration}
             </span>
           ) : null}
           {locationLine ? (
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin className="size-4 shrink-0 text-primary" aria-hidden />
+            <span className={appLayout.metaRow}>
+              <MapPin className={appLayout.metaIcon} aria-hidden />
               {locationLine}
             </span>
           ) : null}
           {stops ? (
-            <span className="inline-flex items-center gap-1.5">
-              <Signpost className="size-4 shrink-0 text-primary" aria-hidden />
+            <span className={appLayout.metaRow}>
+              <Signpost className={appLayout.metaIcon} aria-hidden />
               {stops}
             </span>
           ) : null}

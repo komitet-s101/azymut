@@ -4,6 +4,8 @@ import L from 'leaflet'
 
 import { PlanMapLoadingPlaceholder } from '@/components/search-results/PlanMapLoadingPlaceholder'
 import { Card } from '@/components/ui/card'
+import { appLayout } from '@/lib/appLayout'
+import { cn } from '@/lib/utils'
 import type { WalkingRoute } from '@/lib/walkingRoute'
 import type { TrailStop } from '@/lib/trail'
 
@@ -72,8 +74,8 @@ export function PlanTrailMap({
   }
 
   return (
-    <Card className="gap-0 overflow-hidden border-border/80 py-0">
-      <div className="relative h-[min(42vh,320px)] w-full min-h-[220px] bg-muted">
+    <Card className={appLayout.cardShell}>
+      <div className={cn('relative bg-muted', appLayout.mapFrame)}>
         <MapContainer
           key={mapKey}
           center={center}

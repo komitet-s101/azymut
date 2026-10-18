@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react'
 import { CalendarDays } from 'lucide-react'
 
 import { EventPlaceholderCard } from '@/components/home/EventPlaceholderCard'
-import { fetchUpcomingEventsForHome } from '@/lib/homeEventsApi'
+import { PlanSectionHeading } from '@/components/search-results/PlanSectionHeading'
 import { formatEventLocation, formatEventWhen } from '@/lib/formatEventWhen'
+import { fetchUpcomingEventsForHome } from '@/lib/homeEventsApi'
+import { appLayout } from '@/lib/appLayout'
 import {
   categoryLabel,
   searchPreferencesFromContext,
   type SearchResult,
 } from '@/lib/searchApi'
 import { loadUserContext } from '@/lib/userContextStorage'
+import { cn } from '@/lib/utils'
 
 const SECTION_TITLE = 'Nadchodzące wydarzenia dla Ciebie'
 const HOME_EVENT_LIMIT = 4
@@ -63,32 +66,26 @@ export function UpcomingEventsSection() {
 
   return (
     <section
-      className="flex flex-col gap-4 px-5 pt-7 pb-[max(1.5rem,env(safe-area-inset-bottom))]"
+      className={cn(appLayout.sectionStack, appLayout.pageX, 'pt-6', appLayout.pageBottom)}
       aria-labelledby="upcoming-events-heading"
       aria-busy={load.status === 'loading'}
     >
-      <h2
-        id="upcoming-events-heading"
-        className="flex items-center gap-2 text-lg font-semibold text-foreground"
-      >
-        <CalendarDays className="size-5 text-primary" aria-hidden />
-        {SECTION_TITLE}
-      </h2>
+      <PlanSectionHeading id="upcoming-events-heading" title={SECTION_TITLE} icon={CalendarDays} />
       {load.status === 'loading' ? (
-        <p className="text-sm text-muted-foreground" role="status">Ładujemy wydarzenia…</p>
+        <p className={appLayout.bodyMuted} role="status">Ładujemy wydarzenia…</p>
       ) : null}
       {load.status === 'error' ? (
-        <p className="text-sm text-muted-foreground" role="alert">
+        <p className={appLayout.bodyMuted} role="alert">
           Nie udało się pokazać wydarzeń. Spróbuj odświeżyć stronę.
         </p>
       ) : null}
       {load.status === 'ready' && events.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
+        <p className={appLayout.bodyMuted}>
           Brak nadchodzących wydarzeń w katalogu na najbliższe tygodnie.
         </p>
       ) : null}
       {events.length > 0 ? (
-        <ul className="m-0 flex list-none flex-col gap-4 p-0">
+        <ul className={cn('m-0 list-none p-0', appLayout.listStack)}>
           {events.map((event) => (
             <li key={event.id}>
               <EventPlaceholderCard event={event} />

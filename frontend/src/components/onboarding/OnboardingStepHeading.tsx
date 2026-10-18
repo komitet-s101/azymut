@@ -1,3 +1,4 @@
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 type OnboardingStepHeadingProps = {
@@ -6,14 +7,5 @@ type OnboardingStepHeadingProps = {
 }
 
 export function OnboardingStepHeading({ children, className }: OnboardingStepHeadingProps) {
-  return (
-    <h2
-      className={cn(
-        'font-heading mb-5 text-lg font-semibold leading-snug text-foreground',
-        className,
-      )}
-    >
-      {children}
-    </h2>
-  )
+  return <h2 className={cn(appLayout.stepIntro, className)}>{children}</h2>
 }

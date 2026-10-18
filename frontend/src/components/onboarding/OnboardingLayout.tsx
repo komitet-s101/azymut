@@ -4,6 +4,7 @@ import { OnboardingPageHeader } from '@/components/onboarding/OnboardingPageHead
 import { OnboardingPrivacyFooter } from '@/components/onboarding/OnboardingPrivacyFooter'
 import { WavePageHeader } from '@/components/layout/WavePageHeader'
 import { Badge } from '@/components/ui/badge'
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 type OnboardingLayoutProps = {
@@ -34,7 +35,7 @@ export function OnboardingLayout({
           className,
         )}
       >
-        <div className="scrollbar-hidden flex min-h-0 flex-1 flex-col overflow-y-auto px-6 pt-6 pb-8">
+        <div className={appLayout.onboardingScroll}>
           <div className="mb-5 flex justify-center">
             <Badge variant="secondary" className="px-3 py-1 text-xs font-medium">
               Krok {step} z {totalSteps}
@@ -46,13 +47,13 @@ export function OnboardingLayout({
         <div className="mt-auto flex shrink-0 flex-col bg-background">
           {footerActions ? (
             <div
-              className="flex min-h-[6.5rem] flex-col justify-end bg-background/95 px-6 pt-4 pb-1 backdrop-blur-sm"
+              className={appLayout.onboardingFooter}
             >
               {footerActions}
             </div>
           ) : null}
           <div
-            className="shrink-0 px-6 pt-5 pb-[calc(0.625rem+env(safe-area-inset-bottom,0px))]"
+            className={appLayout.onboardingPrivacy}
           >
             <OnboardingPrivacyFooter />
           </div>

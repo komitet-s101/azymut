@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
 import { Clock, Footprints, MapPinned, Route } from 'lucide-react'
 
-import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { fetchPlaceDetail } from '@/lib/placeApi'
-import { categoryLabel, priceLabel } from '@/lib/searchApi'
+import { appLayout } from '@/lib/appLayout'
+import { cn } from '@/lib/utils'
 import type { WalkingRoute } from '@/lib/walkingRoute'
 import type { TrailMode, TrailStop } from '@/lib/trail'
 import { trailPathKm, trailVisitMinutes } from '@/lib/trail'
@@ -14,13 +12,8 @@ type TrailDetailPanelProps = {
   trailMode: TrailMode | null
   selectedKey: string | null
   walkingRoute: WalkingRoute | null
+  onSelectStop?: (key: string) => void
 }
-
-type DetailState =
-  | { status: 'idle' }
-  | { status: 'loading' }
-  | { status: 'ready'; description: string | null; officialUrl: string | null; bookingUrl: string | null }
-  | { status: 'error' }
 
 function polishPlaceCount(n: number): string {
   if (n === 1) {
@@ -58,112 +51,8 @@ export function TrailDetailPanel({
   trailMode,
   selectedKey,
   walkingRoute,
+  onSelectStop,
 }: TrailDetailPanelProps) {
-  const selected = stops.find((stop) => stop.key === selectedKey) ?? null
-  const [detail, setDetail] = useState<DetailState>({ status: 'idle' })
-
-  useEffect(() => {
-    if (!selected || selected.result.kind !== 'place') {
-      setDetail({ status: 'idle' })
-      return
-    }
-    const controller = new AbortController()
-    setDetail({ status: 'loading' })
-    fetchPlaceDetail(selected.result.id, controller.signal)
-      .then((place) =>
-        setDetail({
-          status: 'ready',
-          description: place.description,
-          officialUrl: place.official_url,
-          bookingUrl: place.booking_url,
-        }),
-      )
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return
-        }
-        setDetail({ status: 'error' })
-      })
-    return () => controller.abort()
-  }, [selected])
-
-  if (selected) {
-    const item = selected.result
-    const placeLine = [item.city, item.address_line].filter(Boolean).join(' · ')
-    return (
-      <Card className="gap-2 border-border/80">
-        <CardHeader className="gap-2 border-b border-border/60 pb-3">
-          <div className="flex items-start justify-between gap-2">
-            <CardTitle className="text-lg leading-snug">{item.name}</CardTitle>
-            <Badge variant="secondary">Przystanek {selected.order}</Badge>
-          </div>
-          {placeLine ? (
-            <p className="text-sm text-muted-foreground">{placeLine}</p>
-          ) : (
-            <p className="text-sm text-muted-foreground">Lokalizacja na mapie</p>
-          )}
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3 pt-3 text-sm">
-          <dl className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-lg bg-muted/40 px-3 py-2.5">
-              <dt className="text-xs font-medium text-muted-foreground">Kategoria</dt>
-              <dd className="mt-0.5 font-medium text-foreground">{categoryLabel(item.category)}</dd>
-            </div>
-            <div className="rounded-lg bg-muted/40 px-3 py-2.5">
-              <dt className="text-xs font-medium text-muted-foreground">Bilety</dt>
-              <dd className="mt-0.5 font-medium text-foreground">
-                {priceLabel(item.price_level, item.flags)}
-              </dd>
-            </div>
-            {item.typical_visit_minutes ? (
-              <div className="rounded-lg bg-muted/40 px-3 py-2.5 sm:col-span-2">
-                <dt className="text-xs font-medium text-muted-foreground">Czas zwiedzania</dt>
-                <dd className="mt-0.5 font-medium text-foreground">
-                  ok. {item.typical_visit_minutes} min
-                </dd>
-              </div>
-            ) : null}
-          </dl>
-
-          {detail.status === 'loading' ? <p role="status">Ładujemy opis…</p> : null}
-          {detail.status === 'ready' && detail.description ? (
-            <p className="leading-relaxed text-foreground">{detail.description}</p>
-          ) : null}
-          {detail.status === 'ready' && !detail.description && item.reason ? (
-            <p className="leading-relaxed text-foreground">{item.reason}</p>
-          ) : null}
-          {detail.status === 'error' ? (
-            <p className="text-muted-foreground">Brak opisu — sprawdź kartę miejsca poniżej.</p>
-          ) : null}
-          {detail.status === 'ready' && (detail.officialUrl || detail.bookingUrl) ? (
-            <div className="flex flex-wrap gap-3 border-t border-border/60 pt-4">
-              {detail.officialUrl ? (
-                <a
-                  href={detail.officialUrl}
-                  className="font-medium text-primary underline-offset-2 hover:underline"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Strona miejsca
-                </a>
-              ) : null}
-              {detail.bookingUrl ? (
-                <a
-                  href={detail.bookingUrl}
-                  className="font-medium text-primary underline-offset-2 hover:underline"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Rezerwacja
-                </a>
-              ) : null}
-            </div>
-          ) : null}
-        </CardContent>
-      </Card>
-    )
-  }
-
   const pathKm = walkingRoute?.distanceKm ?? trailPathKm(stops)
   const walkMin = walkingRoute?.durationMinutes
   const visitMin = trailVisitMinutes(stops)
@@ -177,57 +66,66 @@ export function TrailDetailPanel({
 
   return (
     <Card className="gap-2 border-border/80">
-      <CardHeader className="border-b border-border/60 pb-3">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <Route className="size-4 shrink-0 text-primary" aria-hidden />
+      <CardHeader className={cn(appLayout.cardHeader, 'border-b border-border/60 pb-3')}>
+        <CardTitle className={cn('flex items-center gap-2', appLayout.cardTitle)}>
+          <Route className={appLayout.metaIcon} aria-hidden />
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-3.5 pt-3">
-        <p className="text-sm leading-snug text-muted-foreground">
-          {trailIntro(trailMode, stops.length)}
-        </p>
+      <CardContent className={cn('flex flex-col pt-3', appLayout.listStack)}>
+        <p className={appLayout.bodyMuted}>{trailIntro(trailMode, stops.length)}</p>
 
-        <ul className="flex flex-col gap-1.5 text-sm text-foreground">
-          <li className="flex items-center gap-2.5">
-            <Clock className="size-4 shrink-0 text-primary" aria-hidden />
+        <ul className={cn(appLayout.metaStack, 'text-foreground')}>
+          <li className={appLayout.metaRow}>
+            <Clock className={appLayout.metaIcon} aria-hidden />
             <span>ok. {visitMin} min</span>
           </li>
           {stops.length > 1 ? (
-            <li className="flex items-center gap-2.5">
-              <MapPinned className="size-4 shrink-0 text-primary" aria-hidden />
+            <li className={appLayout.metaRow}>
+              <MapPinned className={appLayout.metaIcon} aria-hidden />
               <span>{pathKm.toFixed(1)} km</span>
             </li>
           ) : null}
           {stops.length > 1 && walkMin ? (
-            <li className="flex items-center gap-2.5">
-              <Footprints className="size-4 shrink-0 text-primary" aria-hidden />
+            <li className={appLayout.metaRow}>
+              <Footprints className={appLayout.metaIcon} aria-hidden />
               <span>ok. {Math.round(walkMin)} min marszu</span>
             </li>
           ) : null}
         </ul>
 
-        <section className="flex flex-col gap-2" aria-labelledby="trail-stops-heading">
+        <section className={appLayout.listStack} aria-labelledby="trail-stops-heading">
           <h3 id="trail-stops-heading" className="text-sm font-semibold text-foreground">
-            Kolejność
+            Kolejność — kliknij punkt, aby zobaczyć szczegóły
           </h3>
-          <ol className="flex flex-col gap-1.5">
-            {stops.map((stop) => (
-              <li
-                key={stop.key}
-                className="flex items-start gap-2.5 rounded-lg border border-border/70 bg-card px-2.5 py-2"
-              >
-                <span
-                  className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[0.6875rem] font-bold text-primary-foreground"
-                  aria-hidden
-                >
-                  {stop.order}
-                </span>
-                <span className="pt-0.5 text-sm font-medium leading-snug text-foreground">
-                  {stop.result.name}
-                </span>
-              </li>
-            ))}
+          <ol className={appLayout.metaStack}>
+            {stops.map((stop) => {
+              const selected = selectedKey === stop.key
+              return (
+                <li key={stop.key}>
+                  <button
+                    type="button"
+                    onClick={() => onSelectStop?.(stop.key)}
+                    className={cn(
+                      'flex w-full items-start gap-2.5 rounded-lg border px-2.5 py-2 text-left transition-colors',
+                      selected
+                        ? 'border-primary bg-secondary ring-1 ring-primary/20'
+                        : 'border-border/70 bg-card hover:border-primary/40',
+                    )}
+                  >
+                    <span
+                      className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[0.6875rem] font-bold text-primary-foreground"
+                      aria-hidden
+                    >
+                      {stop.order}
+                    </span>
+                    <span className="pt-0.5 text-sm font-medium leading-snug text-foreground">
+                      {stop.result.name}
+                    </span>
+                  </button>
+                </li>
+              )
+            })}
           </ol>
         </section>
       </CardContent>

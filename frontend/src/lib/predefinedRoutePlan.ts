@@ -128,21 +128,22 @@ export function routeStopsToTrail(route: RouteDetail): TrailStop[] {
   return stops
 }
 
-export function routePlanSummary(route: RouteDetail): string {
-  const description = route.description?.trim()
-  if (description) {
-    const firstLine = description.split('\n')[0]?.trim()
-    if (firstLine && firstLine.length <= 120) {
-      return firstLine
-    }
-    if (firstLine) {
-      return `${firstLine.slice(0, 117)}…`
-    }
+function formatDurationBrief(minutes: number): string {
+  if (minutes >= 60) {
+    const hours = Math.floor(minutes / 60)
+    const rest = minutes % 60
+    return rest > 0 ? `ok. ${hours} h ${rest} min` : `ok. ${hours} h`
   }
-  const duration = route.duration_minutes_approx
-  const hours = Math.round(duration / 60)
-  if (hours >= 1) {
-    return `${route.name} · ok. ${hours} h`
-  }
-  return `${route.name} · ok. ${duration} min`
+  return `ok. ${minutes} min`
+}
+
+/** Krótki podtytuł pod „Twój plan na dziś” — bez długiego opisu (szczegóły w callout). */
+export function routeHeroLead(route: RouteDetail): string {
+  const duration = formatDurationBrief(route.duration_minutes_approx)
+  const stops =
+    route.stops_min === route.stops_max
+      ? `${route.stops_min} przystanków`
+      : `${route.stops_min}–${route.stops_max} przystanków`
+  const city = route.city?.split(/[/;]/)[0]?.trim()
+  return [duration, stops, city].filter(Boolean).join(' · ')
 }

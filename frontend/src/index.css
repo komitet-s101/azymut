@@ -134,16 +134,16 @@ body {
   pointer-events: none;
   background: linear-gradient(
     to top,
-    #ffffff 0%,
-    rgb(255 255 255 / 0.92) 35%,
-    rgb(255 255 255 / 0.45) 65%,
+    var(--background) 0%,
+    color-mix(in srgb, var(--background) 92%, transparent) 35%,
+    color-mix(in srgb, var(--background) 45%, transparent) 65%,
     transparent 100%
   );
 }
 
 /* Bardzo delikatna szara tekstura na białym tle (sekcja pod hero) */
 .home-surface-texture {
-  background-color: #ffffff;
+  background-color: var(--background);
   background-image:
     radial-gradient(rgb(15 23 42 / 0.028) 0.65px, transparent 0.65px),
     radial-gradient(rgb(15 23 42 / 0.016) 0.5px, transparent 0.5px);
@@ -180,4 +180,112 @@ body {
   background-size:
     22px 22px,
     18px 18px;
+}
+
+/* --- Dostępność (WCAG) — klasy na <html> --- */
+html.a11y-text-large {
+  font-size: 106.25%;
+}
+
+html.a11y-text-larger {
+  font-size: 118.75%;
+}
+
+html.a11y-high-contrast {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --primary: #000080;
+  --primary-foreground: #ffffff;
+  --secondary: #e8e8ff;
+  --secondary-foreground: #000000;
+  --muted: #f0f0f0;
+  --muted-foreground: #1a1a1a;
+  --border: #000000;
+  --input: #000000;
+  --ring: #000080;
+}
+
+html.a11y-high-contrast .home-surface-texture {
+  background-image: none;
+}
+
+/* Paleta żółty + fiolet — lepszy kontrast bez polegania na czerwono-zielonym */
+html.a11y-color-blind {
+  --background: #fffef0;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #5b21b6;
+  --primary-foreground: #fef08a;
+  --secondary: #fef08a;
+  --secondary-foreground: #3b0764;
+  --muted: #ede9fe;
+  --muted-foreground: #4c1d95;
+  --accent: #7c3aed;
+  --accent-foreground: #fef08a;
+  --destructive: #1d4ed8;
+  --border: #000000;
+  --input: #5b21b6;
+  --ring: #7c3aed;
+  --brand-hero: #4c1d95;
+  --brand-accent: #a855f7;
+  --brand-light: #fef08a;
+}
+
+html.a11y-color-blind .home-surface-texture {
+  background-color: var(--background);
+  background-image: none;
+}
+
+html.a11y-reduce-motion *,
+html.a11y-reduce-motion *::before,
+html.a11y-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgb(15 23 42 / 0.15);
+}
+
+.skip-to-content:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.screen-app-scroll.azymut-scroll-locked {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+html.azymut-scroll-locked,
+body.azymut-scroll-locked {
+  overflow: hidden !important;
+  overscroll-behavior: none;
 }

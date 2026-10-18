@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Sparkles } from 'lucide-react'
+import { Route, Sparkles } from 'lucide-react'
 
 import { OnboardingActionBar } from '@/components/onboarding/OnboardingActionBar'
 import { OnboardingStepHeading } from '@/components/onboarding/OnboardingStepHeading'
@@ -12,10 +12,12 @@ import { PlanSectionHeading } from '@/components/search-results/PlanSectionHeadi
 import { Button } from '@/components/ui/button'
 import { listRoutes, type RouteSummary } from '@/lib/routeApi'
 import type { TouristGeographyScope } from '@/lib/touristRoutes'
+import { appLayout } from '@/lib/appLayout'
 import {
   splitOnboardingRouteSuggestions,
   type OnboardingRouteSuggestions,
 } from '@/lib/suggestOnboardingRoutes'
+import { cn } from '@/lib/utils'
 
 const INTRO = 'Wybierz gotową trasę na dzień albo przejdź dalej bez wyboru.'
 
@@ -41,7 +43,7 @@ function RouteList({
   onToggle: (routeId: number) => void
 }) {
   return (
-    <ol className="flex flex-col gap-3">
+    <ol className={cn('m-0 list-none p-0', appLayout.listStack)}>
       {routes.map((route) => (
         <li key={route.id}>
           <SuggestedRouteCard
@@ -96,20 +98,20 @@ export function SuggestedRoutesStep({
     <>
       <OnboardingStepHeading>{INTRO}</OnboardingStepHeading>
       {load.status === 'loading' ? (
-        <p className="text-sm text-muted-foreground" role="status">Ładujemy propozycje tras…</p>
+        <p className={appLayout.bodyMuted} role="status">Ładujemy propozycje tras…</p>
       ) : null}
       {load.status === 'error' ? (
-        <p className="text-sm text-muted-foreground" role="alert">
+        <p className={appLayout.bodyMuted} role="alert">
           {load.message} Możesz przejść dalej bez wyboru trasy.
         </p>
       ) : null}
       {load.status === 'ready' && !hasAnyRoutes ? (
-        <p className="text-sm text-muted-foreground">
+        <p className={appLayout.bodyMuted}>
           Brak tras w katalogu — przejdź dalej i wyszukaj miejsca na ekranie głównym.
         </p>
       ) : null}
       {ready && ready.forYou.length > 0 ? (
-        <section className="flex flex-col gap-4" aria-labelledby="routes-for-you-heading">
+        <section className={appLayout.sectionStack} aria-labelledby="routes-for-you-heading">
           <PlanSectionHeading
             id="routes-for-you-heading"
             title="Dopasowane do Ciebie"
@@ -124,10 +126,10 @@ export function SuggestedRoutesStep({
       ) : null}
       {ready && ready.other.length > 0 ? (
         <section
-          className="mt-6 flex flex-col gap-4"
+          className={cn('mt-6', appLayout.sectionStack)}
           aria-labelledby="routes-other-heading"
         >
-          <PlanSectionHeading id="routes-other-heading" title="Inne trasy" />
+          <PlanSectionHeading id="routes-other-heading" title="Inne trasy" icon={Route} />
           <RouteList
             routes={ready.other}
             selectedRouteId={selectedRouteId}

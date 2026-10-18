@@ -1,6 +1,7 @@
 import { Check } from 'lucide-react'
 
 import type { OnboardingInterestOption } from '@/data/interestCategories'
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 type InterestOptionCardProps = {
@@ -18,10 +19,11 @@ export function InterestOptionCard({ option, active, onToggle }: InterestOptionC
       aria-pressed={active}
       onClick={onToggle}
       className={cn(
-        'flex w-full items-center gap-2.5 rounded-lg border px-3 py-2 text-left transition-colors',
+        appLayout.choiceCard,
+        'flex w-full items-center gap-3',
         active
-          ? 'border-primary bg-primary/10 shadow-sm'
-          : 'border-border/70 bg-card hover:border-border',
+          ? 'border-primary bg-primary/10 ring-1 ring-primary/15'
+          : cn(appLayout.choiceCardIdle, 'hover:border-border'),
       )}
     >
       <span
@@ -34,10 +36,7 @@ export function InterestOptionCard({ option, active, onToggle }: InterestOptionC
         {active ? <Check className="size-3" strokeWidth={3} /> : null}
       </span>
       <Icon
-        className={cn(
-          'size-4 shrink-0',
-          active ? 'text-primary' : 'text-muted-foreground',
-        )}
+        className={cn(appLayout.metaIcon, active ? 'text-primary' : 'text-muted-foreground')}
         strokeWidth={2}
         aria-hidden
       />

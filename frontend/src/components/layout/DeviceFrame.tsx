@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import { AccessibilityToolbar } from '@/components/accessibility/AccessibilityToolbar'
+import { SkipToContentLink } from '@/components/accessibility/SkipToContentLink'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { clearUserContext } from '@/lib/userContextStorage'
@@ -25,8 +27,12 @@ export function DeviceFrame({
 }: DeviceFrameProps) {
   if (!useDeviceMock()) {
     return (
-      <div className={cn('mx-auto flex min-h-dvh w-full max-w-lg flex-col', className)}>
-        {children}
+      <div className={cn('relative mx-auto flex min-h-dvh w-full max-w-lg flex-col', className)}>
+        <SkipToContentLink />
+        <AccessibilityToolbar />
+        <div id="main-content" className="flex min-h-0 flex-1 flex-col outline-none" tabIndex={-1}>
+          {children}
+        </div>
       </div>
     )
   }
@@ -50,8 +56,16 @@ export function DeviceFrame({
       <div className="device-mock-host">
         <div className="marvel-device iphone-x">
           <div className="notch" />
-          <div className={cn('screen screen-app', className)}>
-            <div className="screen-app-scroll">{children}</div>
+          <div className={cn('screen screen-app relative', className)}>
+            <SkipToContentLink />
+            <AccessibilityToolbar />
+            <div
+              id="main-content"
+              className="screen-app-scroll outline-none"
+              tabIndex={-1}
+            >
+              {children}
+            </div>
             {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
           </div>
         </div>

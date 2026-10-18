@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
-import { Lightbulb } from 'lucide-react'
 
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 type PlanSectionHeadingProps = {
@@ -13,15 +13,12 @@ type PlanSectionHeadingProps = {
 export function PlanSectionHeading({
   id,
   title,
-  icon: Icon = Lightbulb,
+  icon: Icon,
   className,
 }: PlanSectionHeadingProps) {
   return (
-    <h2
-      id={id}
-      className={cn('flex items-center gap-2 text-lg font-semibold text-foreground', className)}
-    >
-      <Icon className="size-5 shrink-0 text-primary" aria-hidden />
+    <h2 id={id} className={cn(appLayout.sectionTitle, className)}>
+      {Icon ? <Icon className={appLayout.sectionIcon} aria-hidden /> : null}
       {title}
     </h2>
   )

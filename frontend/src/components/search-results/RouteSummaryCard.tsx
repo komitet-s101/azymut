@@ -3,7 +3,7 @@ import { Clock, MapPin, Signpost } from 'lucide-react'
 import { PlanCategoryBadge } from '@/components/search-results/PlanCategoryBadge'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import type { RouteSummary } from '@/lib/routeApi'
-import { touristRouteKindLabel } from '@/lib/touristRoutes'
+import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
 
 type RouteSummaryCardProps = {
@@ -43,12 +43,11 @@ export function RouteSummaryCard({ route, selected = false, onSelect }: RouteSum
   const blurb = shortDescription(route.description)
   const interactive = Boolean(onSelect)
   const locationLine = [route.city, route.gmina].filter(Boolean).join(' · ')
-  const routeKind = touristRouteKindLabel(route)
 
   return (
     <Card
       className={cn(
-        'gap-0 overflow-hidden border-border/80 py-0',
+        appLayout.cardShell,
         selected && 'ring-2 ring-primary',
         interactive && 'cursor-pointer',
       )}
@@ -67,40 +66,28 @@ export function RouteSummaryCard({ route, selected = false, onSelect }: RouteSum
       tabIndex={interactive ? 0 : undefined}
       aria-pressed={interactive ? selected : undefined}
     >
-      <CardHeader className="gap-2 px-4 py-4">
-        <CardTitle className="text-base leading-snug">{route.name}</CardTitle>
-        {blurb ? (
-          <p className="text-sm leading-snug text-muted-foreground">{blurb}</p>
-        ) : null}
-        <div
-          className={cn(
-            'flex flex-col gap-2.5 rounded-xl border border-border/80 bg-muted/35 px-3 py-3',
-            blurb ? 'mt-1' : 'mt-0.5',
-          )}
-        >
-          {routeKind || route.category ? (
+      <CardHeader className={appLayout.cardHeader}>
+        <CardTitle className={appLayout.cardTitle}>{route.name}</CardTitle>
+        {blurb ? <p className={appLayout.bodyMuted}>{blurb}</p> : null}
+        <div className={cn(appLayout.resultMetaPanel, blurb ? 'mt-1' : 'mt-0.5')}>
+          {route.category ? (
             <div className="flex flex-wrap items-center gap-1.5">
-              {routeKind ? (
-                <span className="inline-flex w-fit rounded-md border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-                  {routeKind}
-                </span>
-              ) : null}
-              {route.category ? <PlanCategoryBadge category={route.category} /> : null}
+              <PlanCategoryBadge category={route.category} />
             </div>
           ) : null}
-          <div className="flex flex-col gap-1.5 text-sm text-foreground/85">
-            <span className="inline-flex items-center gap-1.5">
-              <Clock className="size-4 shrink-0 text-primary" aria-hidden />
+          <div className={cn(appLayout.metaStack, 'text-foreground/85')}>
+            <span className={appLayout.metaRow}>
+              <Clock className={appLayout.metaIcon} aria-hidden />
               {formatDayDuration(route.duration_minutes_approx)}
             </span>
             {locationLine ? (
-              <span className="inline-flex items-center gap-1.5">
-                <MapPin className="size-4 shrink-0 text-primary" aria-hidden />
+              <span className={appLayout.metaRow}>
+                <MapPin className={appLayout.metaIcon} aria-hidden />
                 {locationLine}
               </span>
             ) : null}
-            <span className="inline-flex items-center gap-1.5">
-              <Signpost className="size-4 shrink-0 text-primary" aria-hidden />
+            <span className={appLayout.metaRow}>
+              <Signpost className={appLayout.metaIcon} aria-hidden />
               {stopsLabel(route)}
             </span>
           </div>

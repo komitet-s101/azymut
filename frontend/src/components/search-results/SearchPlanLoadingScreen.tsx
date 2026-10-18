@@ -1,5 +1,8 @@
 import { Loader2 } from 'lucide-react'
 
+import { appLayout } from '@/lib/appLayout'
+import { cn } from '@/lib/utils'
+
 type SearchPlanLoadingScreenProps = {
   message: string
 }
@@ -7,13 +10,16 @@ type SearchPlanLoadingScreenProps = {
 export function SearchPlanLoadingScreen({ message }: SearchPlanLoadingScreenProps) {
   return (
     <div
-      className="home-surface-texture flex flex-1 flex-col items-center justify-center gap-4 px-8 pt-10 pb-[max(2rem,env(safe-area-inset-bottom))]"
+      className={cn(
+        'home-surface-texture pb-[max(2rem,env(safe-area-inset-bottom))]',
+        appLayout.loadingScreen,
+      )}
       role="status"
       aria-live="polite"
       aria-busy="true"
     >
-      <Loader2 className="size-10 animate-spin text-primary" aria-hidden />
-      <p className="max-w-xs text-center text-sm leading-snug text-muted-foreground">{message}</p>
+      <Loader2 className={appLayout.spinnerLg} aria-hidden />
+      <p className={cn('max-w-xs text-center', appLayout.bodyMuted)}>{message}</p>
     </div>
   )
 }

@@ -1,14 +1,10 @@
 import { SlidersHorizontal } from 'lucide-react'
 
+import { HeroWaveTitle } from '@/components/layout/HeroWaveTitle'
+
 const HEADER_TITLE = 'Personalizacja'
+const HEADER_LEAD = 'Ustaw profil — dopasujemy plany do Ciebie'
 
 export function OnboardingPageHeader() {
-  return (
-    <header className="text-center text-primary-foreground">
-      <div className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25">
-        <SlidersHorizontal className="size-5 text-white" aria-hidden />
-      </div>
-      <h1 className="font-heading text-2xl font-bold tracking-tight">{HEADER_TITLE}</h1>
-    </header>
-  )
+  return <HeroWaveTitle icon={SlidersHorizontal} title={HEADER_TITLE} lead={HEADER_LEAD} />
 }
