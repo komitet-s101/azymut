@@ -47,7 +47,11 @@ export function formatPlanAsPlainText(doc: PlanExportDocument): string {
     '',
   ]
 
-  if (doc.routeDistanceKm !== null || doc.routeWalkMinutes !== null || doc.visitMinutesTotal !== null) {
+  if (
+    doc.routeDistanceKm !== null ||
+    doc.routeWalkMinutes !== null ||
+    doc.visitMinutesTotal !== null
+  ) {
     lines.push('Podsumowanie trasy:')
     if (doc.visitMinutesTotal !== null) {
       lines.push(`• Szacowany czas zwiedzania: ok. ${doc.visitMinutesTotal} min`)
@@ -80,117 +84,194 @@ export function formatPlanAsPlainText(doc: PlanExportDocument): string {
     }
   }
 
-  lines.push('', 'Bilety i ceny', doc.ticketNote, '', 'Pogoda', doc.weatherNote, '', '— Azymut, planer wolnego czasu')
+  lines.push('', 'Bilety i ceny', doc.ticketNote, '', 'Pogoda', doc.weatherNote, '', '— Azymut')
   return lines.join('\n')
 }
 
-export function buildPlanPrintHtml(doc: PlanExportDocument): string {
-  const stopsHtml = doc.stops
-    .map((stop) => {
-      const meta: string[] = []
-      if (stop.when) {
-        meta.push(`Termin: ${escapeHtml(stop.when)}`)
-      }
-      if (stop.location) {
-        meta.push(`Adres: ${escapeHtml(stop.location)}`)
-      }
-      meta.push(`Bilety: ${escapeHtml(stop.price)}`)
-      if (stop.visitMinutes) {
-        meta.push(`Czas: ok. ${stop.visitMinutes} min`)
-      }
-      const orderBadge =
-        stop.order !== null
-          ? `<span class="order">${stop.order}</span>`
-          : '<span class="order">•</span>'
-      return `<li class="stop">
-        ${orderBadge}
-        <div>
-          <strong>${escapeHtml(stop.name)}</strong>
-          <span class="cat">${escapeHtml(stop.category)}</span>
-          <p class="meta">${meta.join(' · ')}</p>
-        </div>
-      </li>`
-    })
-    .join('')
-
-  const summaryParts: string[] = []
+function buildSummaryLines(doc: PlanExportDocument): string[] {
+  const parts: string[] = []
   if (doc.visitMinutesTotal !== null) {
-    summaryParts.push(`Zwiedzanie: ok. ${doc.visitMinutesTotal} min`)
+    parts.push(`Czas zwiedzania: ok. ${doc.visitMinutesTotal} min`)
   }
   if (doc.routeDistanceKm !== null) {
-    summaryParts.push(`Dystans: ${doc.routeDistanceKm.toFixed(1)} km`)
+    parts.push(`Dystans: ${doc.routeDistanceKm.toFixed(1)} km`)
   }
   if (doc.routeWalkMinutes !== null) {
-    summaryParts.push(`Marsz: ok. ${Math.round(doc.routeWalkMinutes)} min`)
+    parts.push(`Marsz: ok. ${Math.round(doc.routeWalkMinutes)} min`)
   }
+  return parts
+}
+
+function buildStopBlock(stop: PlanExportStop): string {
+  const prefix = stop.order !== null ? `${stop.order}. ` : ''
+  const details: string[] = []
+  if (stop.when) {
+    details.push(`<li>Termin: ${escapeHtml(stop.when)}</li>`)
+  }
+  if (stop.location) {
+    details.push(`<li>Miejsce: ${escapeHtml(stop.location)}</li>`)
+  }
+  details.push(`<li>Bilety: ${escapeHtml(stop.price)}</li>`)
+  if (stop.visitMinutes) {
+    details.push(`<li>Czas: ok. ${stop.visitMinutes} min</li>`)
+  }
+  return `<article class="stop">
+    <h3 class="stop-title">${prefix}${escapeHtml(stop.name)}</h3>
+    <p class="stop-cat">${escapeHtml(stop.category)}</p>
+    <ul class="stop-details">${details.join('')}</ul>
+  </article>`
+}
+
+export function buildPlanPrintHtml(doc: PlanExportDocument): string {
+  const summary = buildSummaryLines(doc)
+  const stopsHtml = doc.stops.map(buildStopBlock).join('')
+
+  const summaryHtml =
+    summary.length > 0 || doc.routeNote
+      ? `<section class="box" aria-label="Podsumowanie">
+    ${summary.map((line) => `<p>${escapeHtml(line)}</p>`).join('')}
+    ${doc.routeNote ? `<p class="small">${escapeHtml(doc.routeNote)}</p>` : ''}
+  </section>`
+      : ''
 
   return `<!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${escapeHtml(doc.title)} — Azymut</title>
   <style>
+    @page { size: A4; margin: 14mm; }
     * { box-sizing: border-box; }
-    body { font-family: system-ui, "Segoe UI", sans-serif; color: #0f172a; margin: 0; padding: 24px; line-height: 1.45; }
-    h1 { font-size: 1.35rem; margin: 0 0 0.25rem; color: #0b3d91; }
-    .sub { font-size: 0.95rem; color: #334155; margin: 0 0 0.5rem; }
-    .ctx { font-size: 0.85rem; color: #64748b; margin: 0 0 1rem; }
-    .meta-line { font-size: 0.8rem; color: #64748b; margin-bottom: 1.25rem; }
-    .summary { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 14px; margin-bottom: 1.25rem; font-size: 0.9rem; }
-    h2 { font-size: 1rem; margin: 1.25rem 0 0.5rem; }
-    ol { list-style: none; padding: 0; margin: 0; }
-    .stop { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
-    .order { flex-shrink: 0; width: 28px; height: 28px; border-radius: 999px; background: #0b3d91; color: #fff; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
-    .cat { display: inline-block; margin-left: 8px; font-size: 0.75rem; font-weight: 600; color: #0b3d91; background: #eff6ff; padding: 2px 8px; border-radius: 4px; }
-    .meta { margin: 4px 0 0; font-size: 0.82rem; color: #475569; }
-    .note { font-size: 0.88rem; color: #334155; margin: 0.35rem 0 0; }
-    footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; font-size: 0.75rem; color: #94a3b8; }
-    @media print { body { padding: 12mm; } }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 11pt;
+      line-height: 1.45;
+      color: #111827;
+      margin: 0;
+      padding: 0;
+    }
+    .page { max-width: 180mm; margin: 0 auto; }
+    h1 { font-size: 16pt; font-weight: 700; margin: 0 0 6pt; color: #0b3d91; }
+    .lead { margin: 0 0 4pt; color: #334155; }
+    .ctx { margin: 0 0 10pt; font-size: 10pt; color: #64748b; }
+    .stamp { margin: 0 0 14pt; font-size: 9pt; color: #64748b; }
+    h2 {
+      font-size: 12pt;
+      font-weight: 700;
+      margin: 16pt 0 8pt;
+      padding-bottom: 4pt;
+      border-bottom: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+    .box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10pt 12pt;
+      margin-bottom: 12pt;
+    }
+    .box p { margin: 0 0 4pt; }
+    .box p:last-child { margin-bottom: 0; }
+    .small { font-size: 9pt; color: #475569; }
+    .stop {
+      margin: 0 0 12pt;
+      padding-bottom: 10pt;
+      border-bottom: 1px solid #e2e8f0;
+      page-break-inside: avoid;
+    }
+    .stop:last-child { border-bottom: 0; padding-bottom: 0; }
+    .stop-title { font-size: 11pt; font-weight: 700; margin: 0; }
+    .stop-cat { margin: 2pt 0 6pt; font-size: 9pt; font-weight: 600; color: #0b3d91; }
+    .stop-details { margin: 0; padding-left: 16pt; font-size: 10pt; color: #334155; }
+    .stop-details li { margin: 2pt 0; }
+    .note { margin: 0; font-size: 10pt; color: #334155; }
+    footer {
+      margin-top: 18pt;
+      padding-top: 10pt;
+      border-top: 1px solid #e2e8f0;
+      font-size: 9pt;
+      color: #94a3b8;
+    }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
   </style>
 </head>
 <body>
-  <h1>${escapeHtml(doc.title)}</h1>
-  <p class="sub">${escapeHtml(doc.subtitle)}</p>
-  <p class="ctx">${escapeHtml(doc.contextLabel)}</p>
-  <p class="meta-line">Wygenerowano: ${escapeHtml(formatGeneratedAt(doc.generatedAt))}</p>
-  ${
-    summaryParts.length > 0 || doc.routeNote
-      ? `<div class="summary">
-    ${summaryParts.map((part) => `<div>${escapeHtml(part)}</div>`).join('')}
-    ${doc.routeNote ? `<div style="margin-top:6px;font-size:0.82rem">${escapeHtml(doc.routeNote)}</div>` : ''}
-  </div>`
-      : ''
-  }
-  <h2>Punkty planu</h2>
-  <ol>${stopsHtml}</ol>
-  <h2>Bilety i ceny</h2>
-  <p class="note">${escapeHtml(doc.ticketNote)}</p>
-  <h2>Pogoda</h2>
-  <p class="note">${escapeHtml(doc.weatherNote)}</p>
-  <footer>Azymut — planer wolnego czasu · azymut</footer>
+  <div class="page">
+    <header>
+      <h1>${escapeHtml(doc.title)}</h1>
+      <p class="lead">${escapeHtml(doc.subtitle)}</p>
+      <p class="ctx">${escapeHtml(doc.contextLabel)}</p>
+      <p class="stamp">Wygenerowano: ${escapeHtml(formatGeneratedAt(doc.generatedAt))}</p>
+    </header>
+    ${summaryHtml}
+    <h2>Punkty planu</h2>
+    ${stopsHtml}
+    <h2>Bilety i ceny</h2>
+    <p class="note">${escapeHtml(doc.ticketNote)}</p>
+    <h2>Pogoda</h2>
+    <p class="note">${escapeHtml(doc.weatherNote)}</p>
+    <footer>Azymut — planer wolnego czasu</footer>
+  </div>
 </body>
 </html>`
 }
 
 export function printPlanAsPdf(doc: PlanExportDocument): boolean {
   const html = buildPlanPrintHtml(doc)
-  const printWindow = window.open('', '_blank', 'noopener,noreferrer')
-  if (!printWindow) {
+  const iframe = document.createElement('iframe')
+  iframe.setAttribute('title', 'Podgląd planu do zapisu')
+  iframe.setAttribute('aria-hidden', 'true')
+  Object.assign(iframe.style, {
+    position: 'fixed',
+    right: '0',
+    bottom: '0',
+    width: '0',
+    height: '0',
+    border: '0',
+    opacity: '0',
+    pointerEvents: 'none',
+  })
+  document.body.appendChild(iframe)
+
+  const frameWindow = iframe.contentWindow
+  const frameDoc = iframe.contentDocument ?? frameWindow?.document
+  if (!frameWindow || !frameDoc) {
+    iframe.remove()
     return false
   }
-  printWindow.document.open()
-  printWindow.document.write(html)
-  printWindow.document.close()
-  printWindow.focus()
-  const runPrint = () => {
-    printWindow.print()
-    printWindow.close()
+
+  frameDoc.open()
+  frameDoc.write(html)
+  frameDoc.close()
+
+  let cleaned = false
+  const cleanup = () => {
+    if (cleaned) {
+      return
+    }
+    cleaned = true
+    iframe.remove()
   }
-  if (printWindow.document.readyState === 'complete') {
-    runPrint()
+
+  frameWindow.addEventListener('afterprint', cleanup, { once: true })
+  window.setTimeout(cleanup, 120_000)
+
+  const triggerPrint = () => {
+    frameWindow.focus()
+    frameWindow.print()
+  }
+
+  if (frameDoc.readyState === 'complete') {
+    window.setTimeout(triggerPrint, 150)
   } else {
-    printWindow.addEventListener('load', runPrint, { once: true })
+    frameWindow.addEventListener('load', () => window.setTimeout(triggerPrint, 150), {
+      once: true,
+    })
   }
+
   return true
 }
 

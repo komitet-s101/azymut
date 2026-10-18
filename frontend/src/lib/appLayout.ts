@@ -6,6 +6,9 @@ export const appLayout = {
   pageX: 'px-5',
   pageBottom: 'pb-[max(1.5rem,env(safe-area-inset-bottom))]',
   pageContent: 'flex flex-1 flex-col gap-6 px-5 pt-6',
+  planSummaryBlock: 'home-surface-texture flex flex-col gap-6 px-5 pt-6 pb-4',
+  planCatalogBlock:
+    'plan-results-catalog flex flex-col gap-4 px-5 pt-5 pb-[max(1.5rem,env(safe-area-inset-bottom))]',
   onboardingScroll: 'scrollbar-hidden flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-5 pt-6 pb-8',
   onboardingFooter: 'flex min-h-[6.5rem] flex-col justify-end bg-background/95 px-5 pt-4 pb-1 backdrop-blur-sm',
   onboardingPrivacy: 'shrink-0 px-5 pt-4 pb-[calc(0.625rem+env(safe-area-inset-bottom,0px))]',

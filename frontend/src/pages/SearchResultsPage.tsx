@@ -62,6 +62,7 @@ export function SearchResultsPage({
   const [selectedStopKey, setSelectedStopKey] = useState<string | null>(null)
   const [walkingRoute, setWalkingRoute] = useState<WalkingRoute | null>(null)
   const [routeLoading, setRouteLoading] = useState(false)
+  const [routeRetryNonce, setRouteRetryNonce] = useState(0)
 
   useEffect(() => {
     if (isPredefined) {
@@ -144,10 +145,15 @@ export function SearchResultsPage({
     setWalkingRoute(straightLineRoute(trailStops))
     fetchWalkingRoute(trailStops, controller.signal)
       .then((route) => setWalkingRoute(route))
-      .catch(() => setWalkingRoute(straightLineRoute(trailStops)))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return
+        }
+        setWalkingRoute(straightLineRoute(trailStops))
+      })
       .finally(() => setRouteLoading(false))
     return () => controller.abort()
-  }, [trailSignature])
+  }, [trailSignature, routeRetryNonce])
 
   const summary = useMemo(() => {
     if (isPredefined && predefinedState.status === 'ready') {
@@ -273,7 +279,8 @@ export function SearchResultsPage({
         header={<PlanResultsHeader planSummary={summary} />}
         contentClassName="pt-[max(1rem,calc(env(safe-area-inset-top)+0.25rem))]"
       />
-      <div className={cn('home-surface-texture', appLayout.pageContent, appLayout.pageBottom)}>
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className={appLayout.planSummaryBlock}>
         {isPredefined ? (
           <PredefinedRouteCallout
             routeName={predefinedRouteName}
@@ -308,6 +315,11 @@ export function SearchResultsPage({
               routeLoading={routeLoading || (isPredefined && pageLoading)}
               selectedKey={selectedStopKey}
               onSelectStop={setSelectedStopKey}
+              onRetryRoute={
+                trailStops.length >= 2
+                  ? () => setRouteRetryNonce((value) => value + 1)
+                  : undefined
+              }
             />
             <TrailDetailPanel
               stops={trailStops}
@@ -333,8 +345,9 @@ export function SearchResultsPage({
         </div>
 
         <PlanExportActions document={planExportDocument} />
+        </div>
 
-        <section className={appLayout.sectionStack} aria-labelledby="search-results-heading">
+        <div className={appLayout.planCatalogBlock} aria-labelledby="search-results-heading">
           <PlanSectionHeading
             id="search-results-heading"
             title={resultsHeading}
@@ -344,12 +357,16 @@ export function SearchResultsPage({
           {!isPredefined &&
           searchState.status === 'ready' &&
           searchState.data.results.length === 0 ? (
-            <p>Nie znaleźliśmy miejsc na te warunki. Wydłuż czas albo poluzuj cenę.</p>
+            <p className={appLayout.bodyMuted}>
+              Nie znaleźliśmy miejsc na te warunki. Wydłuż czas albo poluzuj cenę.
+            </p>
           ) : null}
           {isPredefined &&
           predefinedState.status === 'ready' &&
           trailStops.length === 0 ? (
-            <p>Brak przystanków z lokalizacją na mapie dla tej trasy.</p>
+            <p className={appLayout.bodyMuted}>
+              Brak przystanków z lokalizacją na mapie dla tej trasy.
+            </p>
           ) : null}
           {!pageError ? (
             <ol className={cn('m-0 list-none p-0', appLayout.listStack)}>
@@ -369,7 +386,7 @@ export function SearchResultsPage({
               })}
             </ol>
           ) : null}
-        </section>
+        </div>
       </div>
 
       <PlanPlaceDetailSheet

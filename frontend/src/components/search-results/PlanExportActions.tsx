@@ -40,15 +40,9 @@ export function PlanExportActions({ document }: PlanExportActionsProps) {
     setFeedback(null)
     const ok = printPlanAsPdf(document)
     if (ok) {
-      setFeedback({
-        kind: 'pdf',
-        message: 'Otworzyliśmy widok do zapisu — wybierz „Zapisz jako PDF”.',
-      })
+      setFeedback({ kind: 'pdf', message: 'Otworzyliśmy podgląd wydruku.' })
     } else {
-      setFeedback({
-        kind: 'error',
-        message: 'Zezwól na wyskakujące okna lub użyj udostępniania.',
-      })
+      setFeedback({ kind: 'error', message: 'Nie udało się otworzyć podglądu wydruku.' })
     }
   }
 

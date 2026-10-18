@@ -12,7 +12,13 @@ function apiBase(): string {
   return configured.replace(/\/$/, '')
 }
 
-export async function fetchWalkingRoute(
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms)
+  })
+}
+
+async function fetchWalkingRouteOnce(
   stops: TrailStop[],
   signal?: AbortSignal,
 ): Promise<WalkingRoute> {
@@ -38,6 +44,34 @@ export async function fetchWalkingRoute(
     durationMinutes: data.duration_minutes,
     followsRoads: true,
   }
+}
+
+/** Pieszy routing OSRM przez backend; kilka prób przy chwilowych błędach sieci. */
+export async function fetchWalkingRoute(
+  stops: TrailStop[],
+  signal?: AbortSignal,
+  maxAttempts = 3,
+): Promise<WalkingRoute> {
+  let lastError: unknown
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    if (signal?.aborted) {
+      throw new DOMException('Aborted', 'AbortError')
+    }
+    try {
+      return await fetchWalkingRouteOnce(stops, signal)
+    } catch (error: unknown) {
+      lastError = error
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw error
+      }
+      if (attempt < maxAttempts - 1) {
+        await sleep(350 * (attempt + 1))
+      }
+    }
+  }
+  throw lastError instanceof Error
+    ? lastError
+    : new Error('Nie udało się wyznaczyć trasy pieszej.')
 }
 
 export function straightLineRoute(stops: TrailStop[]): WalkingRoute {

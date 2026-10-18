@@ -155,6 +155,24 @@ body {
     18px 18px;
 }
 
+/* Katalog kart pod podsumowaniem planu (wyniki wyszukiwania) */
+.plan-results-catalog {
+  background-color: var(--secondary);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--secondary) 88%, var(--background)) 0%,
+    var(--background) 100%
+  );
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -6px 20px rgb(15 23 42 / 0.05);
+  border-radius: 1.25rem 1.25rem 0 0;
+}
+
+html.a11y-color-blind .plan-results-catalog {
+  background-image: none;
+  background-color: var(--muted);
+}
+
 .device-mock-host {
   min-height: 100svh;
   min-height: 100dvh;
