@@ -1,4 +1,4 @@
-const MOTTO = 'Precyzyjny namiar na to, co dzieje się tuż obok,'
+const MOTTO = 'Namiar na to, co dzieje się tuż obok'
 
 export function HomeHeader() {
   return (
