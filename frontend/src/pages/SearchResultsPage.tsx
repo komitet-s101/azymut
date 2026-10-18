@@ -30,6 +30,8 @@ import { appLayout } from '@/lib/appLayout'
 import { loadUserContext } from '@/lib/userContextStorage'
 import { cn } from '@/lib/utils'
 import { buildTrail, resultKey, type TrailMode } from '@/lib/trail'
+import { formatPlanWeatherText, planWeatherCoords } from '@/lib/planWeather'
+import { fetchCurrentWeather, type WeatherSnapshot } from '@/lib/weatherApi'
 import { fetchWalkingRoute, type WalkingRoute } from '@/lib/walkingRoute'
 
 type SearchResultsPageProps = {
@@ -48,6 +50,12 @@ type PredefinedLoadState =
   | { status: 'ready'; route: RouteDetail }
   | { status: 'error'; message: string }
 
+type PlanWeatherState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'ready'; snapshot: WeatherSnapshot }
+  | { status: 'error' }
+
 export function SearchResultsPage({
   query,
   predefinedRouteId = null,
@@ -62,6 +70,7 @@ export function SearchResultsPage({
   const [selectedStopKey, setSelectedStopKey] = useState<string | null>(null)
   const [walkingRoute, setWalkingRoute] = useState<WalkingRoute | null>(null)
   const [routeLoading, setRouteLoading] = useState(false)
+  const [planWeather, setPlanWeather] = useState<PlanWeatherState>({ status: 'idle' })
   const routeFetchGeneration = useRef(0)
 
   useEffect(() => {
@@ -169,6 +178,30 @@ export function SearchResultsPage({
     return () => controller.abort()
   }, [trailSignature])
 
+  const weatherCoordsKey = useMemo(() => {
+    const { lat, lon } = planWeatherCoords(trailStops)
+    return `${lat.toFixed(4)}:${lon.toFixed(4)}`
+  }, [trailSignature])
+
+  useEffect(() => {
+    if (pageLoading || pageError) {
+      setPlanWeather({ status: 'idle' })
+      return
+    }
+    const controller = new AbortController()
+    const { lat, lon } = planWeatherCoords(trailStops)
+    setPlanWeather({ status: 'loading' })
+    fetchCurrentWeather(lat, lon, controller.signal)
+      .then((snapshot) => setPlanWeather({ status: 'ready', snapshot }))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return
+        }
+        setPlanWeather({ status: 'error' })
+      })
+    return () => controller.abort()
+  }, [pageLoading, pageError, weatherCoordsKey])
+
   const summary = useMemo(() => {
     if (isPredefined && predefinedState.status === 'ready') {
       return routeHeroLead(predefinedState.route)
@@ -185,11 +218,28 @@ export function SearchResultsPage({
   const predefinedRouteName =
     isPredefined && predefinedState.status === 'ready' ? predefinedState.route.name : ''
 
-  const weather = isPredefined
-    ? 'Sprawdź prognozę przed wyjściem — szczegóły na kartach przystanków.'
-    : searchState.status === 'ready'
-      ? (searchState.data.weather_note ?? 'Pogoda nie zmieniła kolejności wyników.')
-      : 'Sprawdzamy pogodę…'
+  const weatherContextNote = useMemo(() => {
+    if (isPredefined) {
+      return null
+    }
+    if (searchState.status !== 'ready') {
+      return null
+    }
+    return searchState.data.weather_note
+  }, [isPredefined, searchState])
+
+  const weather = useMemo(() => {
+    if (planWeather.status === 'loading' || planWeather.status === 'idle') {
+      return 'Sprawdzamy aktualną pogodę…'
+    }
+    if (planWeather.status === 'ready') {
+      return formatPlanWeatherText(planWeather.snapshot, weatherContextNote)
+    }
+    if (weatherContextNote) {
+      return weatherContextNote
+    }
+    return 'Nie udało się pobrać aktualnej pogody.'
+  }, [planWeather, weatherContextNote])
 
   const ticket = isPredefined
     ? 'Ceny i bilety są przy każdym przystanku poniżej.'
