@@ -1,4 +1,5 @@
 import { CUSTOM_INTEREST_ID } from '@/data/interestCategories'
+import { apiBase } from '@/lib/apiBase'
 import type { SearchResult, SearchUserPreferencesPayload } from '@/lib/searchApi'
 
 export type HomeRecommendedPlacesResponse = {
@@ -20,11 +21,6 @@ type CatalogPlace = {
 
 type PaginatedPlaces = {
   items: CatalogPlace[]
-}
-
-function apiBase(): string {
-  const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
-  return configured.replace(/\/$/, '')
 }
 
 function interestCategories(prefs?: SearchUserPreferencesPayload): string[] {

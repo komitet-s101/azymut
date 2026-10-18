@@ -1,3 +1,4 @@
+import { apiBase } from '@/lib/apiBase'
 import type { TrailStop } from '@/lib/trail'
 
 export type WalkingRoute = {
@@ -5,11 +6,6 @@ export type WalkingRoute = {
   distanceKm: number
   durationMinutes: number | null
   followsRoads: boolean
-}
-
-function apiBase(): string {
-  const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
-  return configured.replace(/\/$/, '')
 }
 
 function sleep(ms: number): Promise<void> {

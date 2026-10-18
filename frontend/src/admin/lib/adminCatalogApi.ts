@@ -1,9 +1,5 @@
+import { apiBase } from '@/lib/apiBase'
 import type { RouteSummary } from '@/lib/routeApi'
-
-function apiBase(): string {
-  const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
-  return configured.replace(/\/$/, '')
-}
 
 type Paginated<T> = {
   items: T[]

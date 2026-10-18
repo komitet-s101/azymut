@@ -1,3 +1,4 @@
+import { apiBase } from '@/lib/apiBase'
 import type { TouristGeographyScope, UserContextLocal } from '@/types/userContext'
 
 export type SearchResult = {
@@ -94,11 +95,6 @@ export function searchPreferencesFromContext(
     constraints: context.constraints,
     tourist_geography_scope: context.tourist_geography_scope ?? undefined,
   }
-}
-
-function apiBase(): string {
-  const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
-  return configured.replace(/\/$/, '')
 }
 
 export async function searchNaturalLanguage(

@@ -1,12 +1,8 @@
+import { apiBase } from '@/lib/apiBase'
 import type { SearchResult, SearchUserPreferencesPayload } from '@/lib/searchApi'
 
 export type HomeUpcomingEventsResponse = {
   events: SearchResult[]
-}
-
-function apiBase(): string {
-  const configured = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000'
-  return configured.replace(/\/$/, '')
 }
 
 export async function fetchUpcomingEventsForHome(

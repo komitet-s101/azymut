@@ -17,13 +17,13 @@ npm run dev
 
 Opens at [http://localhost:5173](http://localhost:5173) by default. With `VITE_DEVICE_MOCK=true` (default), a phone mock frame appears on viewports **≥ 768px**; on narrower screens (typical phones) the app is full-bleed.
 
-`VITE_API_BASE_URL` is reserved for future API integration (default `http://127.0.0.1:8000`).
+With the FastAPI backend running on port **8000**, `npm run dev` proxies browser requests from `/api/*` to the API (see `vite.config.ts`). Leave `VITE_API_BASE_URL` unset or empty so the app uses relative URLs through that proxy.
 
 ## Environment
 
 | Variable | Purpose |
 |----------|---------|
-| `VITE_API_BASE_URL` | FastAPI base URL (no trailing slash) |
+| `VITE_API_BASE_URL` | Optional FastAPI base URL (no trailing slash). Empty = Vite proxy in dev. Set for production builds or to call the API directly. |
 | `VITE_DEVICE_MOCK` | `true` — iPhone frame on viewports ≥ 768px, full-bleed below; `false` — always full-width |
 
 ## UI stack
