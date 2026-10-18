@@ -21,6 +21,7 @@ from backend.llm.parser import extract_json_object
 from backend.settings import Settings, get_settings
 
 _PROMPTS = Path(__file__).resolve().parent / "prompts"
+DEFAULT_SEARCH_CITY = "Płock"
 _WEEKDAYS_PL = (
     "poniedziałek",
     "wtorek",
@@ -541,6 +542,11 @@ def _interests(text: str) -> list[PlaceCategory]:
     return found
 
 
+def interests_from_query_text(query: str) -> list[PlaceCategory]:
+    """Kategorie wykryte wyłącznie w treści zapytania użytkownika (bez onboardingu)."""
+    return _interests(fold(query))
+
+
 def _city(text: str) -> str | None:
     found: tuple[int, int, str] | None = None
     for name, stem in _CITY_STEMS:
@@ -579,7 +585,10 @@ def apply_search_defaults(
         updated = updated.model_copy(
             update={"date": today, "day_of_week": today.weekday()},
         )
-    return _with_resolved_date(updated, today)
+    updated = _with_resolved_date(updated, today)
+    if updated.city is None:
+        updated = updated.model_copy(update={"city": DEFAULT_SEARCH_CITY})
+    return updated
 
 
 def parse_search_query_rules(query: str, *, today: date) -> SearchFilter:

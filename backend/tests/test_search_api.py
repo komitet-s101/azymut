@@ -260,6 +260,25 @@ async def test_search_endpoint_filters_and_reranks_for_weather(
 
 
 @pytest.mark.anyio
+async def test_search_without_time_returns_multiple_places(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _seed_catalog()
+    response = await api_client.post(
+        "/api/v1/search",
+        json={"query": "coś ciekawego na spacer"},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["filter"]["city"] == "Płock"
+    assert body["filter"]["time_budget_minutes"] is None
+    places = [item for item in body["results"] if item["kind"] == "place"]
+    assert len(places) >= 2
+
+
+@pytest.mark.anyio
 async def test_search_returns_requested_stop_count(
     api_client: AsyncClient,
     db,

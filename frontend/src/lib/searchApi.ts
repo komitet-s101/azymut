@@ -1,4 +1,4 @@
-import type { UserContextLocal } from '@/types/userContext'
+import type { TouristGeographyScope, UserContextLocal } from '@/types/userContext'
 
 export type SearchResult = {
   kind: 'place' | 'event'
@@ -23,6 +23,7 @@ export type SearchUserPreferencesPayload = {
   interest_tag_ids?: string[]
   profile?: UserContextLocal['profile']
   constraints?: UserContextLocal['constraints']
+  tourist_geography_scope?: TouristGeographyScope
 }
 
 export type SearchFilterOut = {
@@ -90,6 +91,7 @@ export function searchPreferencesFromContext(
     interest_tag_ids: context.interest_tag_ids,
     profile: context.profile,
     constraints: context.constraints,
+    tourist_geography_scope: context.tourist_geography_scope ?? undefined,
   }
 }
 

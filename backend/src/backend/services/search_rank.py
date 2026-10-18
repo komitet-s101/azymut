@@ -4,9 +4,13 @@ from dataclasses import dataclass
 
 from backend.api.schemas.plan import UserProfile
 from backend.api.schemas.search import PlaceCategory, SearchFilter, SettingPreference
+from backend.services.search_preferences import InterestLayers
 
 _PRIMARY_CATEGORY = 6.0
 _SECONDARY_CATEGORY = 2.5
+_PREF_PRIMARY_CATEGORY = 2.4
+_PREF_SECONDARY_CATEGORY = 1.0
+_PREF_SIGNAL_SCALE = 0.45
 _SPORT_ACTIVITY = 0.9
 _FAMILY = 0.7
 _OUTDOOR_ONLY = 3.0
@@ -95,6 +99,40 @@ def _profile_score(item: ScoreInput, profile: UserProfile | None) -> float:
     return score
 
 
+def _interest_category_score(
+    item: ScoreInput,
+    layers: InterestLayers,
+) -> float:
+    query_ids = {category.value for category in layers.query}
+    pref_ids = {category.value for category in layers.preference}
+    primary_ids = query_ids if query_ids else pref_ids
+    soft_ids = pref_ids if query_ids else set()
+
+    score = 0.0
+    if item.category and item.category in primary_ids:
+        score += _PRIMARY_CATEGORY
+    elif item.category and item.category in soft_ids:
+        score += _PREF_PRIMARY_CATEGORY
+
+    if item.secondary_categories:
+        secondary_q = sum(1 for cat in item.secondary_categories if cat in primary_ids)
+        secondary_p = sum(1 for cat in item.secondary_categories if cat in soft_ids)
+        score += secondary_q * _SECONDARY_CATEGORY
+        score += secondary_p * _PREF_SECONDARY_CATEGORY
+    return score
+
+
+def _sport_interest_bonus(item: ScoreInput, layers: InterestLayers) -> float:
+    query_ids = {category.value for category in layers.query}
+    pref_ids = {category.value for category in layers.preference}
+    sport = _SPORT.value
+    if sport in query_ids or (sport in pref_ids and not query_ids):
+        return item.physical_activity_level * _SPORT_ACTIVITY
+    if sport in pref_ids:
+        return item.physical_activity_level * _SPORT_ACTIVITY * _PREF_SIGNAL_SCALE
+    return 0.0
+
+
 def _age_score(item: ScoreInput, filt: SearchFilter) -> float:
     kids = filt.group.children > 0 or bool(filt.group.child_ages)
     if not kids or item.min_age_recommended is None:
@@ -117,18 +155,17 @@ def score_match(
     *,
     event_intent: bool = False,
     profile: UserProfile | None = None,
+    interest_layers: InterestLayers | None = None,
 ) -> float:
     score = _EVENT_BONUS if item.kind == "event" else 0.0
     if item.kind == "event" and event_intent:
         score += _EVENT_INTENT_BONUS
-    interests = {category.value for category in filt.interests}
-    if item.category and item.category in interests:
-        score += _PRIMARY_CATEGORY
-    secondary_hits = sum(1 for category in item.secondary_categories if category in interests)
-    score += secondary_hits * _SECONDARY_CATEGORY
-
-    if _SPORT.value in interests:
-        score += item.physical_activity_level * _SPORT_ACTIVITY
+    layers = interest_layers or InterestLayers(
+        query=tuple(filt.interests),
+        preference=(),
+    )
+    score += _interest_category_score(item, layers)
+    score += _sport_interest_bonus(item, layers)
 
     kids = filt.group.children > 0 or bool(filt.group.child_ages)
     if kids:
@@ -158,6 +195,7 @@ def rank_matches(
     *,
     event_intent: bool = False,
     profile: UserProfile | None = None,
+    interest_layers: InterestLayers | None = None,
 ) -> list[tuple[ScoreInput, float]]:
     scored = [
         (
@@ -168,6 +206,7 @@ def rank_matches(
                 weather,
                 event_intent=event_intent,
                 profile=profile,
+                interest_layers=interest_layers,
             ),
         )
         for item in items

@@ -2,7 +2,12 @@ import {
   categoryToPackageId,
   CUSTOM_INTEREST_ID,
 } from '@/data/interestCategories'
-import type { Persona, UserContextLocal, UserProfile } from '@/types/userContext'
+import type {
+  Persona,
+  TouristGeographyScope,
+  UserContextLocal,
+  UserProfile,
+} from '@/types/userContext'
 
 const ADULT_AGE_THRESHOLD = 18
 
@@ -14,6 +19,8 @@ export type OnboardingFormState = {
   childrenCount: string
   customInterests: string
   preferOutdoor: boolean
+  selectedRouteId: number | null
+  touristGeographyScope: TouristGeographyScope
 }
 
 const defaultProfile: UserProfile = {
@@ -111,6 +118,12 @@ export function buildUserContextFromOnboarding(
     last_plan_id: null,
     age,
     interest_tag_ids: form.interestTagIds,
+    onboarding_route_id:
+      form.persona === 'tourist' && form.selectedRouteId !== null
+        ? form.selectedRouteId
+        : null,
+    tourist_geography_scope:
+      form.persona === 'tourist' ? form.touristGeographyScope : null,
     onboarding_completed_at: new Date().toISOString(),
   }
 }

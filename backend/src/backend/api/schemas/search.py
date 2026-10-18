@@ -72,6 +72,11 @@ class SearchFilter(BaseModel):
         return self
 
 
+class TouristGeographyScope(StrEnum):
+    PLOCK_CITY = "plock_city"
+    PLOCK_REGION = "plock_region"
+
+
 class SearchUserPreferences(BaseModel):
     """Opcjonalne preferencje z onboardingu (kategorie, profil, ograniczenia)."""
 
@@ -81,6 +86,7 @@ class SearchUserPreferences(BaseModel):
     interest_tag_ids: list[str] = Field(default_factory=list)
     profile: UserProfile | None = None
     constraints: UserConstraints | None = None
+    tourist_geography_scope: TouristGeographyScope | None = None
 
 
 class SearchRequest(BaseModel):

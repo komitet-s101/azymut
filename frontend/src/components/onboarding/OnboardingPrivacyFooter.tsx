@@ -1,9 +1,15 @@
 export function OnboardingPrivacyFooter() {
   return (
-    <p className="mx-auto max-w-full text-center text-xs leading-relaxed break-words text-muted-foreground">
-      Twoje preferencje zapisujemy wyłącznie na tym urządzeniu. Wykorzystujemy je do
-      personalizacji planów z wykorzystaniem sztucznej inteligencji.{' '}
-      <span className="font-medium text-primary underline-offset-2">Polityka prywatności</span>
-    </p>
+    <div className="mx-auto max-w-full text-center text-[0.625rem] leading-snug text-muted-foreground">
+      <p>
+        Dane użytkownika przechowujemy wyłącznie lokalnie oraz do celów AI.
+      </p>
+      <a
+        href="/polityka-prywatnosci"
+        className="mt-1 inline-block text-primary underline underline-offset-2"
+      >
+        Zapoznaj się z polityką prywatności
+      </a>
+    </div>
   )
 }

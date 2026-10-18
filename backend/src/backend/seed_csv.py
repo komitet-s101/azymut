@@ -271,3 +271,90 @@ async def load_catalog_from_dir(
         counts["needs_verification"],
     )
     return counts
+
+
+_PREDEFINED_ROUTE_PREFIXES = ("DAY-R", "PLK-R", "REG-R")
+
+
+def _route_prefix_allowed(external_id: str, prefixes: tuple[str, ...]) -> bool:
+    return any(external_id.startswith(prefix) for prefix in prefixes)
+
+
+async def upsert_predefined_routes(
+    seed_dir: Path,
+    prefixes: tuple[str, ...] = _PREDEFINED_ROUTE_PREFIXES,
+) -> dict[str, int]:
+    """Dopisz brakujące trasy predefiniowane z CSV (bez czyszczenia katalogu)."""
+    place_key_to_id: dict[str, int] = {}
+    for place in await Place.all():
+        if place.external_id:
+            place_key_to_id[place.external_id] = place.id
+
+    route_key_to_id: dict[str, int] = {}
+    created_routes = 0
+
+    for row in _read_csv(seed_dir / "predefined_routes.csv"):
+        ext_id = _strip(row["id"])
+        if not _route_prefix_allowed(ext_id, prefixes):
+            continue
+        existing = await PredefinedRoute.get_or_none(external_id=ext_id)
+        if existing is not None:
+            route_key_to_id[ext_id] = existing.id
+            continue
+        route = await PredefinedRoute.create(
+            external_id=ext_id,
+            name=row["name"],
+            description=_strip(row.get("description")) or None,
+            duration_minutes_approx=int(row["duration_minutes_approx"]),
+            stops_min=int(row["stops_min"]),
+            stops_max=int(row["stops_max"]),
+            city=row["city"],
+            gmina=row["gmina"],
+            price_level_max=parse_optional_price_level(row.get("price_level_max")),
+            route_type=_strip(row.get("route_type")) or None,
+            category=_strip(row.get("category")) or None,
+            source_url=_strip(row.get("source_url")) or None,
+        )
+        route_key_to_id[ext_id] = route.id
+        created_routes += 1
+
+    created_stops = 0
+    for row in _read_csv(seed_dir / "route_stops.csv"):
+        route_ext = _strip(row["route_id"])
+        if not _route_prefix_allowed(route_ext, prefixes):
+            continue
+        place_ext = _strip(row["place_id"])
+        route_id = route_key_to_id.get(route_ext)
+        place_id = place_key_to_id.get(place_ext)
+        if route_id is None or place_id is None:
+            logger.warning(
+                "Day-trip stop skipped: route=%s place=%s", route_ext, place_ext
+            )
+            continue
+        sequence = int(row["sequence"])
+        exists = await RouteStop.filter(route_id=route_id, sequence=sequence).exists()
+        if exists:
+            continue
+        await RouteStop.create(
+            route_id=route_id,
+            place_id=place_id,
+            sequence=sequence,
+            dwell_minutes=parse_optional_int(row.get("dwell_minutes")),
+        )
+        created_stops += 1
+
+    logger.info(
+        "Predefined route upsert: %s new routes, %s new stops (%s)",
+        created_routes,
+        created_stops,
+        ", ".join(prefixes),
+    )
+    return {
+        "predefined_routes_created": created_routes,
+        "predefined_route_stops_created": created_stops,
+    }
+
+
+async def upsert_day_trip_routes(seed_dir: Path) -> dict[str, int]:
+    """Zachowane dla kompatybilności — tylko DAY-R*."""
+    return await upsert_predefined_routes(seed_dir, prefixes=("DAY-R",))

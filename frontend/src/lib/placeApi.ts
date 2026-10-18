@@ -12,6 +12,8 @@ export type PlaceDetail = {
   category: string | null
   price_level: number | null
   typical_visit_minutes: number | null
+  latitude: number | null
+  longitude: number | null
   official_url: string | null
   booking_url: string | null
 }

@@ -1,3 +1,5 @@
+import { Building2, Map } from 'lucide-react'
+
 import { OnboardingActionBar } from '@/components/onboarding/OnboardingActionBar'
 import { OnboardingStepHeading } from '@/components/onboarding/OnboardingStepHeading'
 import {
@@ -7,6 +9,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import type { Persona, TouristGeographyScope } from '@/types/userContext'
 
 const INTRO = 'Podaj swój wiek — dopasujemy propozycje do Twojej sytuacji.'
 const ADULT_AGE_THRESHOLD = 18
@@ -20,25 +23,72 @@ function parseAge(age: string): number | null {
 }
 
 type ProfileStepProps = {
+  persona: Persona | null
   age: string
   hasChildren: boolean
   childrenCount: string
   preferOutdoor: boolean
+  touristGeographyScope: TouristGeographyScope
   onAgeChange: (value: string) => void
   onHasChildrenChange: (value: boolean) => void
   onChildrenCountChange: (value: string) => void
   onPreferOutdoorChange: (value: boolean) => void
+  onTouristGeographyScopeChange: (value: TouristGeographyScope) => void
+}
+
+function GeographyOption({
+  active,
+  title,
+  description,
+  icon: Icon,
+  onSelect,
+}: {
+  active: boolean
+  title: string
+  description: string
+  icon: typeof Building2
+  onSelect: () => void
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={cn(
+        'flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left text-sm shadow-sm transition-colors',
+        active
+          ? 'border-primary bg-secondary ring-1 ring-primary/20'
+          : 'border-border/80 bg-card hover:border-border',
+      )}
+    >
+      <span
+        className={cn(
+          'flex size-9 shrink-0 items-center justify-center rounded-lg',
+          active ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
+        )}
+        aria-hidden
+      >
+        <Icon className="size-4" />
+      </span>
+      <span className="flex flex-col gap-0.5">
+        <span className="font-medium text-foreground">{title}</span>
+        <span className="text-xs leading-snug text-muted-foreground">{description}</span>
+      </span>
+    </button>
+  )
 }
 
 export function ProfileStep({
+  persona,
   age,
   hasChildren,
   childrenCount,
   preferOutdoor,
+  touristGeographyScope,
   onAgeChange,
   onHasChildrenChange,
   onChildrenCountChange,
   onPreferOutdoorChange,
+  onTouristGeographyScopeChange,
 }: ProfileStepProps) {
   const ageValue = parseAge(age)
   const showChildrenQuestion = ageValue !== null && ageValue >= ADULT_AGE_THRESHOLD
@@ -96,6 +146,26 @@ export function ProfileStep({
           </>
         ) : null}
 
+        {persona === 'tourist' ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-sm font-medium text-foreground">Gdzie szukasz planów?</p>
+            <GeographyOption
+              active={touristGeographyScope === 'plock_city'}
+              title="Tylko Płock"
+              description="Spacery i jednodniówki w mieście"
+              icon={Building2}
+              onSelect={() => onTouristGeographyScopeChange('plock_city')}
+            />
+            <GeographyOption
+              active={touristGeographyScope === 'plock_region'}
+              title="Region płocki"
+              description="Płock i okoliczne gminy"
+              icon={Map}
+              onSelect={() => onTouristGeographyScopeChange('plock_region')}
+            />
+          </div>
+        ) : null}
+
         <button
           type="button"
           role="switch"
@@ -119,11 +189,13 @@ export function ProfileStep({
 export function ProfileStepActions({
   canFinish,
   onBack,
-  onFinish,
+  onPrimary,
+  primaryLabel,
 }: {
   canFinish: boolean
   onBack: () => void
-  onFinish: () => void
+  onPrimary: () => void
+  primaryLabel: string
 }) {
   return (
     <OnboardingActionBar>
@@ -132,9 +204,9 @@ export function ProfileStepActions({
         className={onboardingPrimaryButtonClass}
         size="default"
         disabled={!canFinish}
-        onClick={onFinish}
+        onClick={onPrimary}
       >
-        Zakończ i przejdź do aplikacji
+        {primaryLabel}
       </Button>
       <Button
         type="button"

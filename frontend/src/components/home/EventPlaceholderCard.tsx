@@ -30,7 +30,7 @@ export function EventPlaceholderCard({ event }: EventPlaceholderCardProps) {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <MapPin className="size-4 shrink-0 text-primary" aria-hidden />
-            Region Sierpc / Gostynin
+            {event.locationLabel}
           </span>
         </div>
       </CardHeader>

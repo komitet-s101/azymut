@@ -23,7 +23,7 @@ async def list_routes(
     lat: float | None = None,
     lon: float | None = None,
     radius_km: float | None = Query(None, gt=0),
-    limit: int = Query(20, ge=1, le=100),
+    limit: int = Query(20, ge=1, le=150),
     offset: int = Query(0, ge=0),
 ) -> PaginatedRoutes:
     if (lat is None) ^ (lon is None):

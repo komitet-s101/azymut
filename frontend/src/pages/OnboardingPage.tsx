@@ -13,15 +13,18 @@ import {
   ProfileStep,
   ProfileStepActions,
 } from '@/components/onboarding/ProfileStep'
+import {
+  SuggestedRoutesStep,
+  SuggestedRoutesStepActions,
+} from '@/components/onboarding/SuggestedRoutesStep'
 import { CUSTOM_INTEREST_ID } from '@/data/interestCategories'
 import {
   buildUserContextFromOnboarding,
   type OnboardingFormState,
 } from '@/lib/buildUserContextFromOnboarding'
+import { onboardingStepId, onboardingTotalSteps } from '@/lib/onboardingFlow'
 import { saveUserContext } from '@/lib/userContextStorage'
-import type { Persona } from '@/types/userContext'
-
-const TOTAL_STEPS = 3
+import type { Persona, TouristGeographyScope } from '@/types/userContext'
 
 type OnboardingPageProps = {
   onComplete: () => void
@@ -31,11 +34,27 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
   const [step, setStep] = useState(1)
   const [persona, setPersona] = useState<Persona | null>(null)
   const [interestTagIds, setInterestTagIds] = useState<string[]>([])
+  const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null)
   const [age, setAge] = useState('')
   const [hasChildren, setHasChildren] = useState(false)
   const [childrenCount, setChildrenCount] = useState('')
   const [customInterests, setCustomInterests] = useState('')
   const [preferOutdoor, setPreferOutdoor] = useState(true)
+  const [touristGeographyScope, setTouristGeographyScope] =
+    useState<TouristGeographyScope>('plock_city')
+
+  const totalSteps = onboardingTotalSteps(persona)
+  const stepId = onboardingStepId(persona, step)
+
+  function handlePersonaChange(value: Persona) {
+    if (value !== persona) {
+      setSelectedRouteId(null)
+      if (value === 'resident' && step > 3) {
+        setStep(3)
+      }
+    }
+    setPersona(value)
+  }
 
   function handleAgeChange(value: string) {
     setAge(value)
@@ -61,9 +80,11 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
         setCustomInterests('')
       }
       setInterestTagIds((prev) => prev.filter((item) => item !== id))
+      setSelectedRouteId(null)
       return
     }
     setInterestTagIds((prev) => [...prev, id])
+    setSelectedRouteId(null)
   }
 
   function handleFinish() {
@@ -75,6 +96,8 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
       childrenCount,
       customInterests,
       preferOutdoor,
+      selectedRouteId,
+      touristGeographyScope,
     }
     const context = buildUserContextFromOnboarding(form)
     if (!context) {
@@ -82,6 +105,14 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
     }
     saveUserContext(context)
     onComplete()
+  }
+
+  function goBack() {
+    setStep((prev) => Math.max(1, prev - 1))
+  }
+
+  function goNext() {
+    setStep((prev) => Math.min(totalSteps, prev + 1))
   }
 
   const ageParsed = Number.parseInt(age, 10)
@@ -95,32 +126,40 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
     ageValid && childrenCountValid && interestTagIds.length > 0 && persona !== null
 
   let footerActions = null
-  if (step === 1) {
-    footerActions = <PersonaStepActions value={persona} onNext={() => setStep(2)} />
-  } else if (step === 2) {
+  if (stepId === 'persona') {
+    footerActions = <PersonaStepActions value={persona} onNext={goNext} />
+  } else if (stepId === 'interests') {
     footerActions = (
       <InterestsStepActions
         selectedIds={interestTagIds}
-        onBack={() => setStep(1)}
-        onNext={() => setStep(3)}
+        onBack={goBack}
+        onNext={goNext}
       />
     )
-  } else if (step === 3) {
+  } else if (stepId === 'routes') {
+    footerActions = (
+      <SuggestedRoutesStepActions onBack={goBack} onNext={handleFinish} />
+    )
+  } else if (stepId === 'profile') {
+    const profileIsLastStep = step >= totalSteps
     footerActions = (
       <ProfileStepActions
         canFinish={canFinish}
-        onBack={() => setStep(2)}
-        onFinish={handleFinish}
+        onBack={goBack}
+        onPrimary={profileIsLastStep ? handleFinish : goNext}
+        primaryLabel={
+          profileIsLastStep ? 'Zakończ i przejdź do aplikacji' : 'Dalej'
+        }
       />
     )
   }
 
   return (
-    <OnboardingLayout step={step} totalSteps={TOTAL_STEPS} footerActions={footerActions}>
-      {step === 1 ? (
-        <PersonaStep value={persona} onChange={setPersona} />
+    <OnboardingLayout step={step} totalSteps={totalSteps} footerActions={footerActions}>
+      {stepId === 'persona' ? (
+        <PersonaStep value={persona} onChange={handlePersonaChange} />
       ) : null}
-      {step === 2 ? (
+      {stepId === 'interests' ? (
         <InterestsStep
           selectedIds={interestTagIds}
           customInterests={customInterests}
@@ -128,16 +167,30 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
           onCustomInterestsChange={setCustomInterests}
         />
       ) : null}
-      {step === 3 ? (
+      {stepId === 'routes' ? (
+        <SuggestedRoutesStep
+          interestTagIds={interestTagIds}
+          geographyScope={touristGeographyScope}
+          selectedRouteId={selectedRouteId}
+          onSelectRoute={setSelectedRouteId}
+        />
+      ) : null}
+      {stepId === 'profile' ? (
         <ProfileStep
+          persona={persona}
           age={age}
           hasChildren={hasChildren}
           childrenCount={childrenCount}
           preferOutdoor={preferOutdoor}
+          touristGeographyScope={touristGeographyScope}
           onAgeChange={handleAgeChange}
           onHasChildrenChange={handleHasChildrenChange}
           onChildrenCountChange={setChildrenCount}
           onPreferOutdoorChange={setPreferOutdoor}
+          onTouristGeographyScopeChange={(scope) => {
+            setTouristGeographyScope(scope)
+            setSelectedRouteId(null)
+          }}
         />
       ) : null}
     </OnboardingLayout>

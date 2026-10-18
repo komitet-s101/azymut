@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet'
 import L from 'leaflet'
 
+import { PlanMapLoadingPlaceholder } from '@/components/search-results/PlanMapLoadingPlaceholder'
 import { Card } from '@/components/ui/card'
 import type { WalkingRoute } from '@/lib/walkingRoute'
 import type { TrailStop } from '@/lib/trail'
@@ -14,6 +15,8 @@ type PlanTrailMapProps = {
   routeLoading: boolean
   selectedKey: string | null
   onSelectStop: (key: string) => void
+  /** Wymusza ponowne zamontowanie mapy (np. po wejściu z onboardingu). */
+  mapKey?: string
 }
 
 function stopIcon(order: number, selected: boolean): L.DivIcon {
@@ -47,29 +50,32 @@ function FitTrailBounds({ positions }: { positions: LatLngTuple[] }) {
   return null
 }
 
+const DEFAULT_CENTER: LatLngTuple = [52.5468, 19.7064]
+
 export function PlanTrailMap({
   stops,
   route,
   routeLoading,
   selectedKey,
   onSelectStop,
+  mapKey = 'default',
 }: PlanTrailMapProps) {
   const stopPositions: LatLngTuple[] = stops.map((stop) => [stop.lat, stop.lon])
-  const pathPositions = route?.positions ?? stopPositions
-  const center: LatLngTuple = stopPositions[0] ?? [52.5468, 19.7064]
+  const pathPositions =
+    route && route.positions.length >= 2 ? route.positions : stopPositions
+  const center: LatLngTuple = stopPositions[0] ?? DEFAULT_CENTER
+  const showPath = pathPositions.length >= 2
+  const deferMapMount = routeLoading && stops.length >= 2
+
+  if (deferMapMount) {
+    return <PlanMapLoadingPlaceholder />
+  }
 
   return (
     <Card className="gap-0 overflow-hidden border-border/80 py-0">
       <div className="relative h-[min(42vh,320px)] w-full min-h-[220px] bg-muted">
-        {routeLoading ? (
-          <p
-            className="absolute top-3 left-3 z-[500] rounded-full bg-white/95 px-3 py-1 text-xs font-medium text-foreground shadow"
-            role="status"
-          >
-            Wyznaczamy trasę po chodnikach…
-          </p>
-        ) : null}
         <MapContainer
+          key={mapKey}
           center={center}
           zoom={13}
           className="h-full w-full z-0"
@@ -77,8 +83,10 @@ export function PlanTrailMap({
           attributionControl={false}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <FitTrailBounds positions={pathPositions.length > 1 ? pathPositions : stopPositions} />
-          {pathPositions.length > 1 ? (
+          <FitTrailBounds
+            positions={showPath ? pathPositions : stopPositions.length > 0 ? stopPositions : [center]}
+          />
+          {showPath ? (
             <Polyline
               positions={pathPositions}
               pathOptions={{

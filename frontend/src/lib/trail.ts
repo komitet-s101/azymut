@@ -17,6 +17,8 @@ export type TrailPlan = {
 
 /** Twardy limit bezpieczeństwa — nie cel budowy szlaku. */
 const HARD_MAX_STOPS = 12
+/** Gdy w zapytaniu nie ma czasu ani liczby punktów — sensowny szlak ma ≥ tyle przystanków. */
+const DEFAULT_MIN_TRAIL_STOPS = 2
 /** Maks. odległość między kolejnymi przystankami szlaku miejsc (km). */
 const MAX_LEG_KM = 6
 /** Maks. rozpiętość całego szlaku miejsc (km). */
@@ -236,6 +238,34 @@ function pickCoherentPlaceCluster(
   return orderNearestNeighbor(cluster)
 }
 
+function ensureMinPlaceStops(
+  rankedPlaces: SearchResult[],
+  current: SearchResult[],
+  minStops: number,
+): SearchResult[] {
+  if (current.length >= minStops) {
+    return current
+  }
+  const withCoords = rankedPlaces.filter(hasCoords)
+  const seen = new Set(current.map((item) => resultKey(item)))
+  const merged = [...current]
+  for (const place of withCoords) {
+    if (merged.length >= minStops) {
+      break
+    }
+    const key = resultKey(place)
+    if (seen.has(key)) {
+      continue
+    }
+    seen.add(key)
+    merged.push(place)
+  }
+  if (merged.length < minStops) {
+    return current
+  }
+  return orderNearestNeighbor(merged)
+}
+
 export function buildTrail(
   results: SearchResult[],
   query: string,
@@ -260,6 +290,12 @@ export function buildTrail(
   }
 
   let ordered = pickCoherentPlaceCluster(places, timeBudgetMinutes)
+  const vaguePlan =
+    cap === undefined &&
+    (timeBudgetMinutes === null || timeBudgetMinutes === undefined)
+  if (vaguePlan) {
+    ordered = ensureMinPlaceStops(places, ordered, DEFAULT_MIN_TRAIL_STOPS)
+  }
   if (cap !== undefined) {
     ordered = ordered.slice(0, cap)
   }

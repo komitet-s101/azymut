@@ -20,5 +20,6 @@ export const DEFAULT_SEARCH_RESULTS: SearchResultsPlaceholder = {
     title: 'Festiwal nad rzeką',
     dateLabel: 'Niedziela, 19 paź · 16:00',
     category: 'Muzyka',
+    locationLabel: 'Płock',
   },
 }

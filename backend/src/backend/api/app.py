@@ -10,6 +10,7 @@ from tortoise import Tortoise
 from backend.api.errors import http_exception_handler, validation_exception_handler
 from backend.api.routers import (
     health,
+    home,
     interest_packages,
     plan,
     places,
@@ -56,6 +57,7 @@ def create_app() -> FastAPI:
     app.include_router(interest_packages.router, prefix="/api/v1")
     app.include_router(plan.router, prefix="/api/v1")
     app.include_router(search.router, prefix="/api/v1")
+    app.include_router(home.router, prefix="/api/v1")
     app.include_router(routing.router, prefix="/api/v1")
     app.include_router(weather.router, prefix="/api/v1")
 

@@ -1,5 +1,8 @@
 export type Persona = 'tourist' | 'resident'
 
+/** Zakres planowania turysty: sam Płock vs okolice (gminy regionu). */
+export type TouristGeographyScope = 'plock_city' | 'plock_region'
+
 export type PartyConstraints = {
   adults: number
   kids_ages: number[]
@@ -37,5 +40,7 @@ export type UserContext = {
 export type UserContextLocal = UserContext & {
   age: number | null
   interest_tag_ids: string[]
+  onboarding_route_id: number | null
+  tourist_geography_scope: TouristGeographyScope | null
   onboarding_completed_at: string | null
 }

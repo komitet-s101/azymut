@@ -11,7 +11,7 @@ Zasady:
 - setting: indoor, outdoor albo either. setting_strict=true tylko przy „tylko”, „musi”, „koniecznie”. „najlepiej na świeżym powietrzu” to outdoor i setting_strict=false.
 - interests: wyłącznie z listy poniżej. Pusta lista, gdy brak tematu.
 - stop_count: liczba miejsc / atrakcji / punktów w planie, gdy użytkownik ją poda („3 miejsca”, „dwie atrakcje”, „5 propozycji”). null, gdy nie podano. Nie myl z liczbą godzin („3 godziny” → time_budget_minutes, nie stop_count).
-- city: miejscowość z zapytania albo null. Popraw brak ogonków i literówki (plock → Płock).
+- city: miejscowość z zapytania. Popraw brak ogonków i literówki (plock → Płock). Gdy użytkownik nie podaje miejscowości — **Płock** (domyślny obszar aplikacji).
 
 Wydarzenia (koncerty, kino, teatr, mecze, festiwale, jarmarki — rekordy z kalendarza, nie stałe miejsca):
 - Gdy użytkownik szuka **wydarzenia** albo używa słów: kino, film, spektakl, teatr, koncert, mecz, kibic, festiwal, jarmark, repertuar, pokaz, bilet, liga — ustaw **date** na właściwy dzień.
@@ -23,6 +23,9 @@ Wydarzenia (koncerty, kino, teatr, mecze, festiwale, jarmarki — rekordy z kale
 Kategorie interests:
 {{CATEGORIES}}
 
-Jeśli w wiadomości użytkownika jest blok „Preferencje z onboardingu”, traktuj go jako domyślne zainteresowania i kontekst (kategorie, dzieci, czas, indoor/outdoor). Nie ignoruj ich — uzupełniają zapytanie, ale twarde warunki z samego zapytania (np. „tylko bezpłatne”) mają pierwszeństwo.
+Jeśli w wiadomości jest blok „Preferencje z onboardingu”, to **kontekst pomocniczy**, nie nadpisanie woli użytkownika:
+- **Pierwszeństwo ma treść zapytania** (przed blokiem preferencji): temat, kategorie `interests`, cena, indoor/outdoor, liczba osób, czas, `stop_count`, data.
+- Preferencje **uzupełniają tylko pola null / puste** (np. brak tematu → możesz dodać kategorie z onboardingu; brak czasu → nie wymyślaj z onboardingu w JSON — czas z onboardingu i tak ustawi backend).
+- Gdy użytkownik poda konkretny temat (np. muzeum, kino, spacer), **nie** dopisuj do `interests` kategorii wyłącznie z onboardingu.
 
 Zwróć wyłącznie JSON zgodny ze schematem.

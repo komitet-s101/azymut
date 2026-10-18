@@ -1,15 +1,27 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from backend.api.schemas.search import (
     PlaceCategory,
     SearchFilter,
     SearchGroup,
     SearchUserPreferences,
     SettingPreference,
+    TouristGeographyScope,
 )
+from backend.llm.query_parser import interests_from_query_text
 from backend.services.catalog_query import _price_level_from_budget
 
 _CUSTOM_INTEREST_TAG = "custom"
+
+
+@dataclass(frozen=True)
+class InterestLayers:
+    """query = intencja z wypowiedzi; preference = onboarding (miękki ranking)."""
+
+    query: tuple[PlaceCategory, ...] = ()
+    preference: tuple[PlaceCategory, ...] = ()
 
 
 def _tags_to_categories(tag_ids: list[str]) -> list[PlaceCategory]:
@@ -24,6 +36,39 @@ def _tags_to_categories(tag_ids: list[str]) -> list[PlaceCategory]:
         if category not in found:
             found.append(category)
     return found
+
+
+def preference_interest_categories(
+    prefs: SearchUserPreferences | None,
+) -> list[PlaceCategory]:
+    if prefs is None:
+        return []
+    return _tags_to_categories(prefs.interest_tag_ids)
+
+
+def resolve_interest_layers(
+    raw_query: str,
+    parsed_interests: list[PlaceCategory],
+    prefs: SearchUserPreferences | None,
+) -> InterestLayers:
+    """Zapytanie ma pierwszeństwo; preferencje uzupełniają tylko brak tematu lub są miękkie."""
+    pref_cats = preference_interest_categories(prefs)
+    pref_set = set(pref_cats)
+    rule_cats = interests_from_query_text(raw_query)
+
+    if rule_cats:
+        query = tuple(rule_cats)
+    elif parsed_interests:
+        stripped = [cat for cat in parsed_interests if cat not in pref_set]
+        query = tuple(stripped if stripped else ())
+    else:
+        query = ()
+
+    if not query and not pref_cats and parsed_interests:
+        query = tuple(parsed_interests)
+
+    preference = tuple(cat for cat in pref_cats if cat not in set(query))
+    return InterestLayers(query=query, preference=preference)
 
 
 def preferences_query_suffix(prefs: SearchUserPreferences | None) -> str:
@@ -63,14 +108,6 @@ def merge_user_preferences(
     profile = prefs.profile
     constraints = prefs.constraints
 
-    tag_categories = _tags_to_categories(prefs.interest_tag_ids)
-    if tag_categories:
-        merged_interests = list(filt.interests)
-        for category in tag_categories:
-            if category not in merged_interests:
-                merged_interests.append(category)
-        updates["interests"] = merged_interests
-
     if constraints is not None:
         if filt.time_budget_minutes is None and constraints.available_minutes > 0:
             updates["time_budget_minutes"] = constraints.available_minutes
@@ -100,6 +137,12 @@ def merge_user_preferences(
         else:
             updates["setting"] = SettingPreference.INDOOR
             updates["setting_strict"] = False
+
+    if (
+        prefs.tourist_geography_scope is TouristGeographyScope.PLOCK_CITY
+        and filt.city is None
+    ):
+        updates["city"] = "Płock"
 
     if not updates:
         return filt

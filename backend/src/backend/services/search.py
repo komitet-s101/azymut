@@ -29,6 +29,7 @@ from backend.llm.query_parser import ParsedQuery, parse_search_query, query_even
 from backend.services.search_preferences import (
     merge_user_preferences,
     preferences_query_suffix,
+    resolve_interest_layers,
 )
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
 from backend.services.weather import get_weather_service
@@ -37,6 +38,7 @@ from backend.settings import Settings, get_settings
 _WARSAW = ZoneInfo("Europe/Warsaw")
 _PLOCK_LAT = 52.5468
 _PLOCK_LON = 19.7064
+_MIN_STOPS_WITHOUT_EXPLICIT_PLAN = 2
 _WEEKDAYS_PL = (
     "poniedziałek",
     "wtorek",
@@ -157,6 +159,7 @@ def _pack_ranked_within_budget(
     limit: int,
     stop_count: int | None = None,
     places_only: bool = False,
+    min_stops: int | None = None,
 ) -> list[tuple[ScoreInput, float]]:
     """Budżet czasu jest sumą czasu zwiedzania / wydarzeń, nie limitem na jeden punkt."""
     pool = [
@@ -165,6 +168,8 @@ def _pack_ranked_within_budget(
         if not places_only or pair[0].kind == "place"
     ]
     target = stop_count if stop_count is not None else limit
+    if min_stops is not None:
+        target = max(target, min_stops)
     target = min(target, limit)
 
     def visit_minutes(item: ScoreInput) -> int:
@@ -172,8 +177,14 @@ def _pack_ranked_within_budget(
             return _place_visit_minutes(place_by_key[item.key])
         return _event_visit_minutes(event_by_key[item.key])
 
+    def slice_count(pool_size: int) -> int:
+        count = min(target, pool_size)
+        if min_stops is not None and pool_size >= min_stops:
+            count = max(count, min(min_stops, pool_size))
+        return count
+
     if budget_minutes is None:
-        return pool[:target]
+        return pool[: slice_count(len(pool))]
 
     picked: list[tuple[ScoreInput, float]] = []
     total = 0
@@ -187,6 +198,25 @@ def _pack_ranked_within_budget(
         total += duration
         if len(picked) >= target:
             break
+    if (
+        min_stops is not None
+        and len(picked) < min_stops
+        and len(pool) >= min_stops
+    ):
+        picked_keys = {pair[0].key for pair in picked}
+        for item, score in pool:
+            if item.key in picked_keys:
+                continue
+            duration = visit_minutes(item)
+            if duration > budget_minutes:
+                continue
+            if total + duration > budget_minutes:
+                continue
+            picked.append((item, score))
+            picked_keys.add(item.key)
+            total += duration
+            if len(picked) >= min_stops:
+                break
     return picked
 
 
@@ -397,7 +427,19 @@ async def search_catalog(
         today=resolved_today,
         settings=resolved_settings,
     )
+    query_time_budget = parsed.filter.time_budget_minutes
+    query_stop_count = parsed.filter.stop_count
+    interest_layers = resolve_interest_layers(
+        request.query,
+        parsed.filter.interests,
+        request.user_preferences,
+    )
     filt = merge_user_preferences(parsed.filter, request.user_preferences)
+    if query_time_budget is None:
+        filt = filt.model_copy(update={"time_budget_minutes": None})
+    primary_interests = list(interest_layers.query) or list(interest_layers.preference)
+    if primary_interests != list(filt.interests):
+        filt = filt.model_copy(update={"interests": primary_interests})
     profile = (
         request.user_preferences.profile
         if request.user_preferences is not None
@@ -461,24 +503,33 @@ async def search_catalog(
     lon = request.lon if request.lon is not None else _PLOCK_LON
     bias = await _weather_bias(filt.date, lat, lon)
     event_intent = query_event_intent(request.query, filt)
+    min_pack_stops: int | None = None
+    if (
+        query_stop_count is None
+        and query_time_budget is None
+        and not event_intent
+    ):
+        min_pack_stops = _MIN_STOPS_WITHOUT_EXPLICIT_PLAN
     ranked = rank_matches(
         scored_inputs,
         filt,
         bias,
         event_intent=event_intent,
         profile=profile,
+        interest_layers=interest_layers,
     )
     pack_limit = request.limit
-    if filt.stop_count is not None:
-        pack_limit = max(request.limit, filt.stop_count)
+    if query_stop_count is not None:
+        pack_limit = max(request.limit, query_stop_count)
     ranked = _pack_ranked_within_budget(
         ranked,
         place_by_key=place_by_key,
         event_by_key=event_by_key,
-        budget_minutes=filt.time_budget_minutes,
+        budget_minutes=query_time_budget,
         limit=pack_limit,
-        stop_count=filt.stop_count,
-        places_only=filt.stop_count is not None and not event_intent,
+        stop_count=query_stop_count,
+        places_only=query_stop_count is not None and not event_intent,
+        min_stops=min_pack_stops,
     )
 
     results: list[SearchResult] = []

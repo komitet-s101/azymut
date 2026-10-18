@@ -217,7 +217,8 @@ def _assert_case(filt, case: dict[str, object]) -> None:
     assert filt.setting.value == case["setting"]
     assert filt.setting_strict == case["setting_strict"]
     assert [item.value for item in filt.interests] == case["interests"]
-    assert filt.city == case["city"]
+    expected_city = case["city"] if case["city"] is not None else "Płock"
+    assert filt.city == expected_city
 
 
 def _llm_json(case: dict[str, object]) -> str:
@@ -319,6 +320,11 @@ async def test_parser_skips_llm_without_api_key() -> None:
     )
     assert parsed.source == "rules"
     _assert_case(parsed.filter, POLISH_QUERIES[0])
+
+
+def test_default_city_plock_when_unspecified() -> None:
+    filt = parse_search_query_rules("muzeum i spacer", today=TODAY)
+    assert filt.city == "Płock"
 
 
 def test_stop_count_from_numeric_phrase() -> None:
