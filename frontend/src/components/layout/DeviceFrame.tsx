@@ -3,16 +3,9 @@ import type { ReactNode } from 'react'
 import { AccessibilityToolbar } from '@/components/accessibility/AccessibilityToolbar'
 import { SkipToContentLink } from '@/components/accessibility/SkipToContentLink'
 import { Button } from '@/components/ui/button'
+import { useShowDeviceMockFrame } from '@/lib/deviceMock'
 import { cn } from '@/lib/utils'
 import { clearUserContext } from '@/lib/userContextStorage'
-
-const useDeviceMock = (): boolean => {
-  const raw = import.meta.env.VITE_DEVICE_MOCK
-  if (raw === undefined || raw === '') {
-    return true
-  }
-  return raw !== 'false' && raw !== '0'
-}
 
 type DeviceFrameProps = {
   children: ReactNode
@@ -20,19 +13,45 @@ type DeviceFrameProps = {
   showBottomFade?: boolean
 }
 
+type AppShellContentProps = {
+  children: ReactNode
+  showBottomFade: boolean
+  mainContentClassName: string
+}
+
+function AppShellContent({
+  children,
+  showBottomFade,
+  mainContentClassName,
+}: AppShellContentProps) {
+  return (
+    <>
+      <SkipToContentLink />
+      <AccessibilityToolbar />
+      <div id="main-content" className={mainContentClassName} tabIndex={-1}>
+        {children}
+      </div>
+      {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
+    </>
+  )
+}
+
 export function DeviceFrame({
   children,
   className,
   showBottomFade = true,
 }: DeviceFrameProps) {
-  if (!useDeviceMock()) {
+  const showDeviceMockFrame = useShowDeviceMockFrame()
+
+  if (!showDeviceMockFrame) {
     return (
       <div className={cn('relative mx-auto flex min-h-dvh w-full max-w-lg flex-col', className)}>
-        <SkipToContentLink />
-        <AccessibilityToolbar />
-        <div id="main-content" className="flex min-h-0 flex-1 flex-col outline-none" tabIndex={-1}>
+        <AppShellContent
+          showBottomFade={false}
+          mainContentClassName="flex min-h-0 flex-1 flex-col outline-none"
+        >
           {children}
-        </div>
+        </AppShellContent>
       </div>
     )
   }
@@ -57,16 +76,12 @@ export function DeviceFrame({
         <div className="marvel-device iphone-x">
           <div className="notch" />
           <div className={cn('screen screen-app relative', className)}>
-            <SkipToContentLink />
-            <AccessibilityToolbar />
-            <div
-              id="main-content"
-              className="screen-app-scroll outline-none"
-              tabIndex={-1}
+            <AppShellContent
+              showBottomFade={showBottomFade}
+              mainContentClassName="screen-app-scroll outline-none"
             >
               {children}
-            </div>
-            {showBottomFade ? <div className="screen-app-fade" aria-hidden /> : null}
+            </AppShellContent>
           </div>
         </div>
       </div>

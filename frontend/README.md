@@ -15,7 +15,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Opens at [http://localhost:5173](http://localhost:5173) by default. The home screen uses a phone mock frame when `VITE_DEVICE_MOCK=true` (default).
+Opens at [http://localhost:5173](http://localhost:5173) by default. With `VITE_DEVICE_MOCK=true` (default), a phone mock frame appears on viewports **≥ 768px**; on narrower screens (typical phones) the app is full-bleed.
 
 `VITE_API_BASE_URL` is reserved for future API integration (default `http://127.0.0.1:8000`).
 
@@ -24,7 +24,7 @@ Opens at [http://localhost:5173](http://localhost:5173) by default. The home scr
 | Variable | Purpose |
 |----------|---------|
 | `VITE_API_BASE_URL` | FastAPI base URL (no trailing slash) |
-| `VITE_DEVICE_MOCK` | `true` — Marvel `devices.css` iPhone frame; `false` — full-width mobile layout |
+| `VITE_DEVICE_MOCK` | `true` — iPhone frame on viewports ≥ 768px, full-bleed below; `false` — always full-width |
 
 ## UI stack
 
