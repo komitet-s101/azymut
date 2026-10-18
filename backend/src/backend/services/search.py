@@ -520,7 +520,7 @@ async def search_catalog(
     events = await _candidate_events(filt)
     events = filter_events_for_query(events, request.query)
     mention_scores = mention_scores_for_catalog(request.query, places, events)
-    pin_keys = venue_focus_keys(mention_scores)
+    pin_keys = venue_focus_keys(mention_scores, request.query)
     venue_focus = bool(pin_keys)
     if venue_focus:
         filt = filt.model_copy(update={"setting": SettingPreference.EITHER})

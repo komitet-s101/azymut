@@ -384,6 +384,32 @@ async def test_search_prioritizes_named_venue_in_query(
 
 
 @pytest.mark.anyio
+async def test_search_molo_short_query_focuses_single_venue(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _place(
+        name="Molo na Wiśle",
+        category="przyroda_spacery_widoki",
+        is_indoor=False,
+        is_outdoor=True,
+        typical_visit_minutes=30,
+    )
+    await _seed_catalog()
+    response = await api_client.post(
+        "/api/v1/search",
+        json={"query": "molo"},
+    )
+    assert response.status_code == 200
+    body = response.json()
+    names = [item["name"] for item in body["results"] if item["kind"] == "place"]
+    assert names
+    assert names[0] == "Molo na Wiśle"
+    assert len(body["results"]) <= 3
+
+
+@pytest.mark.anyio
 async def test_search_summary_lead_uses_query_not_onboarding_profile(
     api_client: AsyncClient,
     db,

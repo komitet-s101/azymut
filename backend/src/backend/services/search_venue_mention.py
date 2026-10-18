@@ -142,16 +142,21 @@ def _query_tokens(query: str) -> list[str]:
     return [word for word in words if len(word) >= 3 and word not in _STOP_WORDS]
 
 
-def _alias_bonus(query: str, haystack: str) -> float:
+def _alias_bonus(query: str, haystack: str, name: str) -> float:
+    """Alias musi trafić w katalog obiektu — nie w samo zapytanie (np. „molo” ≠ bonus dla wszystkich)."""
     text = fold(query)
+    name_fold = fold(name)
     score = 0.0
     for pattern, needles in _VENUE_ALIASES:
         if not pattern.search(text):
             continue
         for needle in needles:
             folded_needle = fold(needle)
-            if folded_needle in haystack or folded_needle in text:
+            if folded_needle in name_fold:
                 score = max(score, _ALIAS_BONUS)
+                break
+            if folded_needle in haystack and folded_needle not in name_fold:
+                score = max(score, _ALIAS_BONUS * 0.55)
                 break
     return score
 
@@ -190,10 +195,39 @@ def _phrase_bonus(query: str, name: str) -> float:
 def _score_text(query: str, name: str, haystack: str) -> float:
     tokens = _query_tokens(query)
     return (
-        _alias_bonus(query, haystack)
+        _alias_bonus(query, haystack, name)
         + _phrase_bonus(query, name)
         + _token_bonus(tokens, haystack, name)
     )
+
+
+def _narrow_landmark_query(query: str) -> bool:
+    """Krótkie zapytanie o konkretny obiekt (1–3 słowa, bez pełnego planu dnia)."""
+    tokens = _query_tokens(query)
+    if not tokens or len(tokens) > 3:
+        return False
+    if any(ch.isdigit() for ch in query):
+        return False
+    plan_hints = ("godzin", "miejsc", "atrakcj", "plan", "wolne", "budzet", "weekend")
+    folded = fold(query)
+    if any(hint in folded for hint in plan_hints):
+        return False
+    return True
+
+
+def _top_focus_keys(scores: dict[str, float], *, max_keys: int = 3) -> set[str]:
+    ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
+    if not ranked:
+        return set()
+    top_score = ranked[0][1]
+    if top_score < _STRONG_MENTION_SCORE:
+        return set()
+    chosen = [key for key, value in ranked if value >= top_score - 1.0][:max_keys]
+    if len(ranked) > len(chosen):
+        fourth_score = ranked[len(chosen)][1] if len(ranked) > len(chosen) else 0.0
+        if top_score - fourth_score < 2.0 and len(chosen) > 1:
+            return {ranked[0][0]}
+    return set(chosen)
 
 
 def mention_scores_for_catalog(
@@ -225,9 +259,13 @@ def strong_mention_keys(scores: dict[str, float]) -> set[str]:
     return {key for key, value in scores.items() if value >= _STRONG_MENTION_SCORE}
 
 
-def venue_focus_keys(scores: dict[str, float]) -> set[str]:
-    """Tryb „konkretny obiekt” tylko przy ≤3 mocnych trafieniach (nie cała kategoria)."""
+def venue_focus_keys(scores: dict[str, float], query: str = "") -> set[str]:
+    """Tryb „konkretny obiekt”: ≤3 mocne trafienia lub wąskie zapytanie z wyraźnym liderem."""
     pinned = strong_mention_keys(scores)
-    if not pinned or len(pinned) > 3:
+    if len(pinned) > 3:
         return set()
-    return pinned
+    if pinned:
+        return pinned
+    if query.strip() and _narrow_landmark_query(query):
+        return _top_focus_keys(scores)
+    return set()

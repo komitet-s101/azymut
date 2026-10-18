@@ -56,7 +56,28 @@ async def test_mention_katedra(db) -> None:
     assert scores[f"place:{cathedral.id}"] >= 12
     pins = strong_mention_keys(scores)
     assert f"place:{cathedral.id}" in pins
-    assert f"place:{cathedral.id}" in venue_focus_keys(scores)
+    assert f"place:{cathedral.id}" in venue_focus_keys(scores, "katedra w Płocku")
+
+
+@pytest.mark.anyio
+async def test_mention_molo_single_word_not_every_place(db) -> None:
+    molo = await _place(
+        "Molo na Wiśle",
+        category="przyroda_spacery_widoki",
+        is_outdoor=True,
+        description="drewniany pomost nad Wisłą",
+    )
+    other = await _place(
+        "Bulwary wiślane",
+        category="przyroda_spacery_widoki",
+        is_outdoor=True,
+        description="spacer bez słowa molo w nazwie",
+    )
+    scores = mention_scores_for_catalog("molo", [molo, other], [])
+    assert scores[f"place:{molo.id}"] >= 12
+    assert scores.get(f"place:{other.id}", 0) < 12
+    focus = venue_focus_keys(scores, "molo")
+    assert focus == {f"place:{molo.id}"}
 
 
 @pytest.mark.anyio
@@ -69,4 +90,4 @@ async def test_venue_focus_off_when_many_generic_muzeum_hits(db) -> None:
     ]
     scores = mention_scores_for_catalog("muzeum w Płocku", places, [])
     assert len(strong_mention_keys(scores)) >= 3
-    assert venue_focus_keys(scores) == set()
+    assert venue_focus_keys(scores, "muzeum w Płocku") == set()
