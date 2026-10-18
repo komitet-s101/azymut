@@ -6,7 +6,8 @@ from tortoise.expressions import Q
 from tortoise.queryset import QuerySet
 
 from backend.api.geo import haversine_km
-from backend.db.models import OpeningHours, Place, PredefinedRoute, PriceLevel
+from backend.db.models import Event, OpeningHours, Place, PredefinedRoute, PriceLevel
+from backend.services.search import warsaw_today
 
 
 def _budget_filter(budget_max_pln: int | None) -> Q | None:
@@ -165,6 +166,20 @@ async def list_routes(
     total = len(scored)
     page = scored[offset : offset + limit]
     return page, total
+
+
+async def list_events(
+    *,
+    upcoming_only: bool = True,
+    limit: int = 100,
+    offset: int = 0,
+) -> tuple[list[Event], int]:
+    qs: QuerySet[Event] = Event.all().order_by("start_date", "start_time")
+    if upcoming_only:
+        qs = qs.filter(start_date__gte=warsaw_today())
+    total = await qs.count()
+    rows = await qs.offset(offset).limit(limit)
+    return list(rows), total
 
 
 async def get_route_detail(route_id: int) -> PredefinedRoute | None:

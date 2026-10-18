@@ -164,3 +164,20 @@ body {
   padding: 1.5rem;
   background: linear-gradient(160deg, #e2e8f0 0%, #f8fafc 45%, #dbeafe 100%);
 }
+
+.admin-shell {
+  background: linear-gradient(165deg, #f8fafc 0%, #eff6ff 40%, #f1f5f9 100%);
+}
+
+.admin-main-surface {
+  background-color: #ffffff;
+  background-image:
+    radial-gradient(rgb(15 23 42 / 0.028) 0.65px, transparent 0.65px),
+    radial-gradient(rgb(15 23 42 / 0.016) 0.5px, transparent 0.5px);
+  background-position:
+    0 0,
+    10px 14px;
+  background-size:
+    22px 22px,
+    18px 18px;
+}
