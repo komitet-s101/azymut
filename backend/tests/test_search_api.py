@@ -338,6 +338,99 @@ async def test_search_includes_events_for_concert_query_without_date(
 
 
 @pytest.mark.anyio
+async def test_search_prioritizes_named_venue_in_query(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _place(
+        name="Wieża Ciśnień – punkt widokowy",
+        category="przyroda_spacery_widoki",
+        secondary_categories="historia_zabytki",
+        is_indoor=True,
+        is_outdoor=True,
+        typical_visit_minutes=30,
+    )
+    await _place(
+        name="Aquapark Płock – strefa SPA (sauny, jacuzzi)",
+        category="relaks_wypoczynek",
+        description="grota lodowa i solna",
+        is_indoor=True,
+        is_outdoor=False,
+        typical_visit_minutes=150,
+    )
+    response = await api_client.post(
+        "/api/v1/search",
+        json={
+            "query": "chcę zobaczyć wierzę ciśnień",
+            "user_preferences": {
+                "profile": {
+                    "bmi": None,
+                    "likes_games": 2,
+                    "prefer_outdoor": True,
+                    "gastro_intensity_preference": 2,
+                    "physical_activity_preference": 3,
+                }
+            },
+        },
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert "świeżym powietrzu" not in body["summary"].casefold()
+    assert "Wieża Ciśnień" in body["summary"]
+    names = [item["name"] for item in body["results"] if item["kind"] == "place"]
+    assert names[0] == "Wieża Ciśnień – punkt widokowy"
+    assert len(body["results"]) <= 3
+
+
+@pytest.mark.anyio
+async def test_open_saturday_query_outdoor_profile_favors_outdoor_sport(
+    api_client: AsyncClient,
+    db,
+    fixed_saturday,
+) -> None:
+    await _place(
+        name="Siłownia Arena MOSiR (z sauną) – wejście jednorazowe",
+        category="sport_aktywny_wypoczynek",
+        is_indoor=True,
+        is_outdoor=False,
+        physical_activity_level=5,
+        typical_visit_minutes=90,
+        price_level=PriceLevel.MEDIUM,
+    )
+    await _place(
+        name="Orlik przy ul. Zamenhofa (MOSiR) z siłownią zewnętrzną",
+        category="sport_aktywny_wypoczynek",
+        is_indoor=False,
+        is_outdoor=True,
+        physical_activity_level=5,
+        typical_visit_minutes=90,
+        price_level=PriceLevel.FREE,
+    )
+    response = await api_client.post(
+        "/api/v1/search",
+        json={
+            "query": "mam wolne 3 godziny w sobotę, co mogę zrobić",
+            "user_preferences": {
+                "interest_tag_ids": ["sport_aktywny_wypoczynek"],
+                "profile": {
+                    "bmi": None,
+                    "likes_games": 2,
+                    "prefer_outdoor": True,
+                    "gastro_intensity_preference": 2,
+                    "physical_activity_preference": 5,
+                },
+            },
+        },
+    )
+    assert response.status_code == 200
+    names = [item["name"] for item in response.json()["results"] if item["kind"] == "place"]
+    assert names
+    assert names[0] == "Orlik przy ul. Zamenhofa (MOSiR) z siłownią zewnętrzną"
+    assert "Siłownia Arena MOSiR" not in names[:2]
+
+
+@pytest.mark.anyio
 async def test_search_rejects_blank_query(api_client: AsyncClient, db) -> None:
     response = await api_client.post("/api/v1/search", json={"query": " "})
     assert response.status_code == 422

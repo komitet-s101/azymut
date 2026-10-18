@@ -46,6 +46,7 @@ async function enrichStopPlace(
       ...stop,
       place: {
         ...place,
+        external_id: detail.external_id ?? place.external_id,
         name: detail.name || place.name,
         latitude: lat,
         longitude: lon,
@@ -83,6 +84,7 @@ function placeToSearchResult(
   return {
     kind: 'place',
     id: place.id,
+    external_id: place.external_id,
     name: place.name,
     category: routeCategory,
     city,

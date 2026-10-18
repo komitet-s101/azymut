@@ -16,6 +16,8 @@ _FAMILY = 0.7
 _OUTDOOR_ONLY = 3.0
 _OUTDOOR_MIXED = 1.5
 _SETTING_MISS = 1.5
+_INDOOR_ONLY_UNDER_OUTDOOR = 5.5
+_INDOOR_ONLY_UNDER_INDOOR = 5.5
 _AGE_OK = 0.5
 _AGE_PENALTY_PER_YEAR = 0.35
 _UNKNOWN_PRICE_STRICT = 2.5
@@ -55,24 +57,33 @@ class ScoreInput:
     kind: str = "place"
 
 
-def _setting_score(item: ScoreInput, preference: SettingPreference) -> float:
+def _setting_score(
+    item: ScoreInput,
+    preference: SettingPreference,
+    *,
+    raining: bool = False,
+) -> float:
     if preference is SettingPreference.EITHER:
         return 0.0
     if preference is SettingPreference.OUTDOOR:
         if item.is_outdoor and not item.is_indoor:
             return _OUTDOOR_ONLY
-        if item.is_outdoor:
+        if item.is_outdoor and item.is_indoor:
             return _OUTDOOR_MIXED
         if item.is_indoor:
-            return -_SETTING_MISS
+            if raining:
+                return 0.0
+            return -_INDOOR_ONLY_UNDER_OUTDOOR
         return 0.0
     if preference is SettingPreference.INDOOR:
         if item.is_indoor and not item.is_outdoor:
             return _OUTDOOR_ONLY
-        if item.is_indoor:
+        if item.is_indoor and item.is_outdoor:
             return _OUTDOOR_MIXED
-        if item.is_outdoor:
-            return -_SETTING_MISS
+        if item.is_outdoor and not item.is_indoor:
+            if raining:
+                return 0.0
+            return -_INDOOR_ONLY_UNDER_INDOOR
         return 0.0
     never: never = preference
     return never
@@ -90,10 +101,15 @@ def _profile_score(item: ScoreInput, profile: UserProfile | None) -> float:
     if profile.bmi is not None and profile.bmi >= 27:
         gastro_pref = min(gastro_pref, 2)
     score += (5 - abs(item.gastro_intensity - gastro_pref)) * 0.08
-    if profile.prefer_outdoor and item.is_outdoor:
-        score += 1.2
-    elif not profile.prefer_outdoor and item.is_indoor:
-        score += 0.4
+    if profile.prefer_outdoor:
+        if item.is_outdoor and not item.is_indoor:
+            score += 1.8
+        elif item.is_outdoor:
+            score += 0.9
+        elif item.is_indoor:
+            score -= 1.2
+    elif item.is_indoor and not item.is_outdoor:
+        score += 0.6
     score += item.cultural_education * 0.06
     score += item.nature_relaxation * 0.06
     return score
@@ -104,19 +120,17 @@ def _interest_category_score(
     layers: InterestLayers,
 ) -> float:
     query_ids = {category.value for category in layers.query}
-    pref_ids = {category.value for category in layers.preference}
-    primary_ids = query_ids if query_ids else pref_ids
-    soft_ids = pref_ids if query_ids else set()
+    pref_ids = {category.value for category in layers.preference} - query_ids
 
     score = 0.0
-    if item.category and item.category in primary_ids:
+    if item.category and item.category in query_ids:
         score += _PRIMARY_CATEGORY
-    elif item.category and item.category in soft_ids:
+    elif item.category and item.category in pref_ids:
         score += _PREF_PRIMARY_CATEGORY
 
     if item.secondary_categories:
-        secondary_q = sum(1 for cat in item.secondary_categories if cat in primary_ids)
-        secondary_p = sum(1 for cat in item.secondary_categories if cat in soft_ids)
+        secondary_q = sum(1 for cat in item.secondary_categories if cat in query_ids)
+        secondary_p = sum(1 for cat in item.secondary_categories if cat in pref_ids)
         score += secondary_q * _SECONDARY_CATEGORY
         score += secondary_p * _PREF_SECONDARY_CATEGORY
     return score
@@ -124,9 +138,9 @@ def _interest_category_score(
 
 def _sport_interest_bonus(item: ScoreInput, layers: InterestLayers) -> float:
     query_ids = {category.value for category in layers.query}
-    pref_ids = {category.value for category in layers.preference}
+    pref_ids = {category.value for category in layers.preference} - query_ids
     sport = _SPORT.value
-    if sport in query_ids or (sport in pref_ids and not query_ids):
+    if sport in query_ids:
         return item.physical_activity_level * _SPORT_ACTIVITY
     if sport in pref_ids:
         return item.physical_activity_level * _SPORT_ACTIVITY * _PREF_SIGNAL_SCALE
@@ -172,7 +186,7 @@ def score_match(
         score += item.family_friendly * _FAMILY
     score += _age_score(item, filt)
     score += _profile_score(item, profile)
-    score += _setting_score(item, filt.setting)
+    score += _setting_score(item, filt.setting, raining=weather.raining)
 
     if item.price_level is None and filt.max_price_level == 0:
         score -= _UNKNOWN_PRICE_STRICT if filt.price_strict else _UNKNOWN_PRICE_SOFT

@@ -1,5 +1,6 @@
 import { CalendarDays, Clock, MapPin, Ticket } from 'lucide-react'
 
+import { PlaceCoverImage } from '@/components/place/PlaceCoverImage'
 import { PlanCategoryBadge } from '@/components/search-results/PlanCategoryBadge'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
@@ -64,6 +65,13 @@ export function SearchResultCard({ item, trailOrder, selected, onSelect }: Searc
       tabIndex={interactive ? 0 : undefined}
       aria-pressed={interactive ? selected : undefined}
     >
+      {item.kind === 'place' ? (
+        <PlaceCoverImage
+          name={item.name}
+          source={{ external_id: item.external_id }}
+          className="rounded-t-xl"
+        />
+      ) : null}
       <CardHeader className={appLayout.cardHeader}>
         <CardTitle className={appLayout.cardTitle}>{item.name}</CardTitle>
         {blurb ? <p className={appLayout.bodyMuted}>{blurb}</p> : null}

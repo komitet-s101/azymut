@@ -1,13 +1,13 @@
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { CalendarDays, Clock, ImageIcon, MapPin, Ticket, X } from 'lucide-react'
+import { CalendarDays, Clock, MapPin, Ticket, X } from 'lucide-react'
 
+import { PlaceCoverImage } from '@/components/place/PlaceCoverImage'
 import { PlanCategoryBadge } from '@/components/search-results/PlanCategoryBadge'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { appLayout } from '@/lib/appLayout'
 import { fetchPlaceDetail, type PlaceDetail } from '@/lib/placeApi'
-import { resolvePlaceCoverImageUrl } from '@/lib/placeCoverImage'
 import { categoryLabel, priceLabel, type SearchResult } from '@/lib/searchApi'
 import { getPlanSheetPortalRoot, lockAppScroll, unlockAppScroll } from '@/lib/scrollLock'
 import { cn } from '@/lib/utils'
@@ -25,27 +25,6 @@ type PlaceDetailState =
   | { status: 'ready'; place: PlaceDetail }
   | { status: 'error' }
 
-function PlaceCoverHero({ name, imageUrl }: { name: string; imageUrl: string | null }) {
-  if (imageUrl) {
-    return (
-      <img
-        src={imageUrl}
-        alt={`Zdjęcie: ${name}`}
-        className="h-full w-full object-cover"
-      />
-    )
-  }
-  return (
-    <div
-      className="flex h-full w-full flex-col items-center justify-center gap-2 bg-muted/80 text-muted-foreground"
-      aria-hidden
-    >
-      <ImageIcon className="size-9 opacity-50" />
-      <span className="text-xs font-medium">Zdjęcie wkrótce w bazie</span>
-    </div>
-  )
-}
-
 function formatVisitMinutes(minutes: number): string {
   if (minutes >= 60) {
     const hours = Math.floor(minutes / 60)
@@ -57,42 +36,42 @@ function formatVisitMinutes(minutes: number): string {
 
 export function PlanPlaceDetailSheet({
   open,
-  item,
+  item: itemProp,
   trailOrder,
   onClose,
 }: PlanPlaceDetailSheetProps) {
   const titleId = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
   const [placeDetail, setPlaceDetail] = useState<PlaceDetailState>({ status: 'idle' })
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null)
+  const [displayItem, setDisplayItem] = useState<SearchResult | null>(null)
+  const [isPresent, setIsPresent] = useState(false)
+  const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     setPortalRoot(getPlanSheetPortalRoot())
   }, [])
 
   useEffect(() => {
-    if (!open || !item) {
-      setPlaceDetail({ status: 'idle' })
-      return
+    if (itemProp) {
+      setDisplayItem(itemProp)
     }
-    if (item.kind !== 'place') {
-      setPlaceDetail({ status: 'idle' })
-      return
-    }
-    const controller = new AbortController()
-    setPlaceDetail({ status: 'loading' })
-    fetchPlaceDetail(item.id, controller.signal)
-      .then((place) => setPlaceDetail({ status: 'ready', place }))
-      .catch((error: unknown) => {
-        if (error instanceof DOMException && error.name === 'AbortError') {
-          return
-        }
-        setPlaceDetail({ status: 'error' })
-      })
-    return () => controller.abort()
-  }, [open, item])
+  }, [itemProp])
 
   useEffect(() => {
-    if (!open) {
+    if (open && itemProp) {
+      setIsPresent(true)
+      const frame = requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIsVisible(true))
+      })
+      return () => cancelAnimationFrame(frame)
+    }
+    setIsVisible(false)
+    return undefined
+  }, [open, itemProp])
+
+  useEffect(() => {
+    if (!isPresent) {
       return
     }
     lockAppScroll()
@@ -106,11 +85,64 @@ export function PlanPlaceDetailSheet({
       document.removeEventListener('keydown', onKeyDown)
       unlockAppScroll()
     }
-  }, [open, onClose])
+  }, [isPresent, onClose])
 
-  if (!open || !item || !portalRoot) {
+  useEffect(() => {
+    if (!isPresent || isVisible) {
+      return
+    }
+    const panel = panelRef.current
+    function finishClose() {
+      setIsPresent(false)
+      setDisplayItem(null)
+      setPlaceDetail({ status: 'idle' })
+    }
+    if (!panel) {
+      finishClose()
+      return
+    }
+    const fallbackId = window.setTimeout(finishClose, 320)
+    function handleTransitionEnd(event: TransitionEvent) {
+      if (event.target !== panel || event.propertyName !== 'transform') {
+        return
+      }
+      window.clearTimeout(fallbackId)
+      finishClose()
+    }
+    panel.addEventListener('transitionend', handleTransitionEnd)
+    return () => {
+      window.clearTimeout(fallbackId)
+      panel.removeEventListener('transitionend', handleTransitionEnd)
+    }
+  }, [isPresent, isVisible])
+
+  useEffect(() => {
+    if (!isPresent || !displayItem) {
+      setPlaceDetail({ status: 'idle' })
+      return
+    }
+    if (displayItem.kind !== 'place') {
+      setPlaceDetail({ status: 'idle' })
+      return
+    }
+    const controller = new AbortController()
+    setPlaceDetail({ status: 'loading' })
+    fetchPlaceDetail(displayItem.id, controller.signal)
+      .then((place) => setPlaceDetail({ status: 'ready', place }))
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return
+        }
+        setPlaceDetail({ status: 'error' })
+      })
+    return () => controller.abort()
+  }, [isPresent, displayItem])
+
+  if (!isPresent || !displayItem || !portalRoot) {
     return null
   }
+
+  const item = displayItem
 
   const when = [item.start_date, item.start_time].filter(Boolean).join(' · ')
   const placeLine =
@@ -118,8 +150,10 @@ export function PlanPlaceDetailSheet({
       ? [placeDetail.place.city, placeDetail.place.address_line].filter(Boolean).join(' · ')
       : [item.city, item.address_line].filter(Boolean).join(' · ')
 
-  const coverUrl =
-    placeDetail.status === 'ready' ? resolvePlaceCoverImageUrl(placeDetail.place) : null
+  const coverSource =
+    placeDetail.status === 'ready'
+      ? placeDetail.place
+      : { external_id: item.external_id }
 
   const description =
     placeDetail.status === 'ready' && placeDetail.place.description
@@ -147,18 +181,25 @@ export function PlanPlaceDetailSheet({
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/45"
+        className={cn(
+          'azymut-plan-sheet-backdrop absolute inset-0 bg-black/45',
+          isVisible && 'is-visible',
+        )}
         aria-label="Zamknij szczegóły"
         onClick={onClose}
       />
       <div
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="relative z-10 flex max-h-[88%] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-border/80 bg-background shadow-xl"
+        className={cn(
+          'azymut-plan-sheet-panel relative z-10 flex max-h-[88%] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-border/80 bg-background shadow-xl',
+          isVisible && 'is-visible',
+        )}
       >
-        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden border-b border-border/60 bg-muted/50">
-          <PlaceCoverHero name={item.name} imageUrl={coverUrl} />
+        <div className="relative w-full shrink-0 overflow-hidden border-b border-border/60">
+          <PlaceCoverImage name={item.name} source={coverSource} aspectClassName="aspect-[16/10]" />
           <Button
             type="button"
             variant="secondary"

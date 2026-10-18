@@ -67,6 +67,7 @@ def _to_search_result(event: Event, score: float) -> SearchResult:
     return SearchResult(
         kind="event",
         id=event.id,
+        external_id=event.external_id,
         name=event.name,
         category=_event_category(event),
         city=event.city,
@@ -98,6 +99,9 @@ async def upcoming_events_for_home(
     ).order_by("start_date", "start_time")
 
     pref_categories = preference_interest_categories(user_preferences)
+    if not pref_categories:
+        return []
+
     filt = merge_user_preferences(SearchFilter(), user_preferences)
     if pref_categories:
         filt = filt.model_copy(update={"interests": pref_categories})
@@ -114,11 +118,16 @@ async def upcoming_events_for_home(
         and user_preferences.tourist_geography_scope is TouristGeographyScope.PLOCK_CITY
     )
 
+    category_values = {item.value for item in pref_categories}
+
     candidates: list[Event] = []
     for event in rows:
         if event.status and event.status not in ("upcoming", "scheduled"):
             continue
         if plock_city_only and not _event_in_plock_city(event):
+            continue
+        event_category = _event_category(event)
+        if event_category is None or event_category not in category_values:
             continue
         if _event_blocked(event, filt):
             continue

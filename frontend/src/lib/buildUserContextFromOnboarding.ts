@@ -90,6 +90,27 @@ function buildParty(age: number | null, hasChildren: boolean, childrenCount: str
   return { adults, kids_ages: kidsAges }
 }
 
+export function onboardingFormFromUserContext(
+  context: UserContextLocal,
+): OnboardingFormState {
+  const kids = context.constraints.party.kids_ages
+  const hasChildren = kids.length > 0
+
+  return {
+    persona: context.persona,
+    interestTagIds: [...context.interest_tag_ids],
+    age: context.age !== null ? String(context.age) : '',
+    hasChildren,
+    childrenCount: hasChildren ? String(kids.length) : '',
+    customInterests: context.interest_tag_ids.includes(CUSTOM_INTEREST_ID)
+      ? context.custom_request
+      : '',
+    preferOutdoor: context.profile.prefer_outdoor,
+    selectedRouteId: context.onboarding_route_id,
+    touristGeographyScope: context.tourist_geography_scope ?? 'plock_city',
+  }
+}
+
 export function buildUserContextFromOnboarding(
   form: OnboardingFormState,
 ): UserContextLocal | null {

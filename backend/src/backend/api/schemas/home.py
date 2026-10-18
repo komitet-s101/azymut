@@ -14,3 +14,14 @@ class HomeUpcomingEventsRequest(BaseModel):
 
 class HomeUpcomingEventsResponse(BaseModel):
     events: list[SearchResult] = Field(default_factory=list)
+
+
+class HomeRecommendedPlacesRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    limit: int = Field(default=6, ge=1, le=12)
+    user_preferences: SearchUserPreferences | None = None
+
+
+class HomeRecommendedPlacesResponse(BaseModel):
+    places: list[SearchResult] = Field(default_factory=list)

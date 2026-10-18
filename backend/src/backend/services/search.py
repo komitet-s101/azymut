@@ -26,12 +26,21 @@ from backend.db.models import Event, OpeningHours, Place, PriceLevel
 from backend.llm.client import LLMClient, LLMUnavailableError
 from backend.llm.parser import extract_json_object
 from backend.llm.query_parser import ParsedQuery, parse_search_query, query_event_intent
+from backend.services.search_events import (
+    event_name_boost,
+    filter_events_for_query,
+    venue_place_penalty,
+)
 from backend.services.search_preferences import (
     merge_user_preferences,
     preferences_query_suffix,
     resolve_interest_layers,
 )
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
+from backend.services.search_venue_mention import (
+    mention_scores_for_catalog,
+    strong_mention_keys,
+)
 from backend.services.weather import get_weather_service
 from backend.settings import Settings, get_settings
 
@@ -39,6 +48,7 @@ _WARSAW = ZoneInfo("Europe/Warsaw")
 _PLOCK_LAT = 52.5468
 _PLOCK_LON = 19.7064
 _MIN_STOPS_WITHOUT_EXPLICIT_PLAN = 2
+_VENUE_FOCUS_RESULT_CAP = 3
 _WEEKDAYS_PL = (
     "poniedziałek",
     "wtorek",
@@ -92,6 +102,23 @@ def summarize_filter(filt: SearchFilter) -> str:
     if filt.city:
         parts.append(filt.city)
     return " · ".join(parts) if parts else "Propozycje na Twój czas"
+
+
+def summarize_search_response(
+    query: str,
+    filt: SearchFilter,
+    results: list[SearchResult],
+    *,
+    venue_focus: bool,
+) -> str:
+    """Nagłówek planu: przy konkretnym obiekcie — nazwy trafień, nie profil z onboardingu."""
+    if venue_focus and results:
+        return " · ".join(item.name for item in results[:_VENUE_FOCUS_RESULT_CAP])
+    summary = summarize_filter(filt)
+    stripped = query.strip()
+    if summary == "Propozycje na Twój czas" and stripped:
+        return stripped[:120]
+    return summary
 
 
 def _weather_note(bias: WeatherBias, setting: SettingPreference) -> str | None:
@@ -150,6 +177,29 @@ def _event_visit_minutes(event: Event) -> int:
     return 120
 
 
+def _apply_query_relevance(
+    ranked: list[tuple[ScoreInput, float]],
+    *,
+    query: str,
+    mention_scores: dict[str, float],
+    place_by_key: dict[str, Place],
+    event_by_key: dict[str, Event],
+    event_intent: bool,
+) -> list[tuple[ScoreInput, float]]:
+    boosted: list[tuple[ScoreInput, float]] = []
+    for item, score in ranked:
+        total = score + mention_scores.get(item.key, 0.0)
+        if item.kind == "event":
+            event = event_by_key[item.key]
+            total += event_name_boost(event.name, query)
+        elif event_intent:
+            place = place_by_key[item.key]
+            total -= venue_place_penalty(place.name, event_intent=True)
+        boosted.append((item, total))
+    boosted.sort(key=lambda pair: (-pair[1], pair[0].key))
+    return boosted
+
+
 def _pack_ranked_within_budget(
     ranked: list[tuple[ScoreInput, float]],
     *,
@@ -160,6 +210,7 @@ def _pack_ranked_within_budget(
     stop_count: int | None = None,
     places_only: bool = False,
     min_stops: int | None = None,
+    pin_keys: set[str] | None = None,
 ) -> list[tuple[ScoreInput, float]]:
     """Budżet czasu jest sumą czasu zwiedzania / wydarzeń, nie limitem na jeden punkt."""
     pool = [
@@ -167,6 +218,10 @@ def _pack_ranked_within_budget(
         for pair in ranked
         if not places_only or pair[0].kind == "place"
     ]
+    if pin_keys:
+        pinned = [pair for pair in pool if pair[0].key in pin_keys]
+        rest = [pair for pair in pool if pair[0].key not in pin_keys]
+        pool = pinned + rest
     target = stop_count if stop_count is not None else limit
     if min_stops is not None:
         target = max(target, min_stops)
@@ -440,11 +495,6 @@ async def search_catalog(
     primary_interests = list(interest_layers.query) or list(interest_layers.preference)
     if primary_interests != list(filt.interests):
         filt = filt.model_copy(update={"interests": primary_interests})
-    profile = (
-        request.user_preferences.profile
-        if request.user_preferences is not None
-        else None
-    )
     places = await _candidate_places(filt)
     any_hours: set[int] = set()
     open_today: set[int] = set()
@@ -456,6 +506,17 @@ async def search_catalog(
             if place.id not in any_hours or place.id in open_today
         ]
     events = await _candidate_events(filt)
+    events = filter_events_for_query(events, request.query)
+    mention_scores = mention_scores_for_catalog(request.query, places, events)
+    pin_keys = strong_mention_keys(mention_scores)
+    venue_focus = bool(pin_keys)
+    if venue_focus:
+        filt = filt.model_copy(update={"setting": SettingPreference.EITHER})
+    profile = (
+        request.user_preferences.profile
+        if request.user_preferences is not None and not venue_focus
+        else None
+    )
 
     scored_inputs: list[ScoreInput] = []
     place_by_key: dict[str, Place] = {}
@@ -510,6 +571,8 @@ async def search_catalog(
         and not event_intent
     ):
         min_pack_stops = _MIN_STOPS_WITHOUT_EXPLICIT_PLAN
+    if pin_keys:
+        min_pack_stops = None
     ranked = rank_matches(
         scored_inputs,
         filt,
@@ -518,8 +581,20 @@ async def search_catalog(
         profile=profile,
         interest_layers=interest_layers,
     )
+    ranked = _apply_query_relevance(
+        ranked,
+        query=request.query,
+        mention_scores=mention_scores,
+        place_by_key=place_by_key,
+        event_by_key=event_by_key,
+        event_intent=event_intent,
+    )
+    if venue_focus:
+        ranked = [pair for pair in ranked if pair[0].key in pin_keys]
     pack_limit = request.limit
-    if query_stop_count is not None:
+    if venue_focus:
+        pack_limit = min(pack_limit, _VENUE_FOCUS_RESULT_CAP, len(ranked) or 1)
+    if query_stop_count is not None and not venue_focus:
         pack_limit = max(request.limit, query_stop_count)
     ranked = _pack_ranked_within_budget(
         ranked,
@@ -530,6 +605,7 @@ async def search_catalog(
         stop_count=query_stop_count,
         places_only=query_stop_count is not None and not event_intent,
         min_stops=min_pack_stops,
+        pin_keys=pin_keys or None,
     )
 
     results: list[SearchResult] = []
@@ -540,6 +616,7 @@ async def search_catalog(
                 SearchResult(
                     kind="place",
                     id=place.id,
+                    external_id=place.external_id,
                     name=place.name,
                     category=place.category,
                     city=place.city,
@@ -564,6 +641,7 @@ async def search_catalog(
             SearchResult(
                 kind="event",
                 id=event.id,
+                external_id=event.external_id,
                 name=event.name,
                 category=_event_category(event),
                 city=event.city,
@@ -587,7 +665,12 @@ async def search_catalog(
     )
     return SearchResponse(
         query=request.query,
-        summary=summarize_filter(filt),
+        summary=summarize_search_response(
+            request.query,
+            filt,
+            results,
+            venue_focus=venue_focus,
+        ),
         filter=filt,
         parser=parsed.source,
         weather_used=bias.used,

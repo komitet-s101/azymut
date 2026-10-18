@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 
 import {
   InterestsStep,
@@ -20,28 +20,81 @@ import {
 import { CUSTOM_INTEREST_ID } from '@/data/interestCategories'
 import {
   buildUserContextFromOnboarding,
+  onboardingFormFromUserContext,
   type OnboardingFormState,
 } from '@/lib/buildUserContextFromOnboarding'
-import { onboardingStepId, onboardingTotalSteps } from '@/lib/onboardingFlow'
-import { saveUserContext } from '@/lib/userContextStorage'
-import type { Persona, TouristGeographyScope } from '@/types/userContext'
+import {
+  onboardingStepId,
+  onboardingStepNumber,
+  onboardingTotalSteps,
+} from '@/lib/onboardingFlow'
+import { loadUserContext, saveUserContext } from '@/lib/userContextStorage'
+import type { Persona } from '@/types/userContext'
+
+export type OnboardingEntry = 'full' | 'edit-interests'
 
 type OnboardingPageProps = {
+  entry: OnboardingEntry
   onComplete: () => void
+  onCancel?: () => void
 }
 
-export function OnboardingPage({ onComplete }: OnboardingPageProps) {
-  const [step, setStep] = useState(1)
-  const [persona, setPersona] = useState<Persona | null>(null)
-  const [interestTagIds, setInterestTagIds] = useState<string[]>([])
-  const [selectedRouteId, setSelectedRouteId] = useState<number | null>(null)
-  const [age, setAge] = useState('')
-  const [hasChildren, setHasChildren] = useState(false)
-  const [childrenCount, setChildrenCount] = useState('')
-  const [customInterests, setCustomInterests] = useState('')
-  const [preferOutdoor, setPreferOutdoor] = useState(true)
-  const [touristGeographyScope, setTouristGeographyScope] =
-    useState<TouristGeographyScope>('plock_city')
+function useOnboardingField<T>(
+  seeded: OnboardingFormState | null,
+  pick: (form: OnboardingFormState) => T,
+  fallback: T,
+): [T, Dispatch<SetStateAction<T>>] {
+  return useState<T>(() => (seeded ? pick(seeded) : fallback))
+}
+
+export function OnboardingPage({ entry, onComplete, onCancel }: OnboardingPageProps) {
+  const storedContext = entry === 'edit-interests' ? loadUserContext() : null
+  const seededForm = storedContext ? onboardingFormFromUserContext(storedContext) : null
+  const isEditInterests = entry === 'edit-interests' && seededForm !== null
+
+  const [step, setStep] = useState(() => {
+    if (isEditInterests && seededForm?.persona) {
+      return onboardingStepNumber(seededForm.persona, 'interests')
+    }
+    return 1
+  })
+  const [persona, setPersona] = useOnboardingField(seededForm, (form) => form.persona, null)
+  const [interestTagIds, setInterestTagIds] = useOnboardingField(
+    seededForm,
+    (form) => form.interestTagIds,
+    [],
+  )
+  const [selectedRouteId, setSelectedRouteId] = useOnboardingField(
+    seededForm,
+    (form) => form.selectedRouteId,
+    null,
+  )
+  const [age, setAge] = useOnboardingField(seededForm, (form) => form.age, '')
+  const [hasChildren, setHasChildren] = useOnboardingField(
+    seededForm,
+    (form) => form.hasChildren,
+    false,
+  )
+  const [childrenCount, setChildrenCount] = useOnboardingField(
+    seededForm,
+    (form) => form.childrenCount,
+    '',
+  )
+  const [customInterests, setCustomInterests] = useOnboardingField(
+    seededForm,
+    (form) => form.customInterests,
+    '',
+  )
+  const [preferOutdoor, setPreferOutdoor] = useOnboardingField(
+    seededForm,
+    (form) => form.preferOutdoor,
+    true,
+  )
+  const [touristGeographyScope, setTouristGeographyScope] = useOnboardingField(
+    seededForm,
+    (form) => form.touristGeographyScope,
+    'plock_city',
+  )
 
   const totalSteps = onboardingTotalSteps(persona)
   const stepId = onboardingStepId(persona, step)
@@ -103,6 +156,10 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
     if (!context) {
       return
     }
+    const previous = loadUserContext()
+    if (previous?.last_plan_id) {
+      context.last_plan_id = previous.last_plan_id
+    }
     saveUserContext(context)
     onComplete()
   }
@@ -132,8 +189,10 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
     footerActions = (
       <InterestsStepActions
         selectedIds={interestTagIds}
-        onBack={goBack}
-        onNext={goNext}
+        onBack={isEditInterests ? () => onCancel?.() : goBack}
+        onNext={isEditInterests ? handleFinish : goNext}
+        backLabel={isEditInterests ? 'Anuluj' : undefined}
+        nextLabel={isEditInterests ? 'Zapisz' : undefined}
       />
     )
   } else if (stepId === 'routes') {
@@ -155,7 +214,12 @@ export function OnboardingPage({ onComplete }: OnboardingPageProps) {
   }
 
   return (
-    <OnboardingLayout step={step} totalSteps={totalSteps} footerActions={footerActions}>
+    <OnboardingLayout
+      step={step}
+      totalSteps={totalSteps}
+      stepBadgeLabel={isEditInterests ? 'Zmiana zainteresowań' : undefined}
+      footerActions={footerActions}
+    >
       {stepId === 'persona' ? (
         <PersonaStep value={persona} onChange={handlePersonaChange} />
       ) : null}

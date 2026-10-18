@@ -12,6 +12,7 @@ type OnboardingLayoutProps = {
   footerActions?: ReactNode
   step: number
   totalSteps: number
+  stepBadgeLabel?: string
   className?: string
 }
 
@@ -20,6 +21,7 @@ export function OnboardingLayout({
   footerActions,
   step,
   totalSteps,
+  stepBadgeLabel,
   className,
 }: OnboardingLayoutProps) {
   return (
@@ -38,7 +40,7 @@ export function OnboardingLayout({
         <div className={appLayout.onboardingScroll}>
           <div className="mb-5 flex justify-center">
             <Badge variant="secondary" className="px-3 py-1 text-xs font-medium">
-              Krok {step} z {totalSteps}
+              {stepBadgeLabel ?? `Krok ${step} z ${totalSteps}`}
             </Badge>
           </div>
           {children}

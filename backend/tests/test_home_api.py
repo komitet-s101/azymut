@@ -5,7 +5,7 @@ from datetime import date
 import pytest
 from httpx import AsyncClient
 
-from backend.db.models import Event
+from backend.db.models import Event, Place, PriceLevel
 
 
 async def _event(
@@ -71,23 +71,89 @@ async def test_home_upcoming_events_respects_interests(
     assert response.status_code == 200
     payload = response.json()
     names = [item["name"] for item in payload["events"]]
-    assert names[0] == "Koncert testowy"
-    assert len(names) == 2
+    assert names == ["Koncert testowy"]
 
 
 @pytest.mark.asyncio
-async def test_home_upcoming_events_default_limit_four(
+async def test_home_upcoming_events_without_interests_returns_empty(
     api_client: AsyncClient,
     home_today: date,
 ) -> None:
-    for index in range(6):
-        await _event(
-            external_id=f"H-L{index}",
-            name=f"Wydarzenie {index}",
-            start_date=date(2026, 10, 20 + index),
-            category="kultura_sztuka_film",
-        )
+    await _event(
+        external_id="H-K1",
+        name="Mecz bez preferencji",
+        start_date=date(2026, 10, 18),
+        category="kibicowanie_wydarzenia_sportowe",
+    )
 
     response = await api_client.post("/api/v1/home/upcoming-events", json={})
     assert response.status_code == 200
-    assert len(response.json()["events"]) == 4
+    assert response.json()["events"] == []
+
+
+@pytest.mark.asyncio
+async def test_home_upcoming_events_excludes_unselected_categories(
+    api_client: AsyncClient,
+    home_today: date,
+) -> None:
+    await _event(
+        external_id="H-K2",
+        name="Mecz testowy",
+        start_date=date(2026, 10, 18),
+        category="kibicowanie_wydarzenia_sportowe",
+    )
+    await _event(
+        external_id="H-K3",
+        name="Koncert testowy",
+        start_date=date(2026, 10, 19),
+        category="muzyka_widowiska",
+    )
+
+    response = await api_client.post(
+        "/api/v1/home/upcoming-events",
+        json={
+            "limit": 4,
+            "user_preferences": {"interest_tag_ids": ["muzyka_widowiska"]},
+        },
+    )
+    assert response.status_code == 200
+    names = [item["name"] for item in response.json()["events"]]
+    assert names == ["Koncert testowy"]
+
+
+@pytest.mark.asyncio
+async def test_home_recommended_places_respects_interests(
+    api_client: AsyncClient,
+) -> None:
+    await Place.create(
+        name="Muzeum testowe",
+        city="Płock",
+        gmina="Płock",
+        category="historia_zabytki",
+        is_indoor=True,
+        is_outdoor=False,
+        typical_visit_minutes=60,
+        price_level=PriceLevel.LOW,
+    )
+    await Place.create(
+        name="Basen testowy",
+        city="Płock",
+        gmina="Płock",
+        category="sport_aktywny_wypoczynek",
+        is_indoor=True,
+        is_outdoor=False,
+        typical_visit_minutes=90,
+        price_level=PriceLevel.MEDIUM,
+    )
+
+    response = await api_client.post(
+        "/api/v1/home/recommended-places",
+        json={
+            "limit": 3,
+            "user_preferences": {"interest_tag_ids": ["historia_zabytki"]},
+        },
+    )
+    assert response.status_code == 200
+    names = [item["name"] for item in response.json()["places"]]
+    assert names[0] == "Muzeum testowe"
+    assert "Basen testowy" not in names

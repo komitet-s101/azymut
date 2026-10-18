@@ -112,6 +112,7 @@ class SearchResultFlag(StrEnum):
 class SearchResult(BaseModel):
     kind: Literal["place", "event"]
     id: int
+    external_id: str | None = None
     name: str
     category: str | None = None
     city: str | None = None

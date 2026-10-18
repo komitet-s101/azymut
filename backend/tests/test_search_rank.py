@@ -4,6 +4,7 @@ from datetime import date
 
 from backend.api.schemas.search import PlaceCategory, SearchFilter, SearchGroup
 from backend.llm.query_parser import parse_search_query_rules
+from backend.services.search_preferences import InterestLayers
 from backend.services.search_rank import ScoreInput, WeatherBias, rank_matches
 
 TODAY = date(2026, 10, 17)
@@ -110,6 +111,40 @@ def test_sport_interest_promotes_sport_over_family_score() -> None:
     sporty = rank_matches([sport, museum], with_sport, weather)
     assert plain[0][0].key == "muzeum"
     assert sporty[0][0].key == "orlik"
+
+
+def test_outdoor_setting_deprioritizes_indoor_only_sport_from_preferences() -> None:
+    filt = SearchFilter(setting="outdoor")
+    layers = InterestLayers(
+        query=(),
+        preference=(PlaceCategory.SPORT_AKTYWNY_WYPOCZYNEK,),
+    )
+    gym = _item(
+        "gym",
+        category="sport_aktywny_wypoczynek",
+        family_friendly=2,
+        rain_suitable=3,
+        activity=5,
+        indoor=True,
+        outdoor=False,
+    )
+    orlik = _item(
+        "orlik",
+        category="sport_aktywny_wypoczynek",
+        family_friendly=3,
+        rain_suitable=2,
+        activity=5,
+        indoor=False,
+        outdoor=True,
+    )
+    weather = WeatherBias(raining=False, used=True)
+    ranked = rank_matches(
+        [gym, orlik],
+        filt,
+        weather,
+        interest_layers=layers,
+    )
+    assert ranked[0][0].key == "orlik"
 
 
 def test_child_age_penalizes_high_minimum_age() -> None:

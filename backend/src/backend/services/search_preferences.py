@@ -100,6 +100,8 @@ def preferences_query_suffix(prefs: SearchUserPreferences | None) -> str:
 def merge_user_preferences(
     filt: SearchFilter,
     prefs: SearchUserPreferences | None,
+    *,
+    apply_profile_setting: bool = True,
 ) -> SearchFilter:
     if prefs is None:
         return filt
@@ -130,7 +132,11 @@ def merge_user_preferences(
             if level is not None:
                 updates["max_price_level"] = int(level)
 
-    if profile is not None and filt.setting == SettingPreference.EITHER:
+    if (
+        apply_profile_setting
+        and profile is not None
+        and filt.setting == SettingPreference.EITHER
+    ):
         if profile.prefer_outdoor:
             updates["setting"] = SettingPreference.OUTDOOR
             updates["setting_strict"] = False

@@ -68,9 +68,26 @@ _INTEREST_PHRASES: tuple[tuple[str, tuple[str, ...]], ...] = (
     ("sport_aktywny_wypoczynek", ("sport", "basen", "silown", "orlik", "boisko", "plywal", "fitness", "rower", "biegan", "tenis", "sciank", "aquapark")),
     ("kibicowanie_wydarzenia_sportowe", ("mecz", "kibic")),
     ("historia_zabytki", ("muzeum", "zabytek", "histori", "zamek")),
-    ("sakralne_wielokulturowosc", ("kosciol", "katedr", "sakral", "cerkiew")),
+    (
+        "sakralne_wielokulturowosc",
+        ("kosciol", "koscioly", "katedr", "sakral", "cerkiew", "bazylik", "fara"),
+    ),
     ("warsztaty_nauka_pasje", ("warsztat", "ceramik", "nauka")),
-    ("przyroda_spacery_widoki", ("przyrod", "spacer", "zoo", "las", "widok", "natura", "ogrod", "park")),
+    (
+        "przyroda_spacery_widoki",
+        (
+            "przyrod",
+            "spacer",
+            "zoo",
+            "las",
+            "widok",
+            "natura",
+            "ogrod",
+            "park",
+            "wieza cisn",
+            "cisnien",
+        ),
+    ),
     ("jedzenie_lokalne_smaki", ("restaurac", "jedzen", "kawiarn", "obiad", "smak")),
     ("kultura_sztuka_film", ("kino", "teatr", "sztuk", "film")),
     ("muzyka_widowiska", ("koncert", "muzyk")),
@@ -515,6 +532,8 @@ def _stem_match(stem: str, word: str) -> bool:
     if not word.startswith(stem):
         return False
     if stem == "spa" and word.startswith("spacer"):
+        return False
+    if stem == "spa" and "cisnien" in word:
         return False
     return True
 

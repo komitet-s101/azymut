@@ -3,7 +3,6 @@ import { MapContainer, Marker, Polyline, TileLayer, useMap } from 'react-leaflet
 import L from 'leaflet'
 
 import { PlanMapLoadingPlaceholder } from '@/components/search-results/PlanMapLoadingPlaceholder'
-import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { appLayout } from '@/lib/appLayout'
 import { cn } from '@/lib/utils'
@@ -20,7 +19,6 @@ type PlanTrailMapProps = {
   onSelectStop: (key: string) => void
   /** Wymusza ponowne zamontowanie mapy (np. po wejściu z onboardingu). */
   mapKey?: string
-  onRetryRoute?: () => void
 }
 
 function stopIcon(order: number, selected: boolean): L.DivIcon {
@@ -63,7 +61,6 @@ export function PlanTrailMap({
   selectedKey,
   onSelectStop,
   mapKey = 'default',
-  onRetryRoute,
 }: PlanTrailMapProps) {
   const stopPositions: LatLngTuple[] = stops.map((stop) => [stop.lat, stop.lon])
   const pathPositions =
@@ -71,7 +68,6 @@ export function PlanTrailMap({
   const center: LatLngTuple = stopPositions[0] ?? DEFAULT_CENTER
   const showPath = pathPositions.length >= 2
   const deferMapMount = routeLoading && stops.length >= 2
-  const approximateRoute = Boolean(route && !route.followsRoads && !routeLoading)
 
   if (deferMapMount) {
     return <PlanMapLoadingPlaceholder />
@@ -114,28 +110,6 @@ export function PlanTrailMap({
             />
           ))}
         </MapContainer>
-        {approximateRoute ? (
-          <div
-            className="pointer-events-none absolute inset-x-2 bottom-2 z-[500] rounded-lg border border-amber-200/90 bg-background/95 px-3 py-2 shadow-sm backdrop-blur-sm"
-            role="status"
-          >
-            <p className="text-xs leading-snug text-foreground">
-              Linia przerywana to trasa przybliżona (nie udało się wyznaczyć ścieżki po chodnikach —
-              często przez limit publicznego serwera OSRM lub zbyt długi dystans).
-            </p>
-            {onRetryRoute ? (
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="pointer-events-auto mt-2 h-8 w-full rounded-full text-xs"
-                onClick={onRetryRoute}
-              >
-                Spróbuj ponownie
-              </Button>
-            ) : null}
-          </div>
-        ) : null}
       </div>
     </Card>
   )

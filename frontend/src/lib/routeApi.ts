@@ -5,6 +5,7 @@ function apiBase(): string {
 
 export type RoutePlaceSummary = {
   id: number
+  external_id: string | null
   name: string
   latitude: number | null
   longitude: number | null

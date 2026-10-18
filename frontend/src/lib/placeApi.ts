@@ -5,6 +5,7 @@ function apiBase(): string {
 
 export type PlaceDetail = {
   id: number
+  external_id: string | null
   name: string
   description: string | null
   city: string | null
@@ -16,6 +17,7 @@ export type PlaceDetail = {
   longitude: number | null
   official_url: string | null
   booking_url: string | null
+  image_url?: string | null
 }
 
 export async function fetchPlaceDetail(placeId: number, signal?: AbortSignal): Promise<PlaceDetail> {

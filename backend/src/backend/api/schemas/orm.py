@@ -43,6 +43,7 @@ def _build_orm_schemas() -> None:
         name="PlaceSummaryOut",
         include=(
             "id",
+            "external_id",
             "name",
             "latitude",
             "longitude",

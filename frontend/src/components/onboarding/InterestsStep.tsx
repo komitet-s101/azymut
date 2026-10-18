@@ -59,15 +59,21 @@ export function InterestsStep({
   )
 }
 
+type InterestsStepActionsProps = {
+  selectedIds: string[]
+  onBack: () => void
+  onNext: () => void
+  backLabel?: string
+  nextLabel?: string
+}
+
 export function InterestsStepActions({
   selectedIds,
   onBack,
   onNext,
-}: {
-  selectedIds: string[]
-  onBack: () => void
-  onNext: () => void
-}) {
+  backLabel = 'Wstecz',
+  nextLabel = 'Dalej',
+}: InterestsStepActionsProps) {
   return (
     <OnboardingActionBar>
       <Button
@@ -77,7 +83,7 @@ export function InterestsStepActions({
         disabled={selectedIds.length === 0}
         onClick={onNext}
       >
-        Dalej
+        {nextLabel}
       </Button>
       <Button
         type="button"
@@ -86,7 +92,7 @@ export function InterestsStepActions({
         size="default"
         onClick={onBack}
       >
-        Wstecz
+        {backLabel}
       </Button>
     </OnboardingActionBar>
   )

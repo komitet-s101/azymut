@@ -62,7 +62,6 @@ export function SearchResultsPage({
   const [selectedStopKey, setSelectedStopKey] = useState<string | null>(null)
   const [walkingRoute, setWalkingRoute] = useState<WalkingRoute | null>(null)
   const [routeLoading, setRouteLoading] = useState(false)
-  const [routeRetryNonce, setRouteRetryNonce] = useState(0)
 
   useEffect(() => {
     if (isPredefined) {
@@ -153,7 +152,7 @@ export function SearchResultsPage({
       })
       .finally(() => setRouteLoading(false))
     return () => controller.abort()
-  }, [trailSignature, routeRetryNonce])
+  }, [trailSignature])
 
   const summary = useMemo(() => {
     if (isPredefined && predefinedState.status === 'ready') {
@@ -315,11 +314,6 @@ export function SearchResultsPage({
               routeLoading={routeLoading || (isPredefined && pageLoading)}
               selectedKey={selectedStopKey}
               onSelectStop={setSelectedStopKey}
-              onRetryRoute={
-                trailStops.length >= 2
-                  ? () => setRouteRetryNonce((value) => value + 1)
-                  : undefined
-              }
             />
             <TrailDetailPanel
               stops={trailStops}

@@ -28,6 +28,9 @@ node_modules/
 dist/
 dist-ssr/
 
+# Lokalne zdjęcia miejsc (frontend/src/assets/photo/{external_id}.jpg)
+frontend/src/assets/photo/
+
 # Logs & OS
 *.log
 .DS_Store

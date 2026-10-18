@@ -3,6 +3,7 @@ import type { TouristGeographyScope, UserContextLocal } from '@/types/userContex
 export type SearchResult = {
   kind: 'place' | 'event'
   id: number
+  external_id: string | null
   name: string
   category: string | null
   city: string | null
